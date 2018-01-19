@@ -11,6 +11,6 @@ module.exports = function (app) {
 	});
 
 	app.get("/", (req, res) => {
-		res.render('index', {title: 'Express-standard Version: 0.0.1'});
+		res.render('index', {title: 'Express-OCR-server Version: 1.0.0'});
 	})
 };
