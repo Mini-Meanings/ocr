@@ -1,0 +1,35 @@
+{
+  "redis": {
+    "host": "localhost",
+    "port": 6379,
+    "db": 0
+  },
+  "mongodb": {
+    "host": "localhost",
+    "database": "test",
+    "username": "name",
+    "password": "password",
+    "replsets": [
+      {
+        "host": "localhost:27018"
+      },
+      {
+        "host": "localhost:27018"
+      }
+    ]
+  },
+  "logger": {
+    "logDir": "/logs",
+    "level": "debug",
+    "output": true
+  },
+  "crontab": {
+    "comment": "express-standard-crontab",
+    "nodeCommand": "NODE_ENV=development /usr/local/bin/node",
+    "shellCommand": "/bin/bash",
+    "logTidy": "0 1 * * *",
+    "logRm": "1 1 * * *"
+  },
+  "language": "cn",
+  "sessionSecret": "express-standard"
+}
