@@ -1,13 +1,11 @@
 /**
- * Created by wyq on 17/6/26.
+ * Cgit reated by wyq on 17/6/26.
  */
 const models = require("require-directory")(module);
 const mongoose = require("mongoose");
 mongoose.Promise = require("bluebird");
 const config = require("config");
 const lingo = require("lingo");
-
-console.log("=========== config: %j", config);
 
 let mongodbConnString = 'mongodb://' + config.mongodb.host + '/' + config.mongodb.database;
 if (config.mongodb.replsets && config.mongodb.replsets.length) {
