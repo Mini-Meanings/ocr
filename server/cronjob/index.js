@@ -48,7 +48,7 @@ require('crontab').load(function (err, crontab) {
 			return log.info('Crontab: register task %s', job.toString());
 		}
 		/* istanbul ignore next */
-		return log.error("Don't know what time " + filename + ' to run');
+		return log.warn("Don't know what time " + filename + ' to run');
 	};
 
 	fs.readdir(__dirname, function (err, dirs) {
