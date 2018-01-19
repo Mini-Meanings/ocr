@@ -7,6 +7,8 @@ mongoose.Promise = require("bluebird");
 const config = require("config");
 const lingo = require("lingo");
 
+console.log("=========== config: %j", config);
+
 let mongodbConnString = 'mongodb://' + config.mongodb.host + '/' + config.mongodb.database;
 if (config.mongodb.replsets && config.mongodb.replsets.length) {
 	mongodbConnString = 'mongodb://' + config.mongodb.host;
