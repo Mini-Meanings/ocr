@@ -14,5 +14,6 @@ module.exports = function (options) {
 	options.host = options.host || config.redis.host;
 	options.port = options.port || config.redis.port;
 	options.db = options.db || config.redis.db;
+	config.redis.password && (options.password = config.redis.password);
 	return new Redis(options);
 };
