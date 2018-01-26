@@ -71,3 +71,8 @@ var router = module.exports = express.Router();
 router.get("/", function (req, res) {
 	return res.send("rooms router");
 });
+
+router.post("/t", function (req, res) {
+	console.log(req.body);
+	return res.send(req.body);
+});
