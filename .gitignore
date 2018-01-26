@@ -6,4 +6,5 @@ app/node_modules
 server/config/*
 !server/config/_sample.json
 server/logs
+server/apidoc
 app/.log
