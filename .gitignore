@@ -7,4 +7,5 @@ server/config/*
 !server/config/_sample.json
 server/logs
 server/apidoc
+server/npm-debug.log
 app/.log
