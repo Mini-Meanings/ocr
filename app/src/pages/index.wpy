@@ -16,13 +16,10 @@
   }
 </style>
 <template>
-  <view class="container">
-    <view class="userinfo" @tap="handleViewTap">
-      <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
-      <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
-    </view>
-    <div>ddd</div>
-    <toast />
+  <view class="page">
+    <progress percent="20" show-info />
+    <button type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}"
+        disabled="{{disabled}}" bindtap="primary"> primary </button>
   </view>
 </template>
 
@@ -45,7 +42,7 @@
       counter2: Counter,
       list: List,
       group: Group,
-      toast: Toast
+      toast: Toast,
     }
 
     mixins = [testMixin]
@@ -161,6 +158,29 @@
         let $event = args[args.length - 1]
         console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
       }
+    }
+
+    mytest() {
+      // wx.showModal({
+      //   title: '提示',
+      //   content: '这是一个模态弹窗',
+      //   success: function(res) {
+      //     if (res.confirm) {
+      //       console.log('用户点击确定')
+      //     } else if (res.cancel) {
+      //       console.log('用户点击取消')
+      //     }
+      //   }
+      // })
+      wx.showActionSheet({
+        itemList: ['A', 'B', 'C'],
+        success: function(res) {
+          console.log(res.tapIndex)
+        },
+        fail: function(res) {
+          console.log(res.errMsg)
+        }
+      })
     }
 
     onLoad() {
