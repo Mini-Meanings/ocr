@@ -8,4 +8,5 @@ server/config/*
 server/logs
 server/apidoc
 server/npm-debug.log
+server/test
 app/.log
