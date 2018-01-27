@@ -17,10 +17,23 @@
 </style>
 <template>
   <view class="page">
+    
     <progress percent="20" show-info />
-    <button type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}"
-        disabled="{{disabled}}" bindtap="primary"> primary </button>
+    <view class="page__hd">
+    <text class="page__title">image</text>
+    <text class="page__desc">图片</text>
   </view>
+  <view class="page__bd">
+   <view class="section section_gap">
+    <text class="section__title">设置最小/最大值</text>
+    <view class="body-view">
+      <slider bindchange="slider4change" min="50" max="200" show-value/>
+    </view>
+  </view>
+  </view>
+     
+  </view>
+ 
 </template>
 
 <script>
