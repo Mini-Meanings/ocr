@@ -1,10 +1,16 @@
-var express = require('express');
-var router = module.exports = express.Router();
-var mLockSend = require("../middlewares/lockSend.js");
-var logger = require("../utils/log")(__filename);
-var Joi = require("joi");
-var mJoiValidate = require("../tools/joiValidate.js");
+const express = require('express');
+const router = module.exports = express.Router();
+const mLockSend = require("../middlewares/lockSend.js");
+const logger = require("../utils/log")(__filename);
+const Joi = require("joi");
+const mJoiValidate = require("../tools/joiValidate.js");
+const config = require("config");
 
+
+// let allKey = config.allKey;
+// console.log(allKey);
+// let selKey = allKey[+new Date() % allKey.length];
+// console.log("======selKey: %j", selKey);
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {

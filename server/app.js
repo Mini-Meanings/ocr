@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(require('./middlewares/formParser')());
+// app.use(require('./middlewares/formParser')());
 
 app.set('sessionStore', new RedisStore({client: require("./utils/createRedisClient")()}));
 app.use(session({

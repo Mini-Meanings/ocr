@@ -32,5 +32,17 @@
     "logRm": "1 1 * * *"
   },
   "language": "en",
-  "sessionSecret": "express-standard"
+  "sessionSecret": "express-standard",
+  "allKey": [ //调用api用到的参数
+    {
+      "AppID": "aaa1",
+      "APIKey": "bbb2",
+      "SecretKey": "ccc3"
+    },
+    {
+      "AppID": "aaa1",
+      "APIKey": "bbb2",
+      "SecretKey": "ccc3"
+    }
+  ]
 }
