@@ -33,7 +33,7 @@
     "serve-favicon": "~2.4.2",
     "underscore": "^1.8.3"
   },
-  "description": "express Initialization",
+  "description": "ai-ocr",
   "main": "/bin/www",
   "devDependencies": {},
   "repository": {
