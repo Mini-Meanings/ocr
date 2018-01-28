@@ -3,6 +3,8 @@
     
   <view>
     <image mode="aspectFit" src="{{$preview$imgurl}}"/>
+    <div>{{$preview$result}}</div>
+    <button bindtap="$preview$upload" type="default" loading="{{$preview$loading}}" plain="{{$preview$plain}}" hover-class="other-button-hover"> 快速识别 </button>
   </view>
 
   </view>
