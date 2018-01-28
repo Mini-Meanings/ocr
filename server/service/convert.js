@@ -123,13 +123,28 @@ exports.vehicleLicense = function (imgBuff) {
 	return client.vehicleLicense(imgBuff, options);
 };
 
+// 车牌识别 200次
+exports.licensePlate = function (imgBuff) {
+	if (!imgBuff) {
+		return Bluebird.reject("param imgBuff not exists");
+	}
+	let allKey = config.allKey;
+	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
+	const options = {
+		multi_detect: "true"            //多张车牌进行识别
+	};
+	return client.licensePlate(imgBuff, options);
+};
+
+
 
 
 // 网络图片文字识别 500次
 // 通用文字识别（含生僻字版）付费
 // 通用文字识别（高精度版）50次
 // 营业执照识别 200次
-// 车牌识别 200次
+
 // 通用票据识别 200次
 
 

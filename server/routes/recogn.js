@@ -387,3 +387,50 @@ app.post("/vehiclecard", upload.any(), function (req, res) {
 		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
 	});
 });
+
+//车牌识别
+/**
+ * @api {post} /recogn/license v1-01.07 车牌识别
+ * @apiGroup v1-01.Recogn
+ * @apiName  license
+ *
+ * @apiDescription 车牌识别
+ *
+ * @apiVersion 1.0.0
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *    {
+ *      "status":"ok",
+ *      "code":200,
+ *      "data":{
+ *        "log_id":4340037728924258300,
+ *        "words_result":[{"color":"blue","number":"粤B594SB"}]
+ *      }
+ *    }
+ *
+ * @apiError fileEmpty 文件类型错误
+ * @apiErrorExample {json}
+ *   HTTP/1.1 200 文件类型错误
+ *     {
+ *        "status":"ok",
+ *        "code":200,
+ *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
+ *     }
+ */
+app.post("/license", upload.any(), function (req, res) {
+	if (!req.files || !req.files.length) {
+		return res.lockSend(100001, "上传文件为空");
+	}
+	let file = req.files[0];
+	let size = file.size;
+	let ext = path.extname(file.originalname);
+	if (size > maxFileSize || !allowFile.includes(ext)) {
+		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
+	}
+	mConvert.licensePlate(req.files[0].buffer.toString("base64")).then(result => {
+		return res.lockSend(200, result);
+	}).catch(err => {
+		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+	});
+});
