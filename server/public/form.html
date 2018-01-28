@@ -5,8 +5,62 @@
   <title>单图上传</title>
 </head>
 <body>
-<form action="/rooms/img/t" method="post" enctype="multipart/form-data">
-  <h4>图片识别</h4>
+<form action="/recogn/general/local" method="post" enctype="multipart/form-data">
+  <h4>通用文字识别（含位置信息版）</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogn/accurate/local" method="post" enctype="multipart/form-data">
+  <h4>高精度文字识别（含位置信息版）</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogn/idcard?side=front" method="post" enctype="multipart/form-data">
+  <h4>身份证正面识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogn/idcard?side=back" method="post" enctype="multipart/form-data">
+  <h4>身份证背面识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogn/bankcard" method="post" enctype="multipart/form-data">
+  <h4>银行卡识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogn/drivecard" method="post" enctype="multipart/form-data">
+  <h4>驾驶证识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogn/vehiclecard" method="post" enctype="multipart/form-data">
+  <h4>行驶证识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogn/license" method="post" enctype="multipart/form-data">
+  <h4>车牌识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogn/business" method="post" enctype="multipart/form-data">
+  <h4>营业执照识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogn/receipt" method="post" enctype="multipart/form-data">
+  <h4>通用票据识别</h4>
   <input type="file" name="logo">
   <input type="submit" value="提交">
 </form>
