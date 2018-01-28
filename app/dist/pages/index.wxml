@@ -1,18 +1,7 @@
 
-  <view class="page">
-    
-    <progress percent="20" show-info/>
-    <view class="page__hd">
-    <text class="page__title">image</text>
-    <text class="page__desc">图片</text>
-  </view>
-  <view class="page__bd">
-   <view class="section section_gap">
-    <text class="section__title">设置最小/最大值</text>
-    <view class="body-view">
-      <slider bindchange="slider4change" min="50" max="200" show-value/>
+  <view class="container">
+    <view class="page">
+      <button bindtap="upload" type="default" loading="{{loading}}" plain="{{plain}}" hover-class="other-button-hover"> 上传或拍照 </button>
     </view>
-  </view>
-  </view>
-     
+    <view class="page__bd"/>
   </view>

@@ -1,0 +1,27 @@
+<style lang="less">
+/** less **/
+</style>
+<template>
+  <view>
+    <preview></preview>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import Preview from '../components/preview';
+
+export default class Show extends wepy.page {
+    config = {
+      navigationBarTitleText: '图片预览'
+    }
+    components = {preview: Preview};
+
+    data = {};
+    methods = {};
+
+    events = {};
+    onLoad() {};
+    // Other properties
+}
+</script>
