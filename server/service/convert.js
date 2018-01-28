@@ -64,6 +64,23 @@ exports.accurate = function (imgBuff) {
 
 // 网络图片文字识别 500次
 // 身份证识别 500次
+exports.idcard = function (imgBuff, idCardSide) {
+	if (!imgBuff) {
+		return Bluebird.reject("param imgBuff not exists");
+	}
+	if (!idCardSide || (idCardSide !== "front" && idCardSide !== "back")) {
+		idCardSide = "front";
+	}
+	let allKey = config.allKey;
+	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
+	const options = {
+		recognize_granularity: "big",   //不定位单个字符位置
+		detect_direction: "true",       //检测图像朝向
+		probability: "true"             //返回识别结果中每一行的置信度
+	};
+	return client.idcard(imgBuff, idCardSide || "front", options);
+};
 // 银行卡识别 500次
 // 驾驶证识别 200次
 // 行驶证识别 200次
