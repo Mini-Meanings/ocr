@@ -137,13 +137,21 @@ exports.licensePlate = function (imgBuff) {
 	return client.licensePlate(imgBuff, options);
 };
 
-
+// 营业执照识别 200次
+exports.businessLicense = function (imgBuff) {
+	if (!imgBuff) {
+		return Bluebird.reject("param imgBuff not exists");
+	}
+	let allKey = config.allKey;
+	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
+	return client.businessLicense(imgBuff);
+};
 
 
 // 网络图片文字识别 500次
 // 通用文字识别（含生僻字版）付费
 // 通用文字识别（高精度版）50次
-// 营业执照识别 200次
 
 // 通用票据识别 200次
 

@@ -388,7 +388,6 @@ app.post("/vehiclecard", upload.any(), function (req, res) {
 	});
 });
 
-//车牌识别
 /**
  * @api {post} /recogn/license v1-01.07 车牌识别
  * @apiGroup v1-01.Recogn
@@ -434,3 +433,78 @@ app.post("/license", upload.any(), function (req, res) {
 		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
 	});
 });
+
+/**
+ * @api {post} /recogn/business v1-01.08 营业执照识别
+ * @apiGroup v1-01.Recogn
+ * @apiName  businessLicense
+ *
+ * @apiDescription 营业执照识别
+ *
+ * @apiVersion 1.0.0
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *    {
+ *      "status":"ok",
+ *      "code":200,
+ *      "data":{
+ *        "log_id":4640987200229955000,
+ *        "direction":0,
+ *        "words_result_num":6,
+ *        "words_result":{
+ *          "社会信用代码":{
+ *            "location":{"width":0,"top":0,"height":0,"left":0},
+ *            "words":"无"
+ *          },
+ *          "单位名称":{
+ *            "location":{"width":247,"top":521,"height":20,"left":310},
+ *            "words":"金乡县金马机械制造有限公司"
+ *          },
+ *          "法人":{
+ *            "location":{"width":58,"top":641,"height":20,"left":307},
+ *            "words":"杨小月"
+ *          },
+ *          "证件编号":{
+ *            "location":{"width":142,"top":476,"height":13,"left":516},
+ *            "words":"370828200012462"
+ *          },
+ *          "地址":{
+ *            "location":{"width":286,"top":601,"height":21,"left":306},
+ *            "words":"金乡县王丕镇驻地结核病医院北侧"
+ *          },
+ *          "有效期":{
+ *            "location":{"width":144,"top":763,"height":20,"left":472},
+ *            "words":"2022年07月12日"
+ *          }
+ *        }
+ *      }
+ *    }
+ *
+ * @apiError fileEmpty 文件类型错误
+ * @apiErrorExample {json}
+ *   HTTP/1.1 200 文件类型错误
+ *     {
+ *        "status":"ok",
+ *        "code":200,
+ *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
+ *     }
+ */
+app.post("/business", upload.any(), function (req, res) {
+	if (!req.files || !req.files.length) {
+		return res.lockSend(100001, "上传文件为空");
+	}
+	let file = req.files[0];
+	let size = file.size;
+	let ext = path.extname(file.originalname);
+	if (size > maxFileSize || !allowFile.includes(ext)) {
+		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
+	}
+	mConvert.businessLicense(req.files[0].buffer.toString("base64")).then(result => {
+		return res.lockSend(200, result);
+	}).catch(err => {
+		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+	});
+});
+
+
