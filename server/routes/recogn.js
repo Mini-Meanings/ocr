@@ -137,27 +137,6 @@ app.post("/accurate/local", upload.any(), function (req, res) {
  *      {
  *        "status":"ok",
  *        "code":200,
- *        "data":{
- *          "log_id":6612658922496325000,
- *          "direction":0,
- *          "words_result_num":6,
- *          "words_result":[
- *          {
- *            "probability":{"variance":0.000013,"average":0.99878,"min":0.978404},
- *            "location":{"width":1219,"top":0,"height":36,"left":6},
- *            "words":"在戚夫人为刘邦生下儿子刘如意之后,刘邦更是对她万般宠爱。随着时间的推移,刘邦"
- *          },
- *          ...
- *        ]
- *      }
- *    }
- *
- * @apiError fileEmpty 文件类型错误
- * @apiErrorExample {json}
- *   HTTP/1.1 200 文件类型错误
- *     {
- *        "status":"ok",
- *        "code":200,
  *        "data":{  //正面结果
  *          "log_id":2604311532770586000,
  *          "words_result_num":6,
@@ -210,6 +189,15 @@ app.post("/accurate/local", upload.any(), function (req, res) {
  *            }
  *          }
  *        }
+ *    }
+ *
+ * @apiError fileEmpty 文件类型错误
+ * @apiErrorExample {json}
+ *   HTTP/1.1 200 文件类型错误
+ *     {
+ *        "status":"ok",
+ *        "code":200,
+ *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
 app.post("/idcard", upload.any(), function (req, res) {
