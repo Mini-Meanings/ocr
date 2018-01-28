@@ -1,0 +1,24 @@
+<style lang="less">
+
+</style>
+<template>
+  <view>
+    <image mode="aspectFit" src="{{imgurl}}" />
+  </view>
+</template>
+<script>
+  import wepy from 'wepy';
+
+  export default class Preview extends wepy.component {
+    data = {
+      imgurl: ''
+    }
+
+    methods = {
+    }
+
+    onLoad () {
+      this.imgurl = wx.getStorageSync('imageurl');
+    }
+  }
+</script>

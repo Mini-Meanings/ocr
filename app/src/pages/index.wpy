@@ -1,39 +1,22 @@
 <style lang="less">
-  .userinfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .container {
+    height: ~"calc(100vh)";
+    width: 100%;
+    background: url(http://47.93.248.225:3344/tit.jpg) no-repeat 0 0 transparent;
+    background-size: cover;
   }
-
-  .userinfo-avatar {
-    width: 80rpx;
-    height: 80rpx;
-    border-radius: 50%;
-  }
-
-  .userinfo-nickname {
-    color: #aaa;
+  .bg{
+    width: 100%;
   }
 </style>
 <template>
-  <view class="page">
-    
-    <progress percent="20" show-info />
-    <view class="page__hd">
-    <text class="page__title">image</text>
-    <text class="page__desc">图片</text>
-  </view>
-  <view class="page__bd">
-   <view class="section section_gap">
-    <text class="section__title">设置最小/最大值</text>
-    <view class="body-view">
-      <slider bindchange="slider4change" min="50" max="200" show-value/>
+  <view class="container">
+    <view class="page">
+      <button @tap="upload" type="default" loading="{{loading}}" plain="{{plain}}"
+       hover-class="other-button-hover"> 上传或拍照 </button>
     </view>
+    <view class="page__bd"></view>
   </view>
-  </view>
-     
-  </view>
- 
 </template>
 
 <script>
@@ -122,6 +105,26 @@
     }
 
     methods = {
+      upload() {
+        wx.chooseImage({
+          count: 1, // 默认9
+          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+          success: function (res) {
+            // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+            var tempFilePaths = res.tempFilePaths;
+            console.log(tempFilePaths,'tempFilePaths');
+            // wx.previewImage({
+            //   current: tempFilePaths[0], // 当前显示图片的http链接
+            //   urls: tempFilePaths // 需要预览的图片http链接列表
+            // })
+            wx.setStorageSync('imageurl',tempFilePaths[0]);
+            wx.navigateTo({
+              url: 'preview?id=1'
+            })
+          }
+        })
+      },
       plus () {
         this.mynum++
       },

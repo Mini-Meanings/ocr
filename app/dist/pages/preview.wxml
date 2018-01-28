@@ -1,0 +1,8 @@
+
+  <view>
+    
+  <view>
+    <image mode="aspectFit" src="{{$preview$imgurl}}"/>
+  </view>
+
+  </view>
