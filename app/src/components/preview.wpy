@@ -7,9 +7,9 @@
 </style>
 <template>
   <view>
-    <canvas class="canvas" canvas-id="myCanvas"/>
+    <canvas @tap="which" class="canvas" canvas-id="myCanvas"/>
     <image mode="aspectFit" src="{{result.imgurl}}" />
-    <div>识别结果：{{result.desc}}</div>
+    <div>识别结果：{{result.one}}</div>
     <button @tap="upload" type="default" loading="{{loading}}" plain="{{plain}}"
        hover-class="other-button-hover"> 快速识别 </button>
   </view>
@@ -21,7 +21,8 @@
     data = {
       result: {
         imgurl: '',
-        desc: ''
+        desc: '',
+        one: ''
       }
     }
 
@@ -62,6 +63,9 @@
             wx.hideLoading();
           }
         })
+      },
+      which() {
+        this.result.one = this.result.desc;
       }
     }
 

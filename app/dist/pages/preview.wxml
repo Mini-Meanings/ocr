@@ -2,9 +2,9 @@
   <view>
     
   <view>
-    <canvas class="canvas" canvas-id="myCanvas"/>
+    <canvas bindtap="$preview$which" class="canvas" canvas-id="myCanvas"/>
     <image mode="aspectFit" src="{{$preview$result.imgurl}}"/>
-    <div>识别结果：{{$preview$result.desc}}</div>
+    <div>识别结果：{{$preview$result.one}}</div>
     <button bindtap="$preview$upload" type="default" loading="{{$preview$loading}}" plain="{{$preview$plain}}" hover-class="other-button-hover"> 快速识别 </button>
   </view>
 
