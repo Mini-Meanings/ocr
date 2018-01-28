@@ -5,13 +5,13 @@
   <title>单图上传</title>
 </head>
 <body>
-<form action="/recogn/general/local" method="post" enctype="multipart/form-data">
+<form action="/recogn/general" method="post" enctype="multipart/form-data">
   <h4>通用文字识别（含位置信息版）</h4>
   <input type="file" name="logo">
   <input type="submit" value="提交">
 </form>
 <hr/>
-<form action="/recogn/accurate/local" method="post" enctype="multipart/form-data">
+<form action="/recogn/accurate" method="post" enctype="multipart/form-data">
   <h4>高精度文字识别（含位置信息版）</h4>
   <input type="file" name="logo">
   <input type="submit" value="提交">
@@ -61,6 +61,12 @@
 <hr/>
 <form action="/recogn/receipt" method="post" enctype="multipart/form-data">
   <h4>通用票据识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogn/enhance" method="post" enctype="multipart/form-data">
+  <h4>生僻字识别</h4>
   <input type="file" name="logo">
   <input type="submit" value="提交">
 </form>
