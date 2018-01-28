@@ -3,8 +3,8 @@
 </style>
 <template>
   <view>
-    <image mode="aspectFit" src="{{imgurl}}" />
-    <div>{{result}}</div>
+    <image mode="aspectFit" src="{{result.imgurl}}" />
+    <div>识别结果：{{result.desc}}</div>
     <button @tap="upload" type="default" loading="{{loading}}" plain="{{plain}}"
        hover-class="other-button-hover"> 快速识别 </button>
   </view>
@@ -14,12 +14,15 @@
 
   export default class Preview extends wepy.component {
     data = {
-      imgurl: '',
-      result: ''
+      result: {
+        imgurl: '',
+        desc: ''
+      }
     }
 
     methods = {
       upload() {
+        let self = this;
         // wepy.request({
         //   url: 'http://47.93.248.225:3345/recogn/general/local',
         //   method: 'POST',
@@ -29,43 +32,25 @@
         //   }
         // })
         wx.uploadFile({
-          url: 'http://47.93.248.225:3345/recogn/general/local',
-          filePath: this.imgurl,
+          url:'https://mocha-city-api.sensoro.com/prov1/boss/general',
+          filePath: this.result.imgurl,
           name: 'file',
           // formData:{
           //   'user': 'test'
           // },
           success: function(res){
-            var data = res.data;
-            console.log(data,'success');
+            var data = JSON.parse(res.data);
+            console.log(data.data.words_result[0],'success');
             //do something
+            self.result.desc = data.data.words_result[0].words;
+            self.$apply();
           }
         })
       }
     }
 
-    getDataUri(url) {
-      return new Promise((resolve, reject) => {
-        /* eslint-disable */
-        let image = new Image();
-        image.onload = function() {
-          let canvas = document.createElement('canvas');
-          canvas.width = this.naturalWidth;
-          canvas.height = this.naturalHeight;
-          canvas.getContext('2d').drawImage(this, 0, 0);
-          // Data URI
-          resolve(canvas.toDataURL('image/png'));
-        };
-        image.src = url;
-        // console.log(image.src);
-        image.onerror = () => {
-          reject(new Error('图片流异常'));
-        };
-      });
-    }
-
     onLoad () {
-      this.imgurl = wx.getStorageSync('imageurl');
+      this.result.imgurl = wx.getStorageSync('imageurl');
     }
   }
 </script>

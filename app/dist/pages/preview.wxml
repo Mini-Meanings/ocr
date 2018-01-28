@@ -2,8 +2,8 @@
   <view>
     
   <view>
-    <image mode="aspectFit" src="{{$preview$imgurl}}"/>
-    <div>{{$preview$result}}</div>
+    <image mode="aspectFit" src="{{$preview$result.imgurl}}"/>
+    <div>识别结果：{{$preview$result.desc}}</div>
     <button bindtap="$preview$upload" type="default" loading="{{$preview$loading}}" plain="{{$preview$plain}}" hover-class="other-button-hover"> 快速识别 </button>
   </view>
 
