@@ -47,6 +47,21 @@ exports.generalWithLocation = function (imgBuff) {
 // 通用文字识别（含生僻字版）付费
 // 通用文字识别（高精度版）50次
 // 通用文字识别（高精度含位置版）50次
+exports.accurate = function (imgBuff) {
+	if (!imgBuff) {
+		return Bluebird.reject("param imgBuff not exists");
+	}
+	let allKey = config.allKey;
+	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
+	const options = {
+		recognize_granularity: "big",   //不定位单个字符位置
+		detect_direction: "true",       //检测图像朝向
+		probability: "true"             //返回识别结果中每一行的置信度
+	};
+	return client.accurate(imgBuff, options);
+};
+
 // 网络图片文字识别 500次
 // 身份证识别 500次
 // 银行卡识别 500次

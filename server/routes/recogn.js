@@ -67,6 +67,62 @@ app.post("/general/local", upload.any(), function (req, res) {
 });
 
 
+/**
+ * @api {post} /recogn/accurate/local v1-01.02 高精度文字识别(含位置信息)
+ * @apiGroup v1-01.Recogn
+ * @apiName  accurateWithLocation
+ *
+ * @apiDescription 对文字图片进行高精度识别，同时返回位置信息
+ *
+ * @apiVersion 1.0.0
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *      {
+ *        "status":"ok",
+ *        "code":200,
+ *        "data":{
+ *          "log_id":6612658922496325000,
+ *          "direction":0,
+ *          "words_result_num":6,
+ *          "words_result":[
+ *          {
+ *            "probability":{"variance":0.000013,"average":0.99878,"min":0.978404},
+ *            "location":{"width":1219,"top":0,"height":36,"left":6},
+ *            "words":"在戚夫人为刘邦生下儿子刘如意之后,刘邦更是对她万般宠爱。随着时间的推移,刘邦"
+ *          },
+ *          ...
+ *        ]
+ *      }
+ *    }
+ *
+ * @apiError fileEmpty 文件类型错误
+ * @apiErrorExample {json}
+ *   HTTP/1.1 200 文件类型错误
+ *   {
+ *      "status":"error",
+ *      "code":100002,
+ *      "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
+ *   }
+ */
+app.post("/accurate/local", upload.any(), function (req, res) {
+	if (!req.files || !req.files.length) {
+		return res.lockSend(100001, "上传文件为空");
+	}
+	let file = req.files[0];
+	let size = file.size;
+	let ext = path.extname(file.originalname);
+	if (size > maxFileSize || !allowFile.includes(ext)) {
+		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
+	}
+	mConvert.accurate(req.files[0].buffer.toString("base64")).then(result => {
+		return res.lockSend(200, result);
+	}).catch(err => {
+		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+	});
+});
+
+
 
 
 
