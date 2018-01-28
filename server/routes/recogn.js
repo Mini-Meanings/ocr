@@ -221,13 +221,55 @@ app.post("/idcard", upload.any(), function (req, res) {
 	});
 });
 
-
-
-
-
-
-
-
+//银行卡识别
+/**
+ * @api {post} /recogn/bankcard v1-01.04 银行卡识别
+ * @apiGroup v1-01.Recogn
+ * @apiName  bankcard
+ *
+ * @apiDescription 银行卡识别
+ *
+ * @apiVersion 1.0.0
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *    {
+ *      "status":"ok",
+ *      "code":200,
+ *      "data":{
+ *        "log_id":6785171683675854000,
+ *        "result":{
+ *          "bank_card_number":"4033 9200 1649 3621", //	银行卡卡号
+ *          "bank_card_type":2, //银行卡类型，0:不能识别; 1: 借记卡; 2: 信用卡
+ *          "bank_name":"中信银行"  //银行名，不能识别时为空
+ *        }
+ *      }
+ *    }
+ * @apiError fileEmpty 文件类型错误
+ * @apiErrorExample {json}
+ *   HTTP/1.1 200 文件类型错误
+ *     {
+ *        "status":"ok",
+ *        "code":200,
+ *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
+ *     }
+ */
+app.post("/bankcard", upload.any(), function (req, res) {
+	if (!req.files || !req.files.length) {
+		return res.lockSend(100001, "上传文件为空");
+	}
+	let file = req.files[0];
+	let size = file.size;
+	let ext = path.extname(file.originalname);
+	if (size > maxFileSize || !allowFile.includes(ext)) {
+		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
+	}
+	mConvert.bankcard(req.files[0].buffer.toString("base64")).then(result => {
+		return res.lockSend(200, result);
+	}).catch(err => {
+		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+	});
+});
 
 
 
