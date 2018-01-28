@@ -19,7 +19,7 @@ exports.generalOcr = function (imgBuff) {
 		language_type: "CHN_ENG", //识别语言类型
 		detect_direction: "true", //图像朝向检测
 		detect_language: "true",  //检测语言
-		probability: "true"       //返回识别结果中每一行的置信度
+		//probability: "true"       //返回识别结果中每一行的置信度
 	};
 	return client.generalBasic(imgBuff, options);
 };
@@ -38,7 +38,7 @@ exports.generalWithLocation = function (imgBuff) {
 		detect_direction: "true",       //检测图像朝向
 		detect_language: "true",        //检测语言
 		// vertexes_location: "true",      //返回文字外接多边形顶点位置
-		probability: "true"             //返回识别结果中每一行的置信度
+		//probability: "true"             //返回识别结果中每一行的置信度
 	};
 	return client.general(imgBuff, options);
 };
@@ -54,7 +54,7 @@ exports.accurate = function (imgBuff) {
 	const options = {
 		recognize_granularity: "big",   //不定位单个字符位置
 		detect_direction: "true",       //检测图像朝向
-		probability: "true"             //返回识别结果中每一行的置信度
+		//probability: "true"             //返回识别结果中每一行的置信度
 	};
 	return client.accurate(imgBuff, options);
 };
@@ -73,7 +73,7 @@ exports.idcard = function (imgBuff, idCardSide) {
 	const options = {
 		recognize_granularity: "big",   //不定位单个字符位置
 		detect_direction: "true",       //检测图像朝向
-		probability: "true"             //返回识别结果中每一行的置信度
+		//probability: "true"             //返回识别结果中每一行的置信度
 	};
 	return client.idcard(imgBuff, idCardSide || "front", options);
 };
@@ -88,7 +88,7 @@ exports.bankcard = function (imgBuff) {
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
 		detect_direction: "true",       //检测图像朝向
-		probability: "true"             //返回识别结果中每一行的置信度
+		//probability: "true"             //返回识别结果中每一行的置信度
 	};
 	return client.bankcard(imgBuff, options);
 };
@@ -103,7 +103,7 @@ exports.drivingLicense = function (imgBuff) {
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
 		detect_direction: "true",       //检测图像朝向
-		probability: "true"             //返回识别结果中每一行的置信度
+		//probability: "true"             //返回识别结果中每一行的置信度
 	};
 	return client.drivingLicense(imgBuff, options);
 };
@@ -118,7 +118,7 @@ exports.vehicleLicense = function (imgBuff) {
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
 		detect_direction: "true",       //检测图像朝向
-		probability: "true"             //返回识别结果中每一行的置信度
+		//probability: "true"             //返回识别结果中每一行的置信度
 	};
 	return client.vehicleLicense(imgBuff, options);
 };
@@ -148,11 +148,28 @@ exports.businessLicense = function (imgBuff) {
 	return client.businessLicense(imgBuff);
 };
 
+// 通用票据识别 200次
+exports.receipt = function (imgBuff) {
+	if (!imgBuff) {
+		return Bluebird.reject("param imgBuff not exists");
+	}
+	let allKey = config.allKey;
+	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
+	const options = {
+		recognize_granularity: "big",   //不定位单个字符位置
+		detect_direction: "true",       //检测图像朝向
+		//probability: "true"             //返回识别结果中每一行的置信度
+	};
+	return client.receipt(imgBuff, options);
+};
+
+
 
 // 网络图片文字识别 500次
 // 通用文字识别（含生僻字版）付费
 // 通用文字识别（高精度版）50次
 
-// 通用票据识别 200次
+
 
 

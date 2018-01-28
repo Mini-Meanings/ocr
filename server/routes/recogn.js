@@ -507,4 +507,63 @@ app.post("/business", upload.any(), function (req, res) {
 	});
 });
 
+/**
+ * @api {post} /recogn/receipt v1-01.09 通用票据识别
+ * @apiGroup v1-01.Recogn
+ * @apiName  receipt
+ *
+ * @apiDescription 通用票据识别
+ *
+ * @apiVersion 1.0.0
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *    {
+ *      "status":"ok",
+ *      "code":200,
+ *      "data":{
+ *        "log_id":4758592829353561000,
+ *        "direction":3,
+ *        "words_result_num":50,
+ *        "words_result":[
+ *          {"location":{"width":53,"top":389,"height":257,"left":1256},"words":"刺麻麻辣香锅"},
+ *          {"location":{"width":40,"top":685,"height":126,"left":1214},"words":"人数:0"},
+ *          {"location":{"width":43,"top":228,"height":226,"left":1220},"words":"台号:101号台"},
+ *          {"location":{"width":44,"top":226,"height":352,"left":1181},"words":"单号:XS-1801020026"},
+ *          {"location":{"width":56,"top":225,"height":404,"left":1131},"words":"收银:01月02日13:11:14"},
+ *          {"location":{"width":40,"top":710,"height":126,"left":220},"words":"243.00"},
+ *          {"location":{"width":45,"top":210,"height":131,"left":234},"words":"实收:"},
+ *          {"location":{"width":63,"top":202,"height":416,"left":160},"words":"定座电话:01053269233"},
+ *          {"location":{"width":69,"top":375,"height":280,"left":100},"words":"欢迎下次光临"},
+ *          {"location":{"width":38,"top":798,"height":28,"left":40},"words":"2"},
+ *          {"location":{"width":60,"top":293,"height":453,"left":58},"words":"龙脉餐饮管理系统010-51653309"}
+ *        ]
+ *      }
+ *    }
+ *
+ * @apiError fileEmpty 文件类型错误
+ * @apiErrorExample {json}
+ *   HTTP/1.1 200 文件类型错误
+ *     {
+ *        "status":"ok",
+ *        "code":200,
+ *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
+ *     }
+ */
+app.post("/receipt", upload.any(), function (req, res) {
+	if (!req.files || !req.files.length) {
+		return res.lockSend(100001, "上传文件为空");
+	}
+	let file = req.files[0];
+	let size = file.size;
+	let ext = path.extname(file.originalname);
+	if (size > maxFileSize || !allowFile.includes(ext)) {
+		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
+	}
+	mConvert.receipt(req.files[0].buffer.toString("base64")).then(result => {
+		return res.lockSend(200, result);
+	}).catch(err => {
+		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+	});
+});
 
