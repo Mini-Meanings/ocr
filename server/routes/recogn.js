@@ -12,7 +12,7 @@ const allowFile = [".png", ".jpg", ".jpeg", ".bmp"];  //支持文件类型
 const maxFileSize = 4 * 1024 * 1024;              //文件大小
 
 /**
- * @api {post} /recogn/general/local v1-01.01 文字识别(含位置信息)
+ * @api {post} /recogn/general v1-01.01 文字识别(含位置信息)
  * @apiGroup v1-01.Recogn
  * @apiName  generalWithLocation
  *
@@ -49,7 +49,7 @@ const maxFileSize = 4 * 1024 * 1024;              //文件大小
  *      "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *   }
  */
-app.post("/general/local", upload.any(), function (req, res) {
+app.post("/general", upload.any(), function (req, res) {
 	if (!req.files || !req.files.length) {
 		return res.lockSend(100001, "上传文件为空");
 	}
@@ -67,7 +67,7 @@ app.post("/general/local", upload.any(), function (req, res) {
 });
 
 /**
- * @api {post} /recogn/accurate/local v1-01.02 高精度文字识别(含位置信息)
+ * @api {post} /recogn/accurate v1-01.02 高精度文字识别(含位置信息)
  * @apiGroup v1-01.Recogn
  * @apiName  accurateWithLocation
  *
@@ -104,7 +104,7 @@ app.post("/general/local", upload.any(), function (req, res) {
  *      "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *   }
  */
-app.post("/accurate/local", upload.any(), function (req, res) {
+app.post("/accurate", upload.any(), function (req, res) {
 	if (!req.files || !req.files.length) {
 		return res.lockSend(100001, "上传文件为空");
 	}
@@ -561,6 +561,60 @@ app.post("/receipt", upload.any(), function (req, res) {
 		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
 	}
 	mConvert.receipt(req.files[0].buffer.toString("base64")).then(result => {
+		return res.lockSend(200, result);
+	}).catch(err => {
+		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+	});
+});
+
+/**
+ * @api {post} /recogn/enhance v1-01.10 通用文字识别（含生僻字版）- 无位置信息
+ * @apiGroup v1-01.Recogn
+ * @apiName  enhance
+ *
+ * @apiDescription 通用文字识别（含生僻字版）
+ *
+ * @apiVersion 1.0.0
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *    {
+ *      "status":"ok",
+ *      "code":200,
+ *      "data":{
+ *        "log_id":5314503378561276000,
+ *        "direction":0,
+ *        "words_result_num":36,
+ *        "words_result":[
+ *          {"words":"囧槑烎兲氼"},
+ *          {"words":"砳嘦嫑嘂圐"},
+ *          {"words":"圙玊孖砟"},
+ *          {"words":")|节图2)"},
+ *          {"words":"七大姑八(大姨,亲戚你能分清"}
+ *        ]
+ *      }
+ *    }
+ *
+ * @apiError fileEmpty 文件类型错误
+ * @apiErrorExample {json}
+ *   HTTP/1.1 200 文件类型错误
+ *     {
+ *        "status":"ok",
+ *        "code":200,
+ *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
+ *     }
+ */
+app.post("/enhance", upload.any(), function (req, res) {
+	if (!req.files || !req.files.length) {
+		return res.lockSend(100001, "上传文件为空");
+	}
+	let file = req.files[0];
+	let size = file.size;
+	let ext = path.extname(file.originalname);
+	if (size > maxFileSize || !allowFile.includes(ext)) {
+		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
+	}
+	mConvert.generalEnhance(req.files[0].buffer.toString("base64")).then(result => {
 		return res.lockSend(200, result);
 	}).catch(err => {
 		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));

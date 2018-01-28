@@ -164,12 +164,18 @@ exports.receipt = function (imgBuff) {
 	return client.receipt(imgBuff, options);
 };
 
-
-
-// 网络图片文字识别 500次
 // 通用文字识别（含生僻字版）付费
-// 通用文字识别（高精度版）50次
-
-
-
-
+exports.generalEnhance = function (imgBuff) {
+	if (!imgBuff) {
+		return Bluebird.reject("param imgBuff not exists");
+	}
+	let allKey = config.allKey;
+	let selKey = allKey[1]; //根据时间随机选取一个key
+	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
+	const options = {
+		language_type:"CHN_ENG",
+		detect_direction: "true",
+		detect_language: "true"
+	};
+	return client.generalEnhance(imgBuff, options);
+};
