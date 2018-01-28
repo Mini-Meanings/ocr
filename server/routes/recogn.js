@@ -329,3 +329,61 @@ app.post("/drivecard", upload.any(), function (req, res) {
 	});
 });
 
+/**
+ * @api {post} /recogn/vehiclecard v1-01.06 行驶证识别
+ * @apiGroup v1-01.Recogn
+ * @apiName  vehiclecard
+ *
+ * @apiDescription 行驶证识别
+ *
+ * @apiVersion 1.0.0
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *    {
+ *      "status":"ok",
+ *      "code":200,
+ *      "data":{
+ *        "log_id":2038943926651774700,
+ *        "direction":0,
+ *        "words_result_num":10,
+ *        "words_result":{
+ *          "品牌型号":{"words":"桑塔纳牌SVW7180LEL"},
+ *          "发证日期":{"words":"20130708"},
+ *          "使用性质":{"words":"非营运"},
+ *          "发动机号码":{"words":"0009878"},
+ *          "号牌号码":{"words":"浙BC0P87"},
+ *          "所有人":{"words":"张泽为"},
+ *          "住址":{"words":"浙江省宁波市江东区园T街88弄26号101室"},
+ *          "注册日期":{"words":"20060721"},
+ *          "车辆识别代号":{"words":"LSVAU033662116327"},
+ *          "车辆类型":{"words":"小型轿车"}
+ *        }
+ *      }
+ *    }
+ *
+ * @apiError fileEmpty 文件类型错误
+ * @apiErrorExample {json}
+ *   HTTP/1.1 200 文件类型错误
+ *     {
+ *        "status":"ok",
+ *        "code":200,
+ *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
+ *     }
+ */
+app.post("/vehiclecard", upload.any(), function (req, res) {
+	if (!req.files || !req.files.length) {
+		return res.lockSend(100001, "上传文件为空");
+	}
+	let file = req.files[0];
+	let size = file.size;
+	let ext = path.extname(file.originalname);
+	if (size > maxFileSize || !allowFile.includes(ext)) {
+		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
+	}
+	mConvert.vehicleLicense(req.files[0].buffer.toString("base64")).then(result => {
+		return res.lockSend(200, result);
+	}).catch(err => {
+		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+	});
+});
