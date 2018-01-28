@@ -1,12 +1,5 @@
 <style lang="less">
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
+@import './style/weui.less';
 </style>
 
 <script>
@@ -21,7 +14,7 @@ export default class extends wepy.app {
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: 'jartto',
       navigationBarTextStyle: 'black'
     }
   }

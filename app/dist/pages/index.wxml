@@ -1,23 +1,18 @@
 
-  <view class="container">
-    <view class="userinfo" bindtap="handleViewTap">
-      <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
-      <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
-    </view>
-    <div>ddd</div>
+  <view class="page">
     
-    <view class="wetoast {{$toast$reveal ? 'wetoast_show' : ''}}">
-        <view class="wetoast__mask"/>
-        <view class="wetoast__bd" animation="{{$toast$animationData}}">
-            <block  wx:if="{{$toast$img}}">
-                <view class="wetoast__bd__img {{$toast$imgClassName || ''}}">
-                    <image class="wetoast__bd__img_desc" src="{{$toast$img}}" mode="{{$toast$imgMode || 'scaleToFill'}}"/>
-                </view>
-            </block>
-            <block  wx:if="{{$toast$title}}">
-                <view class="wetoast__bd__title {{$toast$titleClassName || ''}}">{{$toast$title}}</view>
-            </block>
-        </view>
+    <progress percent="20" show-info/>
+    <view class="page__hd">
+    <text class="page__title">image</text>
+    <text class="page__desc">图片</text>
+  </view>
+  <view class="page__bd">
+   <view class="section section_gap">
+    <text class="section__title">设置最小/最大值</text>
+    <view class="body-view">
+      <slider bindchange="slider4change" min="50" max="200" show-value/>
     </view>
-
+  </view>
+  </view>
+     
   </view>
