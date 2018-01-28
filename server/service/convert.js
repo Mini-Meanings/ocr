@@ -93,12 +93,26 @@ exports.bankcard = function (imgBuff) {
 	return client.bankcard(imgBuff, options);
 };
 
+// 驾驶证识别 200次
+exports.drivingLicense = function (imgBuff) {
+	if (!imgBuff) {
+		return Bluebird.reject("param imgBuff not exists");
+	}
+	let allKey = config.allKey;
+	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
+	const options = {
+		detect_direction: "true",       //检测图像朝向
+		probability: "true"             //返回识别结果中每一行的置信度
+	};
+	return client.drivingLicense(imgBuff, options);
+};
 
 
 // 网络图片文字识别 500次
 // 通用文字识别（含生僻字版）付费
 // 通用文字识别（高精度版）50次
-// 驾驶证识别 200次
+
 // 行驶证识别 200次
 // 营业执照识别 200次
 // 车牌识别 200次

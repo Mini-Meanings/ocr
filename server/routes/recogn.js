@@ -221,7 +221,6 @@ app.post("/idcard", upload.any(), function (req, res) {
 	});
 });
 
-//银行卡识别
 /**
  * @api {post} /recogn/bankcard v1-01.04 银行卡识别
  * @apiGroup v1-01.Recogn
@@ -271,5 +270,62 @@ app.post("/bankcard", upload.any(), function (req, res) {
 	});
 });
 
-
+/**
+ * @api {post} /recogn/drivecard v1-01.05 驾驶证识别
+ * @apiGroup v1-01.Recogn
+ * @apiName  drivecard
+ *
+ * @apiDescription 驾驶证识别
+ *
+ * @apiVersion 1.0.0
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *    {
+ *      "status":"ok",
+ *      "code":200,
+ *      "data":{
+ *        "log_id":124457963164818740,
+ *        "direction":0,
+ *        "words_result_num":10,
+ *        "words_result":{
+ *          "证号":{"words":"37078219930111478X"},
+ *          "有效期限":{"words":"20141201"},
+ *          "准驾车型":{"words":"C1"},
+ *          "住址":{"words":"山东省诸城市百尺河镇中水泊村146号"},
+ *          "至":{"words":"20201201"},
+ *          "姓名":{"words":"李菲"},
+ *          "国籍":{"words":"中国"},
+ *          "出生日期":{"words":"19930111"},
+ *          "性别":{"words":"女"},
+ *          "初次领证日期":{"words":"20141201"}
+ *        }
+ *      }
+ *    }
+ *
+ * @apiError fileEmpty 文件类型错误
+ * @apiErrorExample {json}
+ *   HTTP/1.1 200 文件类型错误
+ *     {
+ *        "status":"ok",
+ *        "code":200,
+ *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
+ *     }
+ */
+app.post("/drivecard", upload.any(), function (req, res) {
+	if (!req.files || !req.files.length) {
+		return res.lockSend(100001, "上传文件为空");
+	}
+	let file = req.files[0];
+	let size = file.size;
+	let ext = path.extname(file.originalname);
+	if (size > maxFileSize || !allowFile.includes(ext)) {
+		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
+	}
+	mConvert.drivingLicense(req.files[0].buffer.toString("base64")).then(result => {
+		return res.lockSend(200, result);
+	}).catch(err => {
+		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+	});
+});
 
