@@ -4,6 +4,10 @@
 const express = require('express');
 const router = module.exports = express.Router();
 const mConvert = require("../service/convert");
+const mTools = require("../tools");
+const fs = require("fs");
+const path = require("path");
+const gm = require('gm').subClass({imageMagick: true});
 
 router.get("/", function (req, res) {
 	return res.send("rooms router");
@@ -33,6 +37,78 @@ router.post("/img/t", upload.any(), function (req, res) {
 	*/
 });
 
+router.post("/img/draw", upload.any(), function (req, res) {
+	let filePath = path.join(__dirname, `../public/ocr/${req.files[0].originalname}`);
+	if (fs.existsSync(filePath)) {    //如果文件已经存在则删除
+		fs.unlinkSync(filePath);
+	}
+	fs.writeFile(filePath, req.files[0].buffer, {
+		encoding: 'utf8',
+		mode: 438,
+		flag: 'a+'
+	}, function (err) {
+		if (!!err) {
+			return res.send("生成文件失败");
+		}
+		console.log("...生成完毕...");
+		mConvert.generalWithLocation(req.files[0].buffer.toString("base64")).then(result => {
+			console.log(".... 识别完成。。。。");
+			let gmFun = gm(filePath);
+			for (let i = 0; i < result.words_result.length; ++i) {
+				let temp = result.words_result[i].location;
+				let lineList = mTools.aip2RectLine(temp.left, temp.top, temp.width, temp.height);
+				lineList.forEach(line => {
+					gmFun.drawLine(line[0], line[1], line[2], line[3])
+				});
+			}
+			gmFun.write(filePath, function (err) {
+				if (!!err) {
+					return res.send("生成最终图片失败");
+				}
+				console.log("。。。。生成最终图片完成。。。");
+				return res.send(`<a href='http://127.0.0.1:3000/ocr/${req.files[0].originalname}'>点击链接看效果</a>`);
+			});
+		}).catch(err => {
+			return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		});
+	});
+});
 
+router.post("/img/draw/pro", upload.any(), function (req, res) {
+	let filePath = path.join(__dirname, `../public/ocr/${req.files[0].originalname}`);
+	if (fs.existsSync(filePath)) {    //如果文件已经存在则删除
+		fs.unlinkSync(filePath);
+	}
+	fs.writeFile(filePath, req.files[0].buffer, {
+		encoding: 'utf8',
+		mode: 438,
+		flag: 'a+'
+	}, function (err) {
+		if (!!err) {
+			return res.send("生成文件失败");
+		}
+		console.log("...生成完毕...");
+		mConvert.accurate(req.files[0].buffer.toString("base64")).then(result => {
+			console.log(".... 识别完成。。。。");
+			let gmFun = gm(filePath);
+			for (let i = 0; i < result.words_result.length; ++i) {
+				let temp = result.words_result[i].location;
+				let lineList = mTools.aip2RectLine(temp.left, temp.top, temp.width, temp.height);
+				lineList.forEach(line => {
+					gmFun.drawLine(line[0], line[1], line[2], line[3])
+				});
+			}
+			gmFun.write(filePath, function (err) {
+				if (!!err) {
+					return res.send("生成最终图片失败");
+				}
+				console.log("。。。。生成最终图片完成。。。");
+				return res.send(`<a href='http://127.0.0.1:3000/ocr/${req.files[0].originalname}'>点击链接看效果</a>`);
+			});
+		}).catch(err => {
+			return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		});
+	});
+});
 
 

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>图片识别</title>
+</head>
+<body>
+<form action="/rooms/img/draw" method="post" enctype="multipart/form-data">
+  <h4>识别文字后，画出文字的外接矩形</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/rooms/img/draw/pro" method="post" enctype="multipart/form-data">
+  <h4>"高精度"识别文字后，画出文字的外接矩形</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+</body>
+</html>
