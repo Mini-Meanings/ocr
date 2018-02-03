@@ -1,16 +1,29 @@
 <style lang="less">
-  .panel {
-    background: #fff;
-    width: 700rpx;
+  .panel{
+    display: flex;
+    width:230%;
+    transform: translateX(-485rpx);
+  }
+  .panel .item {
+    width: 600rpx;
     height:800rpx;
-    margin: 0 auto;
+    margin:0 20rpx;
     border-radius:15rpx;
-    opacity:0.6;
+    overflow: hidden;
+    background: #fff;
   }
 </style>
 <template>
   <view class="panel">
-    hello
+    <view class="item">
+      <image src="../image/temp2.png" />
+    </view>
+    <view class="item">
+      <image src="../image/temp1.png" />
+    </view>
+    <view class="item">
+      <image src="../image/temp3.png" />
+    </view>
   </view>
 </template>
 <script>

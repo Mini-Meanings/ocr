@@ -1,1 +1,1 @@
-.panel{background:#fff;width:700rpx;height:800rpx;margin:0 auto;border-radius:15rpx;opacity:.6}
+.panel{display:flex;width:230%;transform:translateX(-485rpx)}.panel .item{width:600rpx;height:800rpx;margin:0 20rpx;border-radius:15rpx;overflow:hidden;background:#fff}
