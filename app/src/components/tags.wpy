@@ -4,8 +4,8 @@
     font-size: 32rpx;
     justify-content: space-around;
     justify-content:space-around;
-    margin-top:50rpx;
-    margin-bottom:40rpx;
+    margin-top:60rpx;
+    margin-bottom:50rpx;
     padding:0 15rpx;
   }
   .tags .list {

@@ -1,6 +1,8 @@
 
   <view>
-    <view class="temp"/>
+    <view class="rmedge">
+      <view class="temp"/>
+    </view>
     <view class="container">
       <view class="content">
         

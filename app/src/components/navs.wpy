@@ -1,8 +1,8 @@
 <style type="less">
   .mynavs {
-    position: fixed;
+    position: absolute;
     bottom: 50rpx;
-    width: 100%;
+    width: 735rpx;
     display: flex;
     justify-content: space-around;
   }
@@ -13,11 +13,10 @@
     display:inline-block;
     border-radius: 50%;
     text-align: center;
-    /* background:#fff; */
-    /* opacity: 0.65; */
     /* box-shadow: rgba(47, 84, 235, 0.12) 0px 6px 12px inset; */
-    box-shadow: rgba(255,255,255,0.52) 0 0rpx 68rpx inset;
-    font-size:34rpx;
+    box-shadow: rgba(255,255,255,0.52) 0 0rpx 38rpx inset;
+    font-size: 32rpx;
+    color: rgb(228, 226, 226);
   }
 </style>
 <template>

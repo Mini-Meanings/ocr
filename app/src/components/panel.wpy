@@ -25,6 +25,10 @@
     text-align: justify;
     display:block;
   }
+  .panel image {
+    width: 540rpx;
+    height: 585rpx;
+  }
 </style>
 <template>
   <view class="panel">

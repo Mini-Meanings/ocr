@@ -1,1 +1,1 @@
-.tags{display:flex;font-size:32rpx;justify-content:space-around;margin-top:50rpx;margin-bottom:40rpx;padding:0 15rpx}.tags .list{border:1px solid;padding:10rpx 30rpx;border-radius:40rpx;opacity:.6}
+.tags{display:flex;font-size:32rpx;justify-content:space-around;margin-top:60rpx;margin-bottom:50rpx;padding:0 15rpx}.tags .list{border:1px solid;padding:10rpx 30rpx;border-radius:40rpx;opacity:.6}
