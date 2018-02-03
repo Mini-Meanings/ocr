@@ -10,7 +10,14 @@
     </view>
   </view>
 
-        <button bindtap="upload" type="default" loading="{{loading}}" plain="{{plain}}" hover-class="other-button-hover"> 上传或拍照 </button>
+        <!-- <button bindtap="upload" type="default" loading="{{loading}}" plain="{{plain}}"
+        hover-class="other-button-hover"> 上传或拍照 </button> -->
+        <!-- <myswiper /> -->
+        
+  <view class="panel">
+    hello
+  </view>
+
         
   <view class="mynavs">
     <span bindtap="$navs$toGeizan" type="default"> 赞赏 </span>

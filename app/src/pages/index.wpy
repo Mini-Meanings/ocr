@@ -30,8 +30,10 @@
     <view class="container">
       <view class="content">
         <tags />
-        <button @tap="upload" type="default" loading="{{loading}}" plain="{{plain}}"
-        hover-class="other-button-hover"> 上传或拍照 </button>
+        <!-- <button @tap="upload" type="default" loading="{{loading}}" plain="{{plain}}"
+        hover-class="other-button-hover"> 上传或拍照 </button> -->
+        <!-- <myswiper /> -->
+        <panel />
         <navs />
       </view>
     </view>
@@ -43,6 +45,8 @@
   import testMixin from '../mixins/test';
   import Tags from '../components/tags';
   import Navs from '../components/navs';
+  import MySwiper from '../components/swiper';
+  import Panel from '../components/panel';
 
   export default class Index extends wepy.page {
     config = {
@@ -50,7 +54,9 @@
     }
     components = {
       tags: Tags,
-      navs: Navs
+      navs: Navs,
+      myswiper: MySwiper,
+      panel: Panel
     }
 
     mixins = [testMixin]
