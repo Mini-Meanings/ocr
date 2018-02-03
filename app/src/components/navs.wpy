@@ -1,20 +1,20 @@
 <style type="less">
   .mynavs {
     position: fixed;
-    bottom: 100rpx;
+    bottom: 50rpx;
     width: 100%;
     display: flex;
     justify-content: space-around;
   }
   .mynavs span {
-    width:130rpx;
-    height:130rpx;
-    line-height:130rpx;
+    width: 130rpx;
+    height: 130rpx;
+    line-height: 130rpx;
     display:inline-block;
-    border-radius:50%;
-    text-align:center;
+    border-radius: 50%;
+    text-align: center;
     background:#fff;
-    opacity:0.65;
+    opacity: 0.65;
     box-shadow: rgba(47, 84, 235, 0.12) 0px 6px 12px;
   }
 </style>
