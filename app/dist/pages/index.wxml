@@ -10,19 +10,23 @@
     </view>
   </view>
 
-        <!-- <button bindtap="upload" type="default" loading="{{loading}}" plain="{{plain}}"
-        hover-class="other-button-hover"> 上传或拍照 </button> -->
         <!-- <myswiper /> -->
         
   <view class="panel">
     <view class="item">
       <image src="../image/temp2.png"/>
+      <text class="title">身份证识别</text>
+      <text class="desc">提供通用图片文字识别，快速高效。对文字图片进行识别。</text>
     </view>
-    <view class="item">
+    <view class="item" bindtap="$panel$upload">
       <image src="../image/temp1.png"/>
+      <text class="title">文字识别</text>
+      <text class="desc">提供通用图片文字识别，快速高效。对文字图片进行识别，返回信息。</text>
     </view>
     <view class="item">
       <image src="../image/temp3.png"/>
+      <text class="title">驾驶证识别</text>
+      <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
     </view>
   </view>
 

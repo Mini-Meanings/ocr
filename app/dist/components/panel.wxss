@@ -1,1 +1,1 @@
-.panel{display:flex;width:230%;transform:translateX(-485rpx)}.panel .item{width:600rpx;height:800rpx;margin:0 20rpx;border-radius:15rpx;overflow:hidden;background:#fff}
+.panel{display:flex;width:230%;transform:translateX(-485rpx)}.panel .item{width:600rpx;height:800rpx;margin:0 20rpx;border-radius:15rpx;overflow:hidden;background:#fff}.panel .title{color:#141414;display:block;padding:0 20rpx;font-size:45rpx}.panel .desc{color:#c1c1c1;padding:20rpx;font-size:30rpx;text-align:justify;display:block}

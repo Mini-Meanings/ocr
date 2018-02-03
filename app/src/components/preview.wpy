@@ -34,7 +34,7 @@
           title: '加载中',
         })
         wx.uploadFile({
-          url:'https://mocha-city-api.sensoro.com/prov1/boss/general',
+          url:'https://www.iocr.vip/ai/recogn/general',
           filePath: this.result.imgurl,
           name: 'file',
           success: function(res){

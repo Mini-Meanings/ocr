@@ -13,9 +13,11 @@
     display:inline-block;
     border-radius: 50%;
     text-align: center;
-    background:#fff;
-    opacity: 0.65;
-    box-shadow: rgba(47, 84, 235, 0.12) 0px 6px 12px;
+    /* background:#fff; */
+    /* opacity: 0.65; */
+    /* box-shadow: rgba(47, 84, 235, 0.12) 0px 6px 12px inset; */
+    box-shadow: rgba(255,255,255,0.52) 0 0rpx 68rpx inset;
+    font-size:34rpx;
   }
 </style>
 <template>
