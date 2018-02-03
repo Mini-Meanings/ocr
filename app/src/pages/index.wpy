@@ -2,32 +2,45 @@
   .container {
     height: ~"calc(100vh)";
     width: 100%;
-    background: url(http://47.93.248.225:3344/tit.jpg) no-repeat 0 0 transparent;
+    background: url(http://47.93.248.225:3344/tit.jpg) no-repeat 0 0 fixed transparent;
     background-size: cover;
+    box-sizing: border-box;
+    overflow: hidden;
   }
-  .bg{
-    width: 100%;
+  .page::before{
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    margin: -30px;
+    z-index: -1;
+    -webkit-filter: blur(20px);
+    filter: blur(20px);
   }
 </style>
 <template>
   <view class="container">
     <view class="page">
+      <tags />
       <button @tap="upload" type="default" loading="{{loading}}" plain="{{plain}}"
        hover-class="other-button-hover"> 上传或拍照 </button>
+      <navs />
     </view>
-    <view class="page__bd"></view>
   </view>
 </template>
 
 <script>
-  import wepy from 'wepy'
-  import testMixin from '../mixins/test'
+  import wepy from 'wepy';
+  import testMixin from '../mixins/test';
+  import Tags from '../components/tags';
+  import Navs from '../components/navs';
 
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: 'AI 识图'
     }
     components = {
+      tags: Tags,
+      navs: Navs
     }
 
     mixins = [testMixin]

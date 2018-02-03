@@ -1,1 +1,3 @@
-.container{height:calc(100vh);width:100%;background:url(http://47.93.248.225:3344/tit.jpg) no-repeat 0 0 transparent;background-size:cover}.bg{width:100%}
+@import "./../components/navs.wxss";
+@import "./../components/tags.wxss";
+.container{height:calc(100vh);width:100%;background:url(http://47.93.248.225:3344/tit.jpg) no-repeat 0 0 fixed transparent;background-size:cover;box-sizing:border-box;overflow:hidden}.page::before{content:'';position:absolute;top:0;right:0;bottom:0;left:0;margin:-30px;z-index:-1;-webkit-filter:blur(20px);filter:blur(20px)}

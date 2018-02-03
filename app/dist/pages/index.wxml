@@ -1,7 +1,22 @@
 
   <view class="container">
     <view class="page">
+      
+  <view class="list">
+    <block  wx:for-items="{{$tags$list}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+      <view bindtap="$tags$tap" class="mylist">
+        <text>{{item.id}}</text>: {{item.title}}
+      </view>
+    </block>
+  </view>
+
       <button bindtap="upload" type="default" loading="{{loading}}" plain="{{plain}}" hover-class="other-button-hover"> 上传或拍照 </button>
+      
+  <view class="mynavs">
+    <span bindtap="$navs$toGeizan" type="default"> 赞赏 </span>
+    <span bindtap="$navs$toGeizan" type="default"> 帮助 </span>
+    <span bindtap="$navs$toGeizan" type="default"> 反馈 </span>
+  </view>
+
     </view>
-    <view class="page__bd"/>
   </view>

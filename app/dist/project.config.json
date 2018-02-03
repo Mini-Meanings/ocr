@@ -27,7 +27,15 @@
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": -1,
+					"name": "test",
+					"pathName": "pages/index",
+					"query": "",
+					"scene": "1072"
+				}
+			]
 		}
 	}
 }
