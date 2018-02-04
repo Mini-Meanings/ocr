@@ -1,0 +1,26 @@
+<style lang="less">
+/** less **/
+</style>
+<template>
+  <view>
+    help
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import Preview from '../components/preview';
+
+export default class Contact extends wepy.page {
+    config = {
+      navigationBarTitleText: '建议反馈'
+    }
+    components = {preview: Preview};
+
+    data = {};
+    methods = {};
+
+    events = {};
+    onLoad() {};
+}
+</script>

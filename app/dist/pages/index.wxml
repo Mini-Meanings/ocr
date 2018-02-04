@@ -35,8 +35,8 @@
         
   <view class="mynavs">
     <span bindtap="$navs$toGeizan" type="default"> 赞赏 </span>
-    <span bindtap="$navs$toGeizan" type="default"> 帮助 </span>
-    <span bindtap="$navs$toGeizan" type="default"> 反馈 </span>
+    <span bindtap="$navs$gotoPage" type="default" data-wpygotopage-a="help"> 帮助 </span>
+    <span bindtap="$navs$gotoPage" type="default" data-wpygotopage-a="contact"> 反馈 </span>
   </view>
 
       </view>

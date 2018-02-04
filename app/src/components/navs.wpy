@@ -22,8 +22,8 @@
 <template>
   <view class="mynavs">
     <span @tap="toGeizan" type="default" > 赞赏 </span>
-    <span @tap="toGeizan" type="default" > 帮助 </span>
-    <span @tap="toGeizan" type="default" > 反馈 </span>
+    <span @tap="gotoPage(help)" type="default" > 帮助 </span>
+    <span @tap="gotoPage(contact)" type="default" > 反馈 </span>
   </view>
 </template>
 <script>
@@ -47,6 +47,12 @@
         // wx.navigateToMiniProgram({
         //   appId: 
         // })
+      },
+      gotoPage(e) {
+        // console.log(e,'e');
+        wx.navigateTo({
+          url: `${e}?id=1`
+        })
       }
     }
   }
