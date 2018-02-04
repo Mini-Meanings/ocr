@@ -3,7 +3,7 @@
     <view class="rmedge">
       <view class="temp"/>
     </view>
-    <view class="container">
+    <view class="mycontainer">
       <view class="content">
         
   <view class="tags">
@@ -12,26 +12,42 @@
     </view>
   </view>
 
-        <!-- <myswiper /> -->
         
-  <view class="panel">
-    <view class="item">
-      <image src="../image/temp2.png"/>
-      <text class="title">身份证识别</text>
-      <text class="desc">提供通用图片文字识别，快速高效。对文字图片进行识别。</text>
-    </view>
-    <view class="item" bindtap="$panel$upload">
-      <image src="../image/temp1.png"/>
-      <text class="title">文字识别</text>
-      <text class="desc">提供通用图片文字识别，快速高效。对文字图片进行识别，返回信息。</text>
-    </view>
-    <view class="item">
-      <image src="../image/temp3.png"/>
-      <text class="title">驾驶证识别</text>
-      <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
+  <view class="swip">
+    <text bindtap="$myswiper$goNext" class="next"> next </text>
+    <text bindtap="$myswiper$goPrev" class="prev"> prev </text>
+    
+  <view class="we-container {{$myswiper$weSwiper$directionClass}}">
+    <view class="we-wrapper" bindtouchstart="$myswiper$weSwiper$touchstart" bindtouchmove="$myswiper$weSwiper$touchmove" bindtouchend="$myswiper$weSwiper$touchend" animation="{{$myswiper$weSwiper$animationData}}">
+      
+      <view class="we-slide">
+        <view class="item" bindtap="$myswiper$upload">
+          <image src="../image/temp1.png"/>
+          <text class="title">文字识别</text>
+          <text class="desc">提供通用图片文字识别，快速高效。对文字图片进行识别，返回信息。</text>
+        </view>
+      </view>
+      <view class="we-slide">
+        <view class="item">
+          <image src="../image/temp2.png"/>
+          <text class="title">身份证识别</text>
+          <text class="desc">提供通用图片文字识别，快速高效。对文字图片进行识别。</text>
+        </view>
+      </view>
+      <view class="we-slide">
+        <view class="item">
+          <image src="../image/temp3.png"/>
+          <text class="title">驾驶证识别</text>
+          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
+        </view>
+      </view>
+    
     </view>
   </view>
 
+  </view>
+
+        <!-- <panel /> -->
         
   <view class="mynavs">
     <span bindtap="$navs$toGeizan" type="default"> 赞赏 </span>
