@@ -109,6 +109,15 @@ export default class Help extends wepy.page {
     methods = {};
 
     events = {};
-    onLoad() {};
+    onLoad() {
+      wx.showLoading({
+        title: '加载中',
+        mask: true,
+        duration: 1500,
+      })
+    };
+    onReady() {
+      wx.hideLoading();
+    };
 }
 </script>

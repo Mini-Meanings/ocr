@@ -1,4 +1,27 @@
 
-  <view>
-    help
+  <view class="contact">
+    <view class="rmedge">
+      <view class="temp"/>
+    </view>
+    <form bindsubmit="formSubmit" bindreset="formReset">
+      <!-- <view class="section">
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+          <view class="picker">
+            请选择问题类型：{{array[index]}}
+          </view>
+        </picker>
+      </view> -->
+      <view class="section">
+        <view>请描述您的问题</view>
+        <textarea bindblur="bindTextAreaBlur" placeholder-style="color:#fff;font-size:30rpx;" placeholder=""/>
+      </view>
+      <view class="section">
+        <view class="section__title">告诉我们怎样联系您</view>
+        <input name="input"/>
+      </view>
+      <view class="btns">
+        <span>提交</span>
+        <span bindtap="goback">返回</span>
+      </view>
+    </form>
   </view>
