@@ -14,8 +14,8 @@
 
         
   <view class="swip">
-    <text bindtap="$myswiper$goNext" class="next"> next </text>
-    <text bindtap="$myswiper$goPrev" class="prev"> prev </text>
+    <image bindtap="$myswiper$goNext" class="next" src="../image/next.png"/>
+    <image bindtap="$myswiper$goPrev" class="prev" src="../image/prev.png"/>
     
   <view class="we-container {{$myswiper$weSwiper$directionClass}}">
     <view class="we-wrapper" bindtouchstart="$myswiper$weSwiper$touchstart" bindtouchmove="$myswiper$weSwiper$touchmove" bindtouchend="$myswiper$weSwiper$touchend" animation="{{$myswiper$weSwiper$animationData}}">
