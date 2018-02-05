@@ -33,7 +33,7 @@
   },
   "language": "en",
   "sessionSecret": "express-standard",
-  "allKey": [ //调用api用到的参数
+  "ocrKey": [ //调用api用到的参数
     {
       "AppID": "aaa1",
       "APIKey": "bbb2",

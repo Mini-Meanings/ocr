@@ -7,9 +7,9 @@ const mJoiValidate = require("../tools/joiValidate.js");
 const config = require("config");
 
 
-// let allKey = config.allKey;
-// console.log(allKey);
-// let selKey = allKey[+new Date() % allKey.length];
+// let ocrKey = config.ocrKey;
+// console.log(ocrKey);
+// let selKey = ocrKey[+new Date() % ocrKey.length];
 // console.log("======selKey: %j", selKey);
 
 /* GET users listing. */
