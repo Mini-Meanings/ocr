@@ -37,8 +37,8 @@ const mDefaultValue = require("../utils/defaultValue.js");
  *   }
  */
 app.post("/translate", function (req, res) {
-	let q = req.body.q;               //翻译原文
-	let destLan = req.body.destLan;   //目标语言
+	let q = req.body.q || req.query.q;                      //翻译原文
+	let destLan = req.body.destLan || req.query.destLan;    //目标语言
 	if (!q || !destLan) {
 		return res.lockSend(100004, "参数不全");
 	}
