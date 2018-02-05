@@ -13,7 +13,7 @@ import Preview from '../components/preview';
 
 export default class Show extends wepy.page {
     config = {
-      navigationBarTitleText: '图片预览'
+      navigationBarTitleText: '图片预览',
     }
     components = {preview: Preview};
 
@@ -22,6 +22,5 @@ export default class Show extends wepy.page {
 
     events = {};
     onLoad() {};
-    // Other properties
 }
 </script>

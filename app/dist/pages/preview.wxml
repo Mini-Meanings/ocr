@@ -1,11 +1,18 @@
 
   <view>
     
-  <view>
+  <view class="preview">
     <canvas bindtap="$preview$which" class="canvas" canvas-id="myCanvas"/>
-    <image mode="aspectFit" src="{{$preview$result.imgurl}}"/>
-    <div>识别结果：{{$preview$result.one}}</div>
-    <button bindtap="$preview$upload" type="default" loading="{{$preview$loading}}" plain="{{$preview$plain}}" hover-class="other-button-hover"> 快速识别 </button>
+    <view class="imgbox">
+      <image mode="aspectFill" src="{{$preview$result.imgurl}}"/>
+    </view>
+    <view class="result">{{$preview$result.one}}</view>
+    <view class="btns">
+      <span>显示</span>
+      <span>翻译</span>
+      <span>语音</span>
+      <span>拷贝</span>
+    </view>
   </view>
 
   </view>

@@ -2,16 +2,53 @@
   canvas {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height:1000rpx;
+  }
+  .preview .imgbox {
+    // border: 1px solid red;
+    height: 1000rpx;
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    overflow: scroll;
+  }
+  .preview .imgbox>img{
+    width: 100%;
+  }
+  .preview .result {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 1000rpx;
+    background: rgba(0,0,0,0.3);
+  }
+  .preview .btns {
+    display: flex;
+    justify-content: space-around;
+    margin-top:30rpx;
+  }
+  .preview .btns>span {
+    width:120rpx;
+    height:120rpx;
+    border:1px solid;
+    border-radius:50%;
+    line-height:120rpx;
+    text-align:center;
   }
 </style>
 <template>
-  <view>
+  <view class="preview">
     <canvas @tap="which" class="canvas" canvas-id="myCanvas"/>
-    <image mode="aspectFit" src="{{result.imgurl}}" />
-    <div>识别结果：{{result.one}}</div>
-    <button @tap="upload" type="default" loading="{{loading}}" plain="{{plain}}"
-       hover-class="other-button-hover"> 快速识别 </button>
+    <view class="imgbox">
+      <image mode="aspectFill" src="{{result.imgurl}}" />
+    </view>
+    <view class="result">{{result.one}}</view>
+    <view class="btns">
+      <span>显示</span>
+      <span>翻译</span>
+      <span>语音</span>
+      <span>拷贝</span>
+    </view>
   </view>
 </template>
 <script>
@@ -27,50 +64,52 @@
     }
 
     methods = {
-      upload() {
-        let self = this;
-        const ctx = wx.createCanvasContext('myCanvas');
-        wx.showLoading({
-          title: '加载中',
-        })
-        wx.uploadFile({
-          url:'https://www.iocr.vip/ai/recogn/general',
-          filePath: this.result.imgurl,
-          name: 'file',
-          success: function(res){
-            // wx.showToast({
-            //   title: '成功',
-            //   icon: 'success',
-            //   duration: 2000
-            // })
-            var data = JSON.parse(res.data);
-            console.log(data.data.words_result[0],'success');
-            //do something
-            self.result.desc = data.data.words_result[0].words;
-            self.$apply();
-
-            // ctx.rect(10, 10, 100, 50);
-            ctx.rect(
-              data.data.words_result[0].location.left-80, 
-              data.data.words_result[0].location.top, 
-              data.data.words_result[0].location.width-350, 
-              26
-            );
-            ctx.setStrokeStyle('red');
-            ctx.stroke();
-            ctx.draw();
-
-            wx.hideLoading();
-          }
-        })
-      },
       which() {
         this.result.one = this.result.desc;
       }
     }
 
+    upload() {
+      let self = this;
+      const ctx = wx.createCanvasContext('myCanvas');
+      wx.showLoading({
+        title: '加载中',
+      })
+      wx.uploadFile({
+        url:'https://www.iocr.vip/ai/recogn/general',
+        filePath: this.result.imgurl,
+        name: 'file',
+        success: function(res){
+          // wx.showToast({
+          //   title: '成功',
+          //   icon: 'success',
+          //   duration: 2000
+          // })
+          var data = JSON.parse(res.data);
+          console.log(data.data.words_result[0],'success');
+          //do something
+          self.result.desc = data.data.words_result[0].words;
+          self.$apply();
+
+          // ctx.rect(10, 10, 100, 50);
+          ctx.rect(
+            data.data.words_result[0].location.left-80, 
+            data.data.words_result[0].location.top, 
+            data.data.words_result[0].location.width-350, 
+            26
+          );
+          ctx.setStrokeStyle('red');
+          ctx.stroke();
+          ctx.draw();
+
+          wx.hideLoading();
+        }
+      })
+    }
+
     onLoad () {
       this.result.imgurl = wx.getStorageSync('imageurl');
+      // this.upload();
     }
   }
 </script>
