@@ -92,6 +92,7 @@
     }
 
     data = {
+      index: 0,
       swiper: {
         // direction: 'vertical',
         // width: 180,
@@ -187,15 +188,16 @@
 
     methods = {
       goNext(weswiper) {
+        console.log(this.index);
         this.$invoke('weSwiper', 'slideNext');
       },
       goPrev(weswiper) {
+        console.log(this.index);
         this.$invoke('weSwiper', 'slidePrev');
       }
     }
     
     onLoad() {
-      // setTimeout(() =>this.$invoke('weSwiper', 'slideTo', 2), 3000)
     }
   }
 </script>

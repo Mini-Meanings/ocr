@@ -2,7 +2,7 @@
   .mynavs {
     position: absolute;
     bottom: 50rpx;
-    width: 735rpx;
+    width: 100%;
     display: flex;
     justify-content: space-around;
   }
