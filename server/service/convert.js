@@ -12,8 +12,8 @@ exports.generalOcr = function (imgBuff) {
 	if (!imgBuff) {
 		return Bluebird.reject("param imgBuff not exists");
 	}
-	let allKey = config.allKey;
-	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	let ocrKey = config.ocrKey;
+	let selKey = ocrKey[+new Date() % ocrKey.length]; //根据时间随机选取一个key
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
 		language_type: "CHN_ENG", //识别语言类型
@@ -29,8 +29,8 @@ exports.generalWithLocation = function (imgBuff) {
 	if (!imgBuff) {
 		return Bluebird.reject("param imgBuff not exists");
 	}
-	let allKey = config.allKey;
-	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	let ocrKey = config.ocrKey;
+	let selKey = ocrKey[+new Date() % ocrKey.length]; //根据时间随机选取一个key
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
 		recognize_granularity: "big",   //不定位单个字符位置
@@ -48,8 +48,8 @@ exports.accurate = function (imgBuff) {
 	if (!imgBuff) {
 		return Bluebird.reject("param imgBuff not exists");
 	}
-	let allKey = config.allKey;
-	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	let ocrKey = config.ocrKey;
+	let selKey = ocrKey[+new Date() % ocrKey.length]; //根据时间随机选取一个key
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
 		recognize_granularity: "big",   //不定位单个字符位置
@@ -67,8 +67,8 @@ exports.idcard = function (imgBuff, idCardSide) {
 	if (!idCardSide || (idCardSide !== "front" && idCardSide !== "back")) {
 		idCardSide = "front";
 	}
-	let allKey = config.allKey;
-	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	let ocrKey = config.ocrKey;
+	let selKey = ocrKey[+new Date() % ocrKey.length]; //根据时间随机选取一个key
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
 		recognize_granularity: "big",   //不定位单个字符位置
@@ -83,8 +83,8 @@ exports.bankcard = function (imgBuff) {
 	if (!imgBuff) {
 		return Bluebird.reject("param imgBuff not exists");
 	}
-	let allKey = config.allKey;
-	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	let ocrKey = config.ocrKey;
+	let selKey = ocrKey[+new Date() % ocrKey.length]; //根据时间随机选取一个key
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
 		detect_direction: "true",       //检测图像朝向
@@ -98,8 +98,8 @@ exports.drivingLicense = function (imgBuff) {
 	if (!imgBuff) {
 		return Bluebird.reject("param imgBuff not exists");
 	}
-	let allKey = config.allKey;
-	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	let ocrKey = config.ocrKey;
+	let selKey = ocrKey[+new Date() % ocrKey.length]; //根据时间随机选取一个key
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
 		detect_direction: "true",       //检测图像朝向
@@ -113,8 +113,8 @@ exports.vehicleLicense = function (imgBuff) {
 	if (!imgBuff) {
 		return Bluebird.reject("param imgBuff not exists");
 	}
-	let allKey = config.allKey;
-	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	let ocrKey = config.ocrKey;
+	let selKey = ocrKey[+new Date() % ocrKey.length]; //根据时间随机选取一个key
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
 		detect_direction: "true",       //检测图像朝向
@@ -128,8 +128,8 @@ exports.licensePlate = function (imgBuff) {
 	if (!imgBuff) {
 		return Bluebird.reject("param imgBuff not exists");
 	}
-	let allKey = config.allKey;
-	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	let ocrKey = config.ocrKey;
+	let selKey = ocrKey[+new Date() % ocrKey.length]; //根据时间随机选取一个key
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
 		multi_detect: "true"            //多张车牌进行识别
@@ -142,8 +142,8 @@ exports.businessLicense = function (imgBuff) {
 	if (!imgBuff) {
 		return Bluebird.reject("param imgBuff not exists");
 	}
-	let allKey = config.allKey;
-	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	let ocrKey = config.ocrKey;
+	let selKey = ocrKey[+new Date() % ocrKey.length]; //根据时间随机选取一个key
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	return client.businessLicense(imgBuff);
 };
@@ -153,8 +153,8 @@ exports.receipt = function (imgBuff) {
 	if (!imgBuff) {
 		return Bluebird.reject("param imgBuff not exists");
 	}
-	let allKey = config.allKey;
-	let selKey = allKey[+new Date() % allKey.length]; //根据时间随机选取一个key
+	let ocrKey = config.ocrKey;
+	let selKey = ocrKey[+new Date() % ocrKey.length]; //根据时间随机选取一个key
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
 		recognize_granularity: "big",   //不定位单个字符位置
@@ -169,8 +169,8 @@ exports.generalEnhance = function (imgBuff) {
 	if (!imgBuff) {
 		return Bluebird.reject("param imgBuff not exists");
 	}
-	let allKey = config.allKey;
-	let selKey = allKey[1]; //根据时间随机选取一个key
+	let ocrKey = config.ocrKey;
+	let selKey = ocrKey[1]; //根据时间随机选取一个key
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
 		language_type:"CHN_ENG",
