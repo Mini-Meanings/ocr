@@ -8,7 +8,7 @@ const mConvert = require("../service/convert");
 const multer = require('multer');
 const upload = multer(/*{dest: 'upload/'}*/);   //注释掉,则文件流保存在req.files[0].buffer字段
 const path = require("path");
-const allowFile = [".png", ".jpg", ".jpeg", ".bmp"];  //支持文件类型
+const allowFile = [".png", ".jpg", ".bmp"];  //支持文件类型
 const maxFileSize = 4 * 1024 * 1024;              //文件大小
 
 /**
@@ -16,7 +16,7 @@ const maxFileSize = 4 * 1024 * 1024;              //文件大小
  * @apiGroup v1-01.Recogn
  * @apiName  generalWithLocation
  *
- * @apiDescription 对文字图片进行识别，同时返回位置信息
+ * @apiDescription 对文字图片进行识别，同时返回位置信息(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
  *
@@ -71,7 +71,7 @@ app.post("/general", upload.any(), function (req, res) {
  * @apiGroup v1-01.Recogn
  * @apiName  accurateWithLocation
  *
- * @apiDescription 对文字图片进行高精度识别，同时返回位置信息
+ * @apiDescription 对文字图片进行高精度识别，同时返回位置信息(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
  *
@@ -126,7 +126,7 @@ app.post("/accurate", upload.any(), function (req, res) {
  * @apiGroup v1-01.Recogn
  * @apiName  idcard
  *
- * @apiDescription 识别身份证正反面
+ * @apiDescription 识别身份证正反面(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
  *
@@ -226,7 +226,7 @@ app.post("/idcard", upload.any(), function (req, res) {
  * @apiGroup v1-01.Recogn
  * @apiName  bankcard
  *
- * @apiDescription 银行卡识别
+ * @apiDescription 银行卡识别(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
  *
@@ -275,7 +275,7 @@ app.post("/bankcard", upload.any(), function (req, res) {
  * @apiGroup v1-01.Recogn
  * @apiName  drivecard
  *
- * @apiDescription 驾驶证识别
+ * @apiDescription 驾驶证识别(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
  *
@@ -334,7 +334,7 @@ app.post("/drivecard", upload.any(), function (req, res) {
  * @apiGroup v1-01.Recogn
  * @apiName  vehiclecard
  *
- * @apiDescription 行驶证识别
+ * @apiDescription 行驶证识别(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
  *
@@ -393,7 +393,7 @@ app.post("/vehiclecard", upload.any(), function (req, res) {
  * @apiGroup v1-01.Recogn
  * @apiName  license
  *
- * @apiDescription 车牌识别
+ * @apiDescription 车牌识别(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
  *
@@ -439,7 +439,7 @@ app.post("/license", upload.any(), function (req, res) {
  * @apiGroup v1-01.Recogn
  * @apiName  businessLicense
  *
- * @apiDescription 营业执照识别
+ * @apiDescription 营业执照识别(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
  *
@@ -512,7 +512,7 @@ app.post("/business", upload.any(), function (req, res) {
  * @apiGroup v1-01.Recogn
  * @apiName  receipt
  *
- * @apiDescription 通用票据识别
+ * @apiDescription 通用票据识别(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
  *
@@ -572,7 +572,7 @@ app.post("/receipt", upload.any(), function (req, res) {
  * @apiGroup v1-01.Recogn
  * @apiName  enhance
  *
- * @apiDescription 通用文字识别（含生僻字版）
+ * @apiDescription 通用文字识别（含生僻字版）(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
  *
