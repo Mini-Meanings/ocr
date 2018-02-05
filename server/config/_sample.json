@@ -33,7 +33,8 @@
   },
   "language": "en",
   "sessionSecret": "express-standard",
-  "ocrKey": [ //调用api用到的参数
+  "ocrKey": [
+    //调用api用到的参数
     {
       "AppID": "aaa1",
       "APIKey": "bbb2",
@@ -43,6 +44,17 @@
       "AppID": "aaa1",
       "APIKey": "bbb2",
       "SecretKey": "ccc3"
+    }
+  ],
+  "translateKay": [
+    //翻译key
+    {
+      "AppID": "abcdef123456",
+      "APIKey": "abcdef123456"
+    },
+    {
+      "AppID": "abcdef123456",
+      "APIKey": "abcdef123456"
     }
   ]
 }

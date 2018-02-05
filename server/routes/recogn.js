@@ -195,7 +195,7 @@ app.post("/accurate", upload.any(), function (req, res) {
  * @apiErrorExample {json}
  *   HTTP/1.1 200 文件类型错误
  *     {
- *        "status":"ok",
+ *        "status":"error",
  *        "code":200,
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
@@ -248,7 +248,7 @@ app.post("/idcard", upload.any(), function (req, res) {
  * @apiErrorExample {json}
  *   HTTP/1.1 200 文件类型错误
  *     {
- *        "status":"ok",
+ *        "status":"error",
  *        "code":200,
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
@@ -307,7 +307,7 @@ app.post("/bankcard", upload.any(), function (req, res) {
  * @apiErrorExample {json}
  *   HTTP/1.1 200 文件类型错误
  *     {
- *        "status":"ok",
+ *        "status":"error",
  *        "code":200,
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
@@ -366,7 +366,7 @@ app.post("/drivecard", upload.any(), function (req, res) {
  * @apiErrorExample {json}
  *   HTTP/1.1 200 文件类型错误
  *     {
- *        "status":"ok",
+ *        "status":"error",
  *        "code":200,
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
@@ -412,7 +412,7 @@ app.post("/vehiclecard", upload.any(), function (req, res) {
  * @apiErrorExample {json}
  *   HTTP/1.1 200 文件类型错误
  *     {
- *        "status":"ok",
+ *        "status":"error",
  *        "code":200,
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
@@ -485,7 +485,7 @@ app.post("/license", upload.any(), function (req, res) {
  * @apiErrorExample {json}
  *   HTTP/1.1 200 文件类型错误
  *     {
- *        "status":"ok",
+ *        "status":"error",
  *        "code":200,
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
@@ -545,7 +545,7 @@ app.post("/business", upload.any(), function (req, res) {
  * @apiErrorExample {json}
  *   HTTP/1.1 200 文件类型错误
  *     {
- *        "status":"ok",
+ *        "status":"error",
  *        "code":200,
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
@@ -599,7 +599,7 @@ app.post("/receipt", upload.any(), function (req, res) {
  * @apiErrorExample {json}
  *   HTTP/1.1 200 文件类型错误
  *     {
- *        "status":"ok",
+ *        "status":"error",
  *        "code":200,
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
