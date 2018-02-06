@@ -57,22 +57,22 @@
     <image @tap="goPrev" class="prev" src="../image/prev.png" />
     <weSwiper :option="swiper">
       <view class="we-slide">
-        <view class="item" @tap="upload">
-          <image src="../image/temp1.png" />
+        <view class="item" @tap="upload(generate)">
+          <image lazy-load="true" src="../image/temp1.png" />
           <text class="title">文字识别</text>
           <text class="desc">提供通用图片文字识别，快速高效。对文字图片进行识别，返回信息。</text>
         </view>
       </view>
       <view class="we-slide">
-        <view class="item">
-          <image src="../image/temp2.png" />
+        <view class="item" @tap="upload(id)">
+          <image lazy-load="true" src="../image/temp2.png" />
           <text class="title">身份证识别</text>
           <text class="desc">提供通用图片文字识别，快速高效。对文字图片进行识别。</text>
         </view>
       </view>
       <view class="we-slide">
-        <view class="item">
-          <image src="../image/temp3.png" />
+        <view class="item" @tap="upload(drive)">
+          <image lazy-load="true" src="../image/temp3.png" />
           <text class="title">驾驶证识别</text>
           <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
         </view>
@@ -92,6 +92,7 @@
     }
 
     data = {
+      index: 0,
       swiper: {
         // direction: 'vertical',
         // width: 180,
@@ -187,15 +188,36 @@
 
     methods = {
       goNext(weswiper) {
+        console.log(this.index);
         this.$invoke('weSwiper', 'slideNext');
       },
       goPrev(weswiper) {
+        console.log(this.index);
         this.$invoke('weSwiper', 'slidePrev');
-      }
+      },
+      upload(e) {
+        wx.chooseImage({
+          count: 1, // 默认9
+          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+          success: function (res) {
+            // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+            var tempFilePaths = res.tempFilePaths;
+            console.log(tempFilePaths,'tempFilePaths');
+            // wx.previewImage({
+            //   current: tempFilePaths[0], // 当前显示图片的http链接
+            //   urls: tempFilePaths // 需要预览的图片http链接列表
+            // })
+            wx.setStorageSync('imageurl',tempFilePaths[0]);
+            wx.navigateTo({
+              url: `preview?type=${e}`
+            })
+          }
+        })
+      },
     }
     
     onLoad() {
-      // setTimeout(() =>this.$invoke('weSwiper', 'slideTo', 2), 3000)
     }
   }
 </script>

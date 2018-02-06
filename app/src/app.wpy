@@ -1,7 +1,7 @@
 <style lang="less">
 @import './style/weui.less';
-page, view{
-  // overflow: hidden;
+page,view{
+  // overflow-y: hidden;
 }
 </style>
 

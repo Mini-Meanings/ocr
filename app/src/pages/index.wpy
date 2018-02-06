@@ -94,6 +94,17 @@
     }
 
     onLoad() {
-    }
+      wx.showLoading({
+        title: '加载中',
+        mask: true,
+        duration: 1500,
+      })
+    };
+    onReady() {
+      wx.hideLoading();
+      wx.showShareMenu({
+        withShareTicket: true
+      })
+    };
   }
 </script>
