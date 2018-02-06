@@ -4,14 +4,14 @@
   <view class="preview">
     <canvas bindtap="$preview$which" class="canvas" canvas-id="myCanvas"/>
     <view class="imgbox">
-      <image mode="aspectFill" src="{{$preview$result.imgurl}}"/>
+      <image mode="widthFix" src="{{$preview$result.imgurl}}"/>
     </view>
-    <view class="result">{{$preview$result.one}}</view>
-    <view class="btns">
-      <span>显示</span>
-      <span>翻译</span>
-      <span>语音</span>
-      <span>拷贝</span>
+    <view  wx:if="{{$preview$result.status}}" class="result">{{$preview$result.one}}</view>
+    <view class="btns {{!$preview$result.status?'hide':''}}">
+      <span class="first" bindtap="$preview$toggle">{{!$preview$result.status?'显示':'隐藏'}}</span>
+      <span class="second" bindtap="$preview$transfer">翻译</span>
+      <span class="third">语音</span>
+      <span class="fourth" bindtap="$preview$copy">拷贝</span>
     </view>
   </view>
 

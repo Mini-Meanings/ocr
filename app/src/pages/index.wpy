@@ -102,6 +102,9 @@
     };
     onReady() {
       wx.hideLoading();
+      wx.showShareMenu({
+        withShareTicket: true
+      })
     };
   }
 </script>

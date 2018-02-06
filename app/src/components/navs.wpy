@@ -13,7 +13,6 @@
     display:inline-block;
     border-radius: 50%;
     text-align: center;
-    /* box-shadow: rgba(47, 84, 235, 0.12) 0px 6px 12px inset; */
     box-shadow: rgba(255,255,255,0.52) 0 0rpx 38rpx inset;
     font-size: 32rpx;
     color: rgb(228, 226, 226);
