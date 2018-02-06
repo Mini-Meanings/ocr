@@ -17,8 +17,8 @@
 </style>
 <template>
   <view class="tags">
-    <view @tap="tap" class="list" wx:for-items="{{list}}" wx:for-index="index" wx:for-item="item" wx:key="id">
-      <text>{{item.title}}</text>
+    <view class="list" wx:for="{{list}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+      <text @tap="tap({{item.id}})">{{item.title}}</text>
     </view>
   </view>
 </template>
@@ -29,26 +29,37 @@
     data = {
       list: [
         {
-          id: '0',
-          title: '生僻字'
-        },
-        {
-          id: '1',
+          id: 'id',
           title: '身份证'
         },
         {
-          id: '2',
+          id: 'card',
           title: '银行卡'
         },
         {
-          id: '3',
+          id: 'drive',
           title: '驾驶证'
-        }
+        },
+        {
+          id: 'wyw',
+          title: '生僻字'
+        },
       ]
     }
     methods = {
-      tap () {
-        console.log('tag click');
+      tap (e) {
+        wx.chooseImage({
+          count: 1,
+          sizeType: ['original', 'compressed'],
+          sourceType: ['album', 'camera'],
+          success: function (res) {
+            let tempFilePaths = res.tempFilePaths;
+            wx.setStorageSync('imageurl',tempFilePaths[0]);
+            wx.navigateTo({
+              url: `preview?type=${e}`
+            })
+          }
+        })
       },
     }
 

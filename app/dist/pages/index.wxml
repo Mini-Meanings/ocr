@@ -7,8 +7,8 @@
       <view class="content">
         
   <view class="tags">
-    <view bindtap="$tags$tap" class="list"  wx:for-items="{{$tags$list}}" wx:for-index="index" wx:for-item="item" wx:key="id">
-      <text>{{item.title}}</text>
+    <view class="list"  wx:for="{{$tags$list}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+      <text bindtap="$tags$tap" data-wpytap-a="{{item.id}}">{{item.title}}</text>
     </view>
   </view>
 
