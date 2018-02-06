@@ -170,7 +170,7 @@ exports.generalEnhance = function (imgBuff) {
 		return Bluebird.reject("param imgBuff not exists");
 	}
 	let ocrKey = config.ocrKey;
-	let selKey = ocrKey[1]; //根据时间随机选取一个key
+	let selKey = ocrKey[1]; //付费接口，key只有一个
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
 		language_type:"CHN_ENG",
