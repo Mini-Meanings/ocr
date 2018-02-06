@@ -68,10 +68,10 @@
     </view>
     <view wx:if="{{result.status}}" class="result">{{result.one}}</view>
     <view class="btns {{!result.status?'hide':''}}">
-      <span class="first" @tap="toggle">{{!result.status?'显示':'隐藏'}}</span>
-      <span class="second" @tap="transfer">翻译</span>
-      <span class="third">语音</span>
-      <span class="fourth" @tap="copy">拷贝</span>
+      <span class="second" @tap="transfer">翻译文本</span>
+      <span class="third">语音播报</span>
+      <span class="fourth" @tap="copy">复制文字</span>
+      <span class="first" @tap="toggle">{{!result.status?'显示图层':'隐藏图层'}}</span>
     </view>
   </view>
 </template>
