@@ -77,6 +77,27 @@
           <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
         </view>
       </view>
+      <view class="we-slide">
+        <view class="item" @tap="upload(card)">
+          <image lazy-load="true" src="../image/temp4.png" />
+          <text class="title">银行卡识别</text>
+          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
+        </view>
+      </view>
+      <view class="we-slide">
+        <view class="item" @tap="upload(ticket)">
+          <image lazy-load="true" src="../image/temp5.png" />
+          <text class="title">票据识别</text>
+          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
+        </view>
+      </view>
+      <view class="we-slide">
+        <view class="item" @tap="upload(wyw)">
+          <image lazy-load="true" src="../image/temp6.png" />
+          <text class="title">生僻字识别</text>
+          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
+        </view>
+      </view>
     </weSwiper>
   </view>
 </template>
@@ -96,7 +117,7 @@
       swiper: {
         // direction: 'vertical',
         // width: 180,
-        slideLength: 3,
+        slideLength: 6,
         initialSlide: 0,
         /**
          * swiper初始化后执行
