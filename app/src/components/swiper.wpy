@@ -16,6 +16,7 @@
     border-radius:15rpx;
     overflow: hidden;
     background: #fff;
+    box-shadow: 0 0 5rpx #999;
   }
   .swip .title {
     color:#141414;
