@@ -24,6 +24,7 @@
     width: 100%;
     height: ~"calc(100vh)";
     background: rgba(0,0,0,0.3);
+    text-align:center;
   }
   .preview .btns {
     position:absolute;
