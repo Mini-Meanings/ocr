@@ -16,6 +16,7 @@
     border-radius:15rpx;
     overflow: hidden;
     background: #fff;
+    box-shadow: 0 0 5rpx #999;
   }
   .swip .title {
     color:#141414;
@@ -39,16 +40,16 @@
     top: 560rpx;
     right: 15rpx;
     z-index: 2;
-    width:50rpx;
-    height:50rpx;
+    width:60rpx;
+    height:60rpx;
   }
   .swip .prev {
     position: absolute;
     top: 560rpx;
     left: 15rpx;
     z-index: 2;
-    width:50rpx;
-    height:50rpx;
+    width:60rpx;
+    height:60rpx;
   }
 </style>
 <template>
@@ -77,6 +78,27 @@
           <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
         </view>
       </view>
+      <view class="we-slide">
+        <view class="item" @tap="upload(card)">
+          <image lazy-load="true" src="../image/temp4.png" />
+          <text class="title">银行卡识别</text>
+          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
+        </view>
+      </view>
+      <view class="we-slide">
+        <view class="item" @tap="upload(ticket)">
+          <image lazy-load="true" src="../image/temp5.png" />
+          <text class="title">票据识别</text>
+          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
+        </view>
+      </view>
+      <view class="we-slide">
+        <view class="item" @tap="upload(wyw)">
+          <image lazy-load="true" src="../image/temp6.png" />
+          <text class="title">生僻字识别</text>
+          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
+        </view>
+      </view>
     </weSwiper>
   </view>
 </template>
@@ -96,7 +118,7 @@
       swiper: {
         // direction: 'vertical',
         // width: 180,
-        slideLength: 3,
+        slideLength: 6,
         initialSlide: 0,
         /**
          * swiper初始化后执行
@@ -169,7 +191,8 @@
          *  slide达到过渡条件 且规定了方向 向前（右、下）切换结束时执行
          */
         onSlideNextEnd (weswiper) {
-
+          console.log(weswiper.activeIndex,'next');
+          wx.setStorageSync('index', weswiper.activeIndex);
         },
         /**
          *  slide达到过渡条件 且规定了方向 向前（左、上）切换时执行
@@ -181,19 +204,37 @@
          *  slide达到过渡条件 且规定了方向 向前（左、上）切换结束时执行
          */
         onSlidePrevEnd (weswiper) {
-
+          console.log(weswiper.activeIndex,'prev');
+          wx.setStorageSync('index', weswiper.activeIndex);
         }
       }
     }
 
     methods = {
       goNext(weswiper) {
-        console.log(this.index);
-        this.$invoke('weSwiper', 'slideNext');
+        let index = wx.getStorageSync('index');
+        console.log(index);
+        if(index < 5){
+          this.$invoke('weSwiper', 'slideNext');
+        } else {
+          wx.showToast({
+            title: '已经到尾啦～',
+            icon: 'none',
+            duration: 1000
+          })
+        }
       },
       goPrev(weswiper) {
-        console.log(this.index);
-        this.$invoke('weSwiper', 'slidePrev');
+        let index = wx.getStorageSync('index');
+        if(index > 0){
+          this.$invoke('weSwiper', 'slidePrev');
+        } else {
+          wx.showToast({
+            title: '已经到头啦～',
+            icon: 'none',
+            duration: 1000
+          })
+        }
       },
       upload(e) {
         wx.chooseImage({
@@ -201,13 +242,8 @@
           sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: function (res) {
-            // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
             var tempFilePaths = res.tempFilePaths;
             console.log(tempFilePaths,'tempFilePaths');
-            // wx.previewImage({
-            //   current: tempFilePaths[0], // 当前显示图片的http链接
-            //   urls: tempFilePaths // 需要预览的图片http链接列表
-            // })
             wx.setStorageSync('imageurl',tempFilePaths[0]);
             wx.navigateTo({
               url: `preview?type=${e}`

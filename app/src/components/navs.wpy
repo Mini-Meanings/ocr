@@ -13,9 +13,9 @@
     display:inline-block;
     border-radius: 50%;
     text-align: center;
-    box-shadow: rgba(255,255,255,0.52) 0 0rpx 38rpx inset;
+    box-shadow: rgba(38, 218, 231, 0.52) 0 0rpx 38rpx inset;
     font-size: 32rpx;
-    color: rgb(228, 226, 226);
+    color: rgb(87, 86, 86);
   }
 </style>
 <template>

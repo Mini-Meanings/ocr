@@ -24,15 +24,19 @@
     width: 100%;
     height: ~"calc(100vh)";
     background: rgba(0,0,0,0.3);
+    text-align:center;
+    font-size: 32rpx;
   }
   .preview .btns {
     position:absolute;
-    bottom:10rpx;
+    bottom:0rpx;
     width:100%;
     box-sizing:border-box;
     text-align:center;
+    display:flex;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(249, 249, 250,0.05)), to(rgb(253, 253, 253)));
   }
-  .preview .btns>span {
+  .preview .btns span {
     width:120rpx;
     height:120rpx;
     display: inline-block;
@@ -59,6 +63,16 @@
   .hide span{
     color: rgb(43, 43, 43)!important;
   }
+  .btns image{
+    width:60rpx;
+    height:60rpx;
+    vertical-align:middle;
+  }
+  .btns .one{
+    font-size:30rpx;
+    color:#333;
+    opacity:0.8;
+  }
 </style>
 <template>
   <view class="preview">
@@ -68,10 +82,30 @@
     </view>
     <view wx:if="{{result.status}}" class="result">{{result.one}}</view>
     <view class="btns {{!result.status?'hide':''}}">
-      <span class="second" @tap="transfer">翻译文本</span>
-      <span class="third">语音播报</span>
-      <span class="fourth" @tap="copy">复制文字</span>
-      <span class="first" @tap="toggle">{{!result.status?'显示图层':'隐藏图层'}}</span>
+      <view>
+        <span class="second" @tap="transfer">
+          <image src="../image/transfer.png" />
+        </span>
+        <text class="one">翻译文本</text>
+      </view>
+      <view>
+        <span class="third" @tap="voice">
+          <image src="../image/voice.png" />
+        </span>
+        <text class="one">语音播报</text>
+      </view>
+      <view>
+        <span class="fourth" @tap="copy">
+          <image src="../image/copy.png" />
+        </span>
+        <text class="one">复制文字</text>
+      </view>
+      <view>
+        <span class="first" @tap="toggle">
+          <image src="../image/{{result.status? 'show':'hide'}}.png" />
+        </span>
+        <text class="one">{{!result.status?'显示图层':'隐藏图层'}}</text>
+      </view>
     </view>
   </view>
 </template>
@@ -83,7 +117,7 @@
       result: {
         imgurl: '',
         desc: '',
-        one: '',
+        one: '这里是测试文字～这里是测试文字',
         status: true
       }
     }
@@ -95,6 +129,13 @@
       share() {
         wx.showShareMenu({
           withShareTicket: true
+        })
+      },
+      voice() {
+        wx.showToast({
+          title: '语音合成中...',
+          icon: 'loading',
+          duration: 2000
         })
       },
       toggle() {
@@ -118,7 +159,7 @@
             wx.getClipboardData({
               success: function(res) {
                 wx.showToast({
-                  title: '拷贝成功',
+                  title: '文字已复制',
                   icon: 'success',
                   duration: 2000
                 })
