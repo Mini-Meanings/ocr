@@ -4,21 +4,25 @@
  */
 const express = require('express');
 const app = module.exports = express.Router();
-const mConvert = require("../service/convert");
 const multer = require('multer');
 const upload = multer(/*{dest: 'upload/'}*/);   //注释掉,则文件流保存在req.files[0].buffer字段
-const path = require("path");
-const allowFile = [".png", ".jpg", ".bmp"];  //支持文件类型
-const maxFileSize = 4 * 1024 * 1024;              //文件大小
+const mRecongnMid = require("../controllers/recongnMid.js");
+const mRecongnCont = require("../controllers/recongnController.js");
 
 /**
- * @api {post} /recogn/general v1-01.01 文字识别(含位置信息)
+ * @api {post} /recogns/general v1-01.01 文字识别(含位置信息)
  * @apiGroup v1-01.Recogn
  * @apiName  generalWithLocation
  *
  * @apiDescription 对文字图片进行识别，同时返回位置信息(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
+ *
+ * @apiParam (Recogn) {Number} [x 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [y 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [w 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [h 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {String} authId 用户唯一识别ID(必须放在headers中)
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
@@ -49,31 +53,22 @@ const maxFileSize = 4 * 1024 * 1024;              //文件大小
  *      "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *   }
  */
-app.post("/general", upload.any(), function (req, res) {
-	if (!req.files || !req.files.length) {
-		return res.lockSend(100001, "上传文件为空");
-	}
-	let file = req.files[0];
-	let size = file.size;
-	let ext = path.extname(file.originalname);
-	if (size > maxFileSize || !allowFile.includes(ext)) {
-		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
-	}
-	mConvert.generalWithLocation(req.files[0].buffer.toString("base64")).then(result => {
-		return res.lockSend(200, result);
-	}).catch(err => {
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
-	});
-});
+app.post("/general", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnCont.doGeneral);
 
 /**
- * @api {post} /recogn/accurate v1-01.02 高精度文字识别(含位置信息)
+ * @api {post} /recogns/accurate v1-01.02 高精度文字识别(含位置信息)
  * @apiGroup v1-01.Recogn
  * @apiName  accurateWithLocation
  *
  * @apiDescription 对文字图片进行高精度识别，同时返回位置信息(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
+ *
+ * @apiParam (Recogn) {Number} [x 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [y 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [w 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [h 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {String} authId 用户唯一识别ID(必须放在headers中)
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
@@ -104,25 +99,10 @@ app.post("/general", upload.any(), function (req, res) {
  *      "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *   }
  */
-app.post("/accurate", upload.any(), function (req, res) {
-	if (!req.files || !req.files.length) {
-		return res.lockSend(100001, "上传文件为空");
-	}
-	let file = req.files[0];
-	let size = file.size;
-	let ext = path.extname(file.originalname);
-	if (size > maxFileSize || !allowFile.includes(ext)) {
-		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
-	}
-	mConvert.accurate(req.files[0].buffer.toString("base64")).then(result => {
-		return res.lockSend(200, result);
-	}).catch(err => {
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
-	});
-});
+app.post("/accurate", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnCont.doAccurate);
 
 /**
- * @api {post} /recogn/idcard v1-01.03 识别身份证(正反面)
+ * @api {post} /recogns/idcard v1-01.03 识别身份证(正反面)
  * @apiGroup v1-01.Recogn
  * @apiName  idcard
  *
@@ -131,6 +111,11 @@ app.post("/accurate", upload.any(), function (req, res) {
  * @apiVersion 1.0.0
  *
  * @apiParam (Recogn) {String=front, back} side 身份证正反面
+ * @apiParam (Recogn) {Number} [x 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [y 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [w 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [h 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {String} authId 用户唯一识别ID(必须放在headers中)
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
@@ -200,35 +185,22 @@ app.post("/accurate", upload.any(), function (req, res) {
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/idcard", upload.any(), function (req, res) {
-	if (!req.files || !req.files.length) {
-		return res.lockSend(100001, "上传文件为空");
-	}
-	let file = req.files[0];
-	let size = file.size;
-	let ext = path.extname(file.originalname);
-	if (size > maxFileSize || !allowFile.includes(ext)) {
-		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
-	}
-	const idCardSide = req.body.side || req.query.side;
-	if (!idCardSide || (idCardSide !== "front" && idCardSide !== "back")) {
-		return res.lockSend(100003, `需要指出证件朝向(front: 正面,back: 背面)`);
-	}
-	mConvert.idcard(req.files[0].buffer.toString("base64"), idCardSide).then(result => {
-		return res.lockSend(200, result);
-	}).catch(err => {
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
-	});
-});
+app.post("/idcard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnCont.doIdcard);
 
 /**
- * @api {post} /recogn/bankcard v1-01.04 银行卡识别
+ * @api {post} /recogns/bankcard v1-01.04 银行卡识别
  * @apiGroup v1-01.Recogn
  * @apiName  bankcard
  *
  * @apiDescription 银行卡识别(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
+ *
+ * @apiParam (Recogn) {Number} [x 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [y 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [w 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [h 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {String} authId 用户唯一识别ID(必须放在headers中)
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
@@ -253,31 +225,22 @@ app.post("/idcard", upload.any(), function (req, res) {
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/bankcard", upload.any(), function (req, res) {
-	if (!req.files || !req.files.length) {
-		return res.lockSend(100001, "上传文件为空");
-	}
-	let file = req.files[0];
-	let size = file.size;
-	let ext = path.extname(file.originalname);
-	if (size > maxFileSize || !allowFile.includes(ext)) {
-		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
-	}
-	mConvert.bankcard(req.files[0].buffer.toString("base64")).then(result => {
-		return res.lockSend(200, result);
-	}).catch(err => {
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
-	});
-});
+app.post("/bankcard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnCont.doBankcard);
 
 /**
- * @api {post} /recogn/drivecard v1-01.05 驾驶证识别
+ * @api {post} /recogns/drivecard v1-01.05 驾驶证识别
  * @apiGroup v1-01.Recogn
  * @apiName  drivecard
  *
  * @apiDescription 驾驶证识别(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
+ *
+ * @apiParam (Recogn) {Number} [x 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [y 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [w 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [h 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {String} authId 用户唯一识别ID(必须放在headers中)
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
@@ -312,31 +275,22 @@ app.post("/bankcard", upload.any(), function (req, res) {
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/drivecard", upload.any(), function (req, res) {
-	if (!req.files || !req.files.length) {
-		return res.lockSend(100001, "上传文件为空");
-	}
-	let file = req.files[0];
-	let size = file.size;
-	let ext = path.extname(file.originalname);
-	if (size > maxFileSize || !allowFile.includes(ext)) {
-		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
-	}
-	mConvert.drivingLicense(req.files[0].buffer.toString("base64")).then(result => {
-		return res.lockSend(200, result);
-	}).catch(err => {
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
-	});
-});
+app.post("/drivecard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnCont.doDrivecard);
 
 /**
- * @api {post} /recogn/vehiclecard v1-01.06 行驶证识别
+ * @api {post} /recogns/vehiclecard v1-01.06 行驶证识别
  * @apiGroup v1-01.Recogn
  * @apiName  vehiclecard
  *
  * @apiDescription 行驶证识别(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
+ *
+ * @apiParam (Recogn) {Number} [x 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [y 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [w 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [h 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {String} authId 用户唯一识别ID(必须放在headers中)
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
@@ -371,31 +325,22 @@ app.post("/drivecard", upload.any(), function (req, res) {
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/vehiclecard", upload.any(), function (req, res) {
-	if (!req.files || !req.files.length) {
-		return res.lockSend(100001, "上传文件为空");
-	}
-	let file = req.files[0];
-	let size = file.size;
-	let ext = path.extname(file.originalname);
-	if (size > maxFileSize || !allowFile.includes(ext)) {
-		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
-	}
-	mConvert.vehicleLicense(req.files[0].buffer.toString("base64")).then(result => {
-		return res.lockSend(200, result);
-	}).catch(err => {
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
-	});
-});
+app.post("/vehiclecard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnCont.doVehiclecard);
 
 /**
- * @api {post} /recogn/license v1-01.07 车牌识别
+ * @api {post} /recogns/license v1-01.07 车牌识别
  * @apiGroup v1-01.Recogn
  * @apiName  license
  *
  * @apiDescription 车牌识别(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
+ *
+ * @apiParam (Recogn) {Number} [x 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [y 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [w 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [h 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {String} authId 用户唯一识别ID(必须放在headers中)
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
@@ -417,31 +362,22 @@ app.post("/vehiclecard", upload.any(), function (req, res) {
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/license", upload.any(), function (req, res) {
-	if (!req.files || !req.files.length) {
-		return res.lockSend(100001, "上传文件为空");
-	}
-	let file = req.files[0];
-	let size = file.size;
-	let ext = path.extname(file.originalname);
-	if (size > maxFileSize || !allowFile.includes(ext)) {
-		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
-	}
-	mConvert.licensePlate(req.files[0].buffer.toString("base64")).then(result => {
-		return res.lockSend(200, result);
-	}).catch(err => {
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
-	});
-});
+app.post("/license", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnCont.doLicense);
 
 /**
- * @api {post} /recogn/business v1-01.08 营业执照识别
+ * @api {post} /recogns/business v1-01.08 营业执照识别
  * @apiGroup v1-01.Recogn
  * @apiName  businessLicense
  *
  * @apiDescription 营业执照识别(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
+ *
+ * @apiParam (Recogn) {Number} [x 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [y 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [w 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [h 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {String} authId 用户唯一识别ID(必须放在headers中)
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
@@ -490,31 +426,22 @@ app.post("/license", upload.any(), function (req, res) {
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/business", upload.any(), function (req, res) {
-	if (!req.files || !req.files.length) {
-		return res.lockSend(100001, "上传文件为空");
-	}
-	let file = req.files[0];
-	let size = file.size;
-	let ext = path.extname(file.originalname);
-	if (size > maxFileSize || !allowFile.includes(ext)) {
-		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
-	}
-	mConvert.businessLicense(req.files[0].buffer.toString("base64")).then(result => {
-		return res.lockSend(200, result);
-	}).catch(err => {
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
-	});
-});
+app.post("/business", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnCont.doBusiness);
 
 /**
- * @api {post} /recogn/receipt v1-01.09 通用票据识别
+ * @api {post} /recogns/receipt v1-01.09 通用票据识别
  * @apiGroup v1-01.Recogn
  * @apiName  receipt
  *
  * @apiDescription 通用票据识别(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
+ *
+ * @apiParam (Recogn) {Number} [x 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [y 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [w 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [h 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {String} authId 用户唯一识别ID(必须放在headers中)
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
@@ -550,31 +477,22 @@ app.post("/business", upload.any(), function (req, res) {
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/receipt", upload.any(), function (req, res) {
-	if (!req.files || !req.files.length) {
-		return res.lockSend(100001, "上传文件为空");
-	}
-	let file = req.files[0];
-	let size = file.size;
-	let ext = path.extname(file.originalname);
-	if (size > maxFileSize || !allowFile.includes(ext)) {
-		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
-	}
-	mConvert.receipt(req.files[0].buffer.toString("base64")).then(result => {
-		return res.lockSend(200, result);
-	}).catch(err => {
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
-	});
-});
+app.post("/receipt", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnCont.doReceipt);
 
 /**
- * @api {post} /recogn/enhance v1-01.10 通用文字识别（含生僻字版）- 无位置信息
+ * @api {post} /recogns/enhance v1-01.10 通用文字识别（含生僻字版）- 无位置信息
  * @apiGroup v1-01.Recogn
  * @apiName  enhance
  *
  * @apiDescription 通用文字识别（含生僻字版）(注意：支持文件格式 *.png, *.jpg, *.bmp)
  *
  * @apiVersion 1.0.0
+ *
+ * @apiParam (Recogn) {Number} [x 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [y 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [w 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {Number} [h 图片裁切区域(x,y,w,h为同时传递有效)
+ * @apiParam (Recogn) {String} authId 用户唯一识别ID(必须放在headers中)
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
@@ -604,20 +522,4 @@ app.post("/receipt", upload.any(), function (req, res) {
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/enhance", upload.any(), function (req, res) {
-	if (!req.files || !req.files.length) {
-		return res.lockSend(100001, "上传文件为空");
-	}
-	let file = req.files[0];
-	let size = file.size;
-	let ext = path.extname(file.originalname);
-	if (size > maxFileSize || !allowFile.includes(ext)) {
-		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
-	}
-	mConvert.generalEnhance(req.files[0].buffer.toString("base64")).then(result => {
-		return res.lockSend(200, result);
-	}).catch(err => {
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
-	});
-});
-
+app.post("/enhance", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnCont.doEnhance);
