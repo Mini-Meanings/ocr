@@ -78,7 +78,7 @@ exports.timesCount = function (type) {
 		}
 		let uid = user;
 		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
-		let field = type + uid;
+		let field = type + "_" + uid;
 		rc.hincrby(key, field, 1).then(response => {
 			rc.expire(key, 24 * 60 * 60);   //24小时后删除key
 			const defaultTimes = mDefauleValue.times[type];

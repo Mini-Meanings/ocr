@@ -1,79 +1,33 @@
 const express = require('express');
-const router = module.exports = express.Router();
-const mLockSend = require("../middlewares/lockSend.js");
+const moment = require("moment");
+const _ = require("underscore");
+const app = module.exports = express.Router();
+const mDefauleValue = require("../utils/defaultValue.js");
+const rc = require("../utils/createRedisClient")();
 const logger = require("../utils/log")(__filename);
-const Joi = require("joi");
-const mJoiValidate = require("../tools/joiValidate.js");
-const config = require("config");
 
-
-// let ocrKey = config.ocrKey;
-// console.log(ocrKey);
-// let selKey = ocrKey[+new Date() % ocrKey.length];
-// console.log("======selKey: %j", selKey);
-
-/* GET users listing. */
-router.get('/', function (req, res, next) {
-	res.send('respond with a resource');
+//获取所有默认次数
+app.get("/times/default", function (req, res) {
+	return res.lockSend(200, mDefauleValue.times);
 });
 
-router.get("/lock", mLockSend.addLock("myTest", "a"), function (req, res) {
-	setTimeout(() => {
-		return res.lockSend("success!");
-	}, 5000);
-});
-
-/**
- * user 为依赖注入变量,变量名称必须和factories目录中文件名称相同
- */
-router.get("/fact", function (user, req, res) {
-	logger.debug("user: %s", user);
-	return res.lockSend(user);
-});
-
-//curl "127.0.0.1:3000/users/joi?a=abc&b=123"
-router.get("/joi", function (req, res) {
-	let schema = {
-		a: Joi.string().uri(),
-		b: Joi.number()
-	};
-	let checkObj = {
-		a: req.query.a,
-		b: req.query.b
-	};
-	let error = mJoiValidate.checkParam(checkObj, schema);
-	if (!!error) {
-		return res.lockSend(400, error);
+//获取某个人的当天已用次数
+app.get("/times/me", function (user, req, res) {
+	if (!user) {
+		return res.lockSend(100006, `获取用户身份信息失败.`);
 	}
-	return res.lockSend("success");
-});
-
-// curl "127.0.0.1:3000/users/sess"
-router.get("/sess", function (user, req, res) {
-	req.session.uid = user.uid;
-	user.sessionID = req.sessionID;
-	return res.lockSend(user);
-});
-
-// curl "127.0.0.1:3000/users/down"
-router.get("/down", function (req, res) {   //文件下载
-	let path = "/Users/sensoro/bynf/express-standard/README.md";
-	return res.download(path, "down_test");
-});
-
-// curl "127.0.0.1:3000/users/add" -d "name=wyq&age=28&addr=beijing"
-router.post("/add", function (req, res) {
-	let doc = {
-		name: req.body.name,
-		age: +req.body.age,
-		addr: req.body.addr
-	};
-	User.create(doc).then(response => {
-		return res.lockSend(response);
+	let uid = user;
+	let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
+	let filedList = Object.keys(mDefauleValue.times).map(item => item + "_" + uid);
+	rc.hmget(key, filedList).then(response => {
+		let result = _.object(Object.keys(mDefauleValue.times), response);
+		return res.lockSend(200, result);
 	}).catch(err => {
-		return res.lockSend(400, err.message || err);
+		logger.warn("times me redis err: %s, key: %s, filedList: %s", err.message || err, key, filedList);
+		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
 	});
 });
+
 
 
 
