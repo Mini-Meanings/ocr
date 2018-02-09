@@ -56,5 +56,6 @@
       "AppID": "abcdef123456",
       "APIKey": "abcdef123456"
     }
-  ]
+  ],
+  "isCacheFile": true
 }

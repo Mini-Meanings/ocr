@@ -2,8 +2,9 @@
  * Created by wyq on 18/2/9.
  * 图片失败控制器(逻辑实现)
  */
-const fs = require("fs");
+const BlueBird = require("bluebird");
 const mConvert = require("../service/convert.js");
+const mCacheFile = require("../service/cacheFile.js");
 
 /**
  * 文字识别(含位置信息)
@@ -12,8 +13,9 @@ const mConvert = require("../service/convert.js");
  */
 exports.doGeneral = function (req, res) {
 	mConvert.generalWithLocation(req.fileBuf.toString("base64")).then(result => {
-		// console.log("==== body: %j, headers: %j", req.body, req.headers);
-		// fs.writeFileSync(`/Users/sensoro/Desktop/${+new Date()}.png`, req.fileBuf);
+		if (result.error_code) {
+			return BlueBird.reject(result);
+		}
 		return res.lockSend(200, result);
 	}).catch(err => {
 		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
@@ -27,6 +29,9 @@ exports.doGeneral = function (req, res) {
  */
 exports.doAccurate = function (req, res) {
 	mConvert.accurate(req.files[0].buffer.toString("base64")).then(result => {
+		if (result.error_code) {
+			return BlueBird.reject(result);
+		}
 		return res.lockSend(200, result);
 	}).catch(err => {
 		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
@@ -45,6 +50,10 @@ exports.doIdcard = function (req, res) {
 		return res.lockSend(100003, `需要指出证件朝向(front: 正面,back: 背面)`);
 	}
 	mConvert.idcard(req.files[0].buffer.toString("base64"), idCardSide).then(result => {
+		if (result.error_code) {
+			return BlueBird.reject(result);
+		}
+		mCacheFile.saveBuf(req.files[0].buffer, "shenfenzheng");
 		return res.lockSend(200, result);
 	}).catch(err => {
 		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
@@ -58,6 +67,10 @@ exports.doIdcard = function (req, res) {
  */
 exports.doBankcard = function (req, res) {
 	mConvert.bankcard(req.files[0].buffer.toString("base64")).then(result => {
+		if (result.error_code) {
+			return BlueBird.reject(result);
+		}
+		mCacheFile.saveBuf(req.files[0].buffer, "shenfenzheng");
 		return res.lockSend(200, result);
 	}).catch(err => {
 		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
@@ -71,6 +84,10 @@ exports.doBankcard = function (req, res) {
  */
 exports.doDrivecard = function (req, res) {
 	mConvert.drivingLicense(req.files[0].buffer.toString("base64")).then(result => {
+		if (result.error_code) {
+			return BlueBird.reject(result);
+		}
+		mCacheFile.saveBuf(req.files[0].buffer, "jiashizheng");
 		return res.lockSend(200, result);
 	}).catch(err => {
 		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
@@ -84,6 +101,10 @@ exports.doDrivecard = function (req, res) {
  */
 exports.doVehiclecard = function (req, res) {
 	mConvert.vehicleLicense(req.files[0].buffer.toString("base64")).then(result => {
+		if (result.error_code) {
+			return BlueBird.reject(result);
+		}
+		mCacheFile.saveBuf(req.files[0].buffer, "xingshizheng");
 		return res.lockSend(200, result);
 	}).catch(err => {
 		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
@@ -97,6 +118,9 @@ exports.doVehiclecard = function (req, res) {
  */
 exports.doLicense = function (req, res) {
 	mConvert.licensePlate(req.files[0].buffer.toString("base64")).then(result => {
+		if (result.error_code) {
+			return BlueBird.reject(result);
+		}
 		return res.lockSend(200, result);
 	}).catch(err => {
 		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
@@ -110,6 +134,10 @@ exports.doLicense = function (req, res) {
  */
 exports.doBusiness = function (req, res) {
 	mConvert.businessLicense(req.files[0].buffer.toString("base64")).then(result => {
+		if (result.error_code) {
+			return BlueBird.reject(result);
+		}
+		mCacheFile.saveBuf(req.files[0].buffer, "yingyezhizhao");
 		return res.lockSend(200, result);
 	}).catch(err => {
 		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
@@ -123,6 +151,9 @@ exports.doBusiness = function (req, res) {
  */
 exports.doReceipt = function (req, res) {
 	mConvert.receipt(req.files[0].buffer.toString("base64")).then(result => {
+		if (result.error_code) {
+			return BlueBird.reject(result);
+		}
 		return res.lockSend(200, result);
 	}).catch(err => {
 		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
@@ -136,6 +167,9 @@ exports.doReceipt = function (req, res) {
  */
 exports.doEnhance = function (req, res) {
 	mConvert.generalEnhance(req.files[0].buffer.toString("base64")).then(result => {
+		if (result.error_code) {
+			return BlueBird.reject(result);
+		}
 		return res.lockSend(200, result);
 	}).catch(err => {
 		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
