@@ -3,8 +3,25 @@
  * 图片失败控制器(逻辑实现)
  */
 const BlueBird = require("bluebird");
+const moment = require("moment");
 const mConvert = require("../service/convert.js");
 const mCacheFile = require("../service/cacheFile.js");
+const mDefauleValue = require("../utils/defaultValue.js");
+const rc = require("../utils/createRedisClient")();
+const logger = require("../utils/log")(__filename);
+
+function totalTimesCount(type) {
+	if (!type) {
+		return null;
+	}
+	let key = mDefauleValue.totalTimesKeyPrefix + moment().format('YYYY-MM-DD');
+	let field = type.toString();
+	rc.hincrby(key, field, 1).then(() => {
+		return rc.expire(key, 30 * 24 * 60 * 60);   //24小时后删除key
+	}).catch(err => {
+		return logger.warn("totalTimesCount redis err: %s, key: %s, field: %s", err.message || err, key, field);
+	});
+}
 
 /**
  * 文字识别(含位置信息)
@@ -13,6 +30,7 @@ const mCacheFile = require("../service/cacheFile.js");
  */
 exports.doGeneral = function (req, res) {
 	mConvert.generalWithLocation(req.fileBuf.toString("base64")).then(result => {
+		totalTimesCount("general");
 		if (result.error_code) {
 			return BlueBird.reject(result);
 		}
@@ -29,6 +47,7 @@ exports.doGeneral = function (req, res) {
  */
 exports.doAccurate = function (req, res) {
 	mConvert.accurate(req.files[0].buffer.toString("base64")).then(result => {
+		totalTimesCount("accurate");
 		if (result.error_code) {
 			return BlueBird.reject(result);
 		}
@@ -50,6 +69,7 @@ exports.doIdcard = function (req, res) {
 		return res.lockSend(100003, `需要指出证件朝向(front: 正面,back: 背面)`);
 	}
 	mConvert.idcard(req.files[0].buffer.toString("base64"), idCardSide).then(result => {
+		totalTimesCount("idcard");
 		if (result.error_code) {
 			return BlueBird.reject(result);
 		}
@@ -67,6 +87,7 @@ exports.doIdcard = function (req, res) {
  */
 exports.doBankcard = function (req, res) {
 	mConvert.bankcard(req.files[0].buffer.toString("base64")).then(result => {
+		totalTimesCount("bankcard");
 		if (result.error_code) {
 			return BlueBird.reject(result);
 		}
@@ -84,6 +105,7 @@ exports.doBankcard = function (req, res) {
  */
 exports.doDrivecard = function (req, res) {
 	mConvert.drivingLicense(req.files[0].buffer.toString("base64")).then(result => {
+		totalTimesCount("drivecard");
 		if (result.error_code) {
 			return BlueBird.reject(result);
 		}
@@ -101,6 +123,7 @@ exports.doDrivecard = function (req, res) {
  */
 exports.doVehiclecard = function (req, res) {
 	mConvert.vehicleLicense(req.files[0].buffer.toString("base64")).then(result => {
+		totalTimesCount("vehiclecard");
 		if (result.error_code) {
 			return BlueBird.reject(result);
 		}
@@ -118,6 +141,7 @@ exports.doVehiclecard = function (req, res) {
  */
 exports.doLicense = function (req, res) {
 	mConvert.licensePlate(req.files[0].buffer.toString("base64")).then(result => {
+		totalTimesCount("license");
 		if (result.error_code) {
 			return BlueBird.reject(result);
 		}
@@ -134,6 +158,7 @@ exports.doLicense = function (req, res) {
  */
 exports.doBusiness = function (req, res) {
 	mConvert.businessLicense(req.files[0].buffer.toString("base64")).then(result => {
+		totalTimesCount("business");
 		if (result.error_code) {
 			return BlueBird.reject(result);
 		}
@@ -151,6 +176,7 @@ exports.doBusiness = function (req, res) {
  */
 exports.doReceipt = function (req, res) {
 	mConvert.receipt(req.files[0].buffer.toString("base64")).then(result => {
+		totalTimesCount("receipt");
 		if (result.error_code) {
 			return BlueBird.reject(result);
 		}
@@ -167,6 +193,7 @@ exports.doReceipt = function (req, res) {
  */
 exports.doEnhance = function (req, res) {
 	mConvert.generalEnhance(req.files[0].buffer.toString("base64")).then(result => {
+		totalTimesCount("enhance");
 		if (result.error_code) {
 			return BlueBird.reject(result);
 		}

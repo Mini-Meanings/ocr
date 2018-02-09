@@ -4,10 +4,12 @@
  */
 const Jimp = require("jimp");
 const path = require("path");
+const moment = require("moment");
 const mDefauleValue = require("../utils/defaultValue.js");
 const allowFile = mDefauleValue.recongnAllowFile;  //支持文件类型
 const maxFileSize = mDefauleValue.recongnMaxFileSize;              //文件大小
 const logger = require("../utils/log")(__filename);
+const rc = require("../utils/createRedisClient")();
 
 /**
  * 参数验证
@@ -63,4 +65,32 @@ exports.picCrop = function (req, res, next) {
 		});
 	}
 };
+
+/**
+ * 统计每个用户每天的已使用次数并作出限制
+ * @param type
+ * @returns {Function}
+ */
+exports.timesCount = function (type) {
+	return function (user, req, res, next) {
+		if (!user) {
+			return res.lockSend(100006, `获取用户身份信息失败.`);
+		}
+		let uid = user;
+		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
+		let field = type + uid;
+		rc.hincrby(key, field, 1).then(response => {
+			rc.expire(key, 24 * 60 * 60);   //24小时后删除key
+			const defaultTimes = mDefauleValue.times[type];
+			if (+response > defaultTimes) {
+				return res.lockSend(100007, "免费次数已用尽");
+			}
+			return next();
+		}).catch(err => {
+			logger.warn("timesCount redis err: %s, key: %s, field: %s", err.message || err, key, field);
+			return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		});
+	}
+};
+
 
