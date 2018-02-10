@@ -17,8 +17,8 @@
         <text class="desc">目前页签根据用户使用次数动态统计，使用次数最多的将排在最前面。</text>
       </block>
       <block class="block">
-        <text class="tit">4.上传图片识别异常？</text>
-        <text class="desc">如果发现图片识别异常，请尝试更换其他图片，或者减小图片尺寸，尽可能使其精确识别。</text>
+        <text class="tit">4.为什么要进行分类？</text>
+        <text class="desc">为了更准确的识别图片，请确保图片类型，如身份证，银行卡等，否则可能出现异常。</text>
       </block>
       <block class="block">
         <text class="tit">5.上传图片识别异常？</text>

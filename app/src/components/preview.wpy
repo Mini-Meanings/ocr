@@ -144,7 +144,8 @@
         desc: '',
         one: '解析图片中～',
         status: false,
-        list: []
+        list: [],
+        type: ''
       },
       copy: []
     }
@@ -207,33 +208,93 @@
       }
     }
 
-    upload() {
+    upload(type) {
+      console.log(type,'upload');
       let self = this;
       wx.showLoading({
         title: '识别中',
       })
-      wx.uploadFile({
-        url:'https://www.iocr.vip/ai/recogn/general',
-        filePath: this.result.imgurl,
-        name: 'file',
-        success: function(res){
-          let data = JSON.parse(res.data);
-          console.log(data.data.words_result,'success');
+      if (type === 'card') {
+        wx.uploadFile({
+          url:'https://www.iocr.vip/ai/recogn/bankcard',
+          filePath: this.result.imgurl,
+          name: 'file',
+          success: function(res) {
+            let data = JSON.parse(res.data);
+            console.log(data,'backcard');
+            if (data.status === 'error') {
+              wx.showModal({
+                title: '异常提示',
+                content: data.data,
+                success: function(res) {
+                  if (res.confirm) {
+                    console.log('用户点击确定');
+                  } else if (res.cancel) {
+                    console.log('用户点击取消');
+                  }
+                }
+              })
+            } else if(data.status === 'ok') {
+              let temp = data.data.result;
+              self.result.list = [
+                {id: 0, val: `卡号：${temp.bank_card_number}`},
+                {id: 1, val: `类型：${temp.bank_card_type === 2 ? '信用卡':'借记卡'}`},
+                {id: 2, val: `银行名称：${temp.bank_name}`}
+              ];
 
-          let results = data.data.words_result.map((item,index) => { return {id:index,val:item.words}; });
-          console.log(results,'sss');
-          self.result.list = results;
-          self.result.status = true;
+              self.result.status = true;
+              self.$apply();
+            }
+            wx.hideLoading();
+          },
+          fail: function(err) {
+            wx.hideLoading();
+          }
+        })
+      } else {
+        wx.uploadFile({
+          url:'https://www.iocr.vip/ai/recogn/general',
+          filePath: this.result.imgurl,
+          name: 'file',
+          success: function(res) {
+            let data = JSON.parse(res.data);
+            console.log(data,'success');
 
-          self.$apply();
-          wx.hideLoading();
-        }
-      })
+            if (data.status === 'error') {
+              wx.showModal({
+                title: '异常提示',
+                content: data.data,
+                success: function(res) {
+                  if (res.confirm) {
+                    console.log('用户点击确定');
+                  } else if (res.cancel) {
+                    console.log('用户点击取消');
+                  }
+                }
+              })
+            } else if(data.status === 'ok') {
+              let results = data.data.words_result.map((item,index) => { return {id:index,val:item.words}; });
+              // console.log(results,'sss');
+              self.result.list = results;
+              self.result.status = true;
+
+              self.$apply();
+            }
+            wx.hideLoading();
+          },
+          fail: function(err) {
+            // console.log(err,'err');
+            wx.hideLoading();
+          }
+        })
+      }
     }
 
     onLoad () {
       this.result.imgurl = wx.getStorageSync('imageurl');
-      this.upload();
+      this.result.type = wx.getStorageSync('type');
+      // console.log(this.result.type,'params');
+      this.upload(this.result.type);
       wx.showShareMenu({
         withShareTicket: true
       })

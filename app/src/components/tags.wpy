@@ -71,7 +71,7 @@
     }
 
     onLoad () {
-      console.log('tags')
+      console.log('tags');
     }
   }
 </script>

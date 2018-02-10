@@ -21,17 +21,17 @@
     <view class="we-wrapper" bindtouchstart="$myswiper$weSwiper$touchstart" bindtouchmove="$myswiper$weSwiper$touchmove" bindtouchend="$myswiper$weSwiper$touchend" animation="{{$myswiper$weSwiper$animationData}}">
       
       <view class="we-slide">
-        <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="ticket">
-          <image lazy-load="true" src="../image/temp5.png"/>
-          <text class="title">票据识别</text>
-          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
-        </view>
-      </view>
-      <view class="we-slide">
         <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="generate">
           <image lazy-load="true" src="../image/temp1.png"/>
           <text class="title">文字识别</text>
           <text class="desc">提供通用图片文字识别，快速高效。对文字图片进行识别，返回信息。</text>
+        </view>
+      </view>
+      <view class="we-slide">
+        <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="ticket">
+          <image lazy-load="true" src="../image/temp5.png"/>
+          <text class="title">票据识别</text>
+          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
         </view>
       </view>
       <view class="we-slide">
