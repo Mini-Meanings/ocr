@@ -25,8 +25,8 @@
     font-size:45rpx;
   }
   .swip .desc {
-    color:#c1c1c1;
-    padding: 20rpx;
+    color:#8b8b8b;
+    padding: 10rpx 20rpx;
     font-size:30rpx;
     text-align: justify;
     display:block;
@@ -74,8 +74,8 @@
       <view class="we-slide">
         <view class="item" @tap="upload(id)">
           <image lazy-load="true" src="../image/temp2.png" />
-          <text class="title">身份证识别</text>
-          <text class="desc">提供通用图片文字识别，快速高效。对文字图片进行识别。</text>
+          <text class="title">身份证识别「正面」</text>
+          <text class="desc">可识别身份证「正面」，包含姓名、性别、出生日期、住址、证件号等信息。</text>
         </view>
       </view>
       <view class="we-slide">

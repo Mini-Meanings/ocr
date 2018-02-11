@@ -37,8 +37,8 @@
       <view class="we-slide">
         <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="id">
           <image lazy-load="true" src="../image/temp2.png"/>
-          <text class="title">身份证识别</text>
-          <text class="desc">提供通用图片文字识别，快速高效。对文字图片进行识别。</text>
+          <text class="title">身份证识别「正面」</text>
+          <text class="desc">可识别身份证「正面」，包含姓名、性别、出生日期、住址、证件号等信息。</text>
         </view>
       </view>
       <view class="we-slide">

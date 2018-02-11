@@ -34,7 +34,7 @@
     box-sizing:border-box;
     width:100%;
     padding:20rpx;
-    color:#fff;
+    color: rgba(0,0,0,0.6);
   }
   .contact input {
     height:60rpx;
