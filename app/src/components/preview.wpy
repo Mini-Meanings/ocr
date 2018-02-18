@@ -126,7 +126,7 @@
       <image mode="widthFix" src="{{result.imgurl}}" />
     </view>
     <!-- <view wx:if="{{result.status}}" class="result">{{result.desc}}</view> -->
-    <view wx:if="{{result.status}}" class="result">
+    <view hidden="{{!result.status}}" class="result">
       <text class="notice">注意：勾选文字可通过「复制文字」进行拷贝！</text>
       <checkbox-group @change="checkboxChange">
         <view class="line" wx:for-items="{{result.list}}" wx:for-index="index" wx:for-item="item" wx:key="index">
@@ -209,12 +209,18 @@
         })
       },
       voice() {
-        console.log(this.isPlay,'this.isPlay');
+        // console.log(this.isPlay,'this.isPlay');
+        if(this.copy.length === 0) {
+          wx.showToast({
+            title: '请勾选需要语音合成的文字！',
+            icon: 'none',
+            duration: 2000
+          })
+          return;
+        }
         if(this.isPlay) return;
-        wx.showToast({
+        wx.showLoading({
           title: '语音合成中...',
-          icon: 'loading',
-          duration: 10000
         })
         let self = this;
         wx.request({
@@ -230,6 +236,7 @@
           },
           success: function(res) {
             console.log('compose',res.data);
+            wx.hideLoading();
 
             if(res.data.code === 200){
               let url = res.data.data.url;
@@ -240,7 +247,6 @@
               //   icon: 'success',
               //   duration: 2000
               // })
-              wx.hideToast();
               self.openPlayer();
             } else {
               wx.showModal({
@@ -257,6 +263,9 @@
                 }
               })
             }
+          },
+          fail: function(err) {
+            wx.hideLoading();
           }
         })
       },
@@ -264,6 +273,14 @@
         this.result.status = !this.result.status;
       },
       transfer() {
+        if(this.copy.length === 0) {
+          wx.showToast({
+            title: '请勾选需要翻译的文字！',
+            icon: 'none',
+            duration: 2000
+          })
+          return;
+        }
         let self = this;
         wx.showActionSheet({
           itemList: ['英文', '日语', '法语', '中文'],
@@ -303,6 +320,18 @@
         })
       },
       copy() {
+        // console.log(this.copy,'this.copy');
+        if(this.copy.length === 0) {
+          wx.setClipboardData({
+            data: ''
+          })
+          wx.showToast({
+            title: '请勾选需要复制的文字！',
+            icon: 'none',
+            duration: 2000
+          })
+          return;
+        }
         wx.setClipboardData({
           data: this.copy.join('\n'),
           success: function(res) {
@@ -358,7 +387,7 @@
       let self = this;
       wx.showLoading({
         title: '识别中',
-        mask: true
+        mask: true,
       })
       if (type === 'card') {
         wx.uploadFile({
@@ -506,6 +535,7 @@
               self.result.status = true;
               self.initCopy();
               self.$apply();
+              
             }
             wx.hideLoading();
           },
@@ -586,6 +616,7 @@
               self.result.status = true;
               self.initCopy();
               self.$apply();
+              
             }
             wx.hideLoading();
           },
@@ -626,6 +657,7 @@
               self.result.status = true;
               self.initCopy();
               self.$apply();
+              
             }
             wx.hideLoading();
           },
