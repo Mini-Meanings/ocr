@@ -373,6 +373,7 @@
               wx.showModal({
                 title: '提示',
                 content: data.data,
+                showCancel: false,
                 success: function(res) {
                   if (res.confirm) {
                     wx.navigateBack({
@@ -418,6 +419,7 @@
               wx.showModal({
                 title: '提示',
                 content: data.data,
+                showCancel: false,
                 success: function(res) {
                   if (res.confirm) {
                     wx.navigateBack({
@@ -469,6 +471,7 @@
               wx.showModal({
                 title: '提示',
                 content: data.data,
+                showCancel: false,
                 success: function(res) {
                   if (res.confirm) {
                     wx.navigateBack({
@@ -525,6 +528,7 @@
               wx.showModal({
                 title: '提示',
                 content: data.data,
+                showCancel: false,
                 success: function(res) {
                   if (res.confirm) {
                     wx.navigateBack({
@@ -564,6 +568,7 @@
               wx.showModal({
                 title: '提示',
                 content: data.data,
+                showCancel: false,
                 success: function(res) {
                   if (res.confirm) {
                     wx.navigateBack({
@@ -603,6 +608,7 @@
               wx.showModal({
                 title: '提示',
                 content: data.data,
+                showCancel: false,
                 success: function(res) {
                   if (res.confirm) {
                     wx.navigateBack({
