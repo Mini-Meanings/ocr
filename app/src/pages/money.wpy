@@ -13,7 +13,7 @@
   .money .fix {
     background: #efeed4;
     width: 100%;
-    height: ~"calc(100vh)/2";
+    height: ~"calc(100vh / 5)";
     position: absolute;
     top: 0;
   }
@@ -21,7 +21,8 @@
 </style>
 <template>
   <view class="money" @tap="previewImg">
-    <image src="https://www.iocr.vip/ai/money.jpeg" width="100%"/>
+    <view class="fix"></view>
+    <image src="https://www.iocr.vip/ai/money.jpg" width="100%"/>
   </view>
 </template>
 
@@ -38,8 +39,8 @@ export default class Contact extends wepy.page {
     methods = {
       previewImg() {
         wx.previewImage({
-          current: 'https://www.iocr.vip/ai/money.jpeg', // 当前显示图片的http链接
-          urls: ['https://www.iocr.vip/ai/money.jpeg'] // 需要预览的图片http链接列表
+          current: 'https://www.iocr.vip/ai/money.jpg', // 当前显示图片的http链接
+          urls: ['https://www.iocr.vip/ai/money.jpg'] // 需要预览的图片http链接列表
         })
       }
     };
