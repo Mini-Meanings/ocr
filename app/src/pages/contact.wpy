@@ -133,7 +133,7 @@ export default class Contact extends wepy.page {
         let self = this;
         let pat = /^([a-zA-Z0-9.-])+@([a-zA-Z0-9-])+(.[a-zA-Z0-9_-])+/;
         console.log(this.question,this.contact);
-        if(!this.question || !this.contact) {
+        if(!this.question.trim() || !this.contact.trim()) {
           wx.showToast({
             title: '请完善信息后提交',
             icon: 'none',
