@@ -186,6 +186,17 @@
           itemList: ['中英文', '日语', '法语'],
           success: function(res) {
             console.log(res.tapIndex);
+            wx.request({
+              url: 'https://www.iocr.vip/ai/switchs/translate', 
+              formData: { 
+                destLan: 'en',
+                q: '王'
+              },
+              header: {authid:this.authid},
+              success: function(res) {
+                console.log('translate',res.data);
+              }
+            })
           },
           fail: function(res) {
             console.log(res.errMsg);

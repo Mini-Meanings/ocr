@@ -45,7 +45,7 @@
         <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="drive">
           <image lazy-load="true" src="../image/temp3.png"/>
           <text class="title">驾驶证识别</text>
-          <text class="desc">针对驾驶证信息进行识别，格式化显示姓名，证号，车型，有效期等数据。</text>
+          <text class="desc">针对驾驶证信息进行识别，格式化显示姓名，证号，车型，有效期等。</text>
         </view>
       </view>
       <view class="we-slide">
