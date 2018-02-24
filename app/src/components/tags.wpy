@@ -41,7 +41,7 @@
           title: '驾驶证'
         },
         {
-          id: 'wyw',
+          id: 'enhance',
           title: '生僻字'
         },
       ]
@@ -56,7 +56,7 @@
             let tempFilePaths = res.tempFilePaths;
             wx.setStorageSync('imageurl',tempFilePaths[0]);
 
-            if(e === 'wyw') {
+            if(e === 'enhance') {
               wx.navigateTo({
                 url: `crop1`
               });

@@ -1,1 +1,1 @@
-.mynavs{position:absolute;bottom:80rpx;width:100%;display:flex;justify-content:space-around}.mynavs span{width:130rpx;height:130rpx;line-height:130rpx;display:inline-block;border-radius:50%;text-align:center;box-shadow:rgba(38,218,231,0.52) 0 0 38rpx inset;font-size:32rpx;color:#575656}
+.mynavs{position:absolute;bottom:80rpx;width:100%;display:flex;justify-content:space-around}.mynavs span{width:130rpx;height:130rpx;line-height:130rpx;display:inline-block;border-radius:50%;text-align:center;box-shadow:rgba(38,218,231,0.52) 0 0 58rpx inset;font-size:32rpx;color:#575656}

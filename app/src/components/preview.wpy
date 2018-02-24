@@ -353,6 +353,42 @@
             wx.hideLoading();
           }
         })
+      } else if(type === 'enhance') {
+         wx.uploadFile({
+          url:'https://www.iocr.vip/ai/recogn/enhance',
+          filePath: this.result.imgurl,
+          name: 'file',
+          success: function(res) {
+            let data = JSON.parse(res.data);
+            console.log(data,'success');
+
+            if (data.status === 'error') {
+              wx.showModal({
+                title: '异常提示',
+                content: data.data,
+                success: function(res) {
+                  if (res.confirm) {
+                    console.log('用户点击确定');
+                  } else if (res.cancel) {
+                    console.log('用户点击取消');
+                  }
+                }
+              })
+            } else if(data.status === 'ok') {
+              let results = data.data.words_result.map((item,index) => { return {id:index,val:item.words}; });
+              // console.log(results,'sss');
+              self.result.list = results;
+              self.result.status = true;
+
+              self.$apply();
+            }
+            wx.hideLoading();
+          },
+          fail: function(err) {
+            // console.log(err,'err');
+            wx.hideLoading();
+          }
+        })
       } else {
         wx.uploadFile({
           url:'https://www.iocr.vip/ai/recogn/general',

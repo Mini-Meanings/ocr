@@ -54,8 +54,8 @@
 </style>
 <template>
   <view  class="swip">
-    <image @tap="goNext" class="next" src="../image/next.png" />
-    <image @tap="goPrev" class="prev" src="../image/prev.png" />
+    <image ng-if="lflag" @tap="goNext" class="next" src="../image/next.png" />
+    <image ng-if="rflag" @tap="goPrev" class="prev" src="../image/prev.png" />
     <weSwiper :option="swiper">
       <view class="we-slide">
         <view class="item" @tap="upload(generate)">
@@ -93,7 +93,7 @@
         </view>
       </view>
       <view class="we-slide">
-        <view class="item" @tap="upload(wyw)">
+        <view class="item" @tap="upload(enhance)">
           <image lazy-load="true" src="../image/temp6.png" />
           <text class="title">生僻字识别</text>
           <text class="desc">适用于打印体的繁体字文件识别，识别率较高，但有次数限制。</text>
@@ -115,6 +115,8 @@
 
     data = {
       index: 0,
+      lflag: true,
+      rflag: true,
       swiper: {
         // direction: 'vertical',
         // width: 180,
@@ -274,7 +276,7 @@
             // console.log(tempFilePaths,'tempFilePaths');
             wx.setStorageSync('imageurl',tempFilePaths[0]);
 
-            if(e === 'ticket' || e === 'wyw') {
+            if(e === 'ticket' || e === 'enhance') {
               wx.navigateTo({
                 url: `crop1`
               });

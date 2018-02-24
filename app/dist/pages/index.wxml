@@ -56,7 +56,7 @@
         </view>
       </view>
       <view class="we-slide">
-        <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="wyw">
+        <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="enhance">
           <image lazy-load="true" src="../image/temp6.png"/>
           <text class="title">生僻字识别</text>
           <text class="desc">适用于打印体的繁体字文件识别，识别率较高，但有次数限制。</text>
