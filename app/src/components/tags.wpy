@@ -55,9 +55,16 @@
           success: function (res) {
             let tempFilePaths = res.tempFilePaths;
             wx.setStorageSync('imageurl',tempFilePaths[0]);
-            wx.navigateTo({
-              url: `preview?type=${e}`
-            })
+
+            if(e === 'wyw') {
+              wx.navigateTo({
+                url: `crop1`
+              });
+            } else {
+              wx.navigateTo({
+                url: `preview?type=${e}`
+              });
+            }
           }
         })
       },

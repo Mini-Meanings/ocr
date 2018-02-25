@@ -53,10 +53,17 @@
   }
 </style>
 <template>
-  <view class="swip">
+  <view  class="swip">
     <image @tap="goNext" class="next" src="../image/next.png" />
     <image @tap="goPrev" class="prev" src="../image/prev.png" />
     <weSwiper :option="swiper">
+      <view class="we-slide">
+        <view class="item" @tap="upload(ticket)">
+          <image lazy-load="true" src="../image/temp5.png" />
+          <text class="title">票据识别</text>
+          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
+        </view>
+      </view>
       <view class="we-slide">
         <view class="item" @tap="upload(generate)">
           <image lazy-load="true" src="../image/temp1.png" />
@@ -82,13 +89,6 @@
         <view class="item" @tap="upload(card)">
           <image lazy-load="true" src="../image/temp4.png" />
           <text class="title">银行卡识别</text>
-          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
-        </view>
-      </view>
-      <view class="we-slide">
-        <view class="item" @tap="upload(ticket)">
-          <image lazy-load="true" src="../image/temp5.png" />
-          <text class="title">票据识别</text>
           <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
         </view>
       </view>
@@ -119,7 +119,7 @@
         // direction: 'vertical',
         // width: 180,
         slideLength: 6,
-        initialSlide: 0,
+        initialSlide: 1,
         /**
          * swiper初始化后执行
          * @param swiper
@@ -149,7 +149,20 @@
          * @param event
          */
         onTouchEnd (weswiper, event) {
-
+          // console.log(weswiper.activeIndex,'weswiper.activeIndex');
+          // if(weswiper.activeIndex === 5){
+          //   wx.showToast({
+          //     title: '已经到尾啦～',
+          //     icon: 'none',
+          //     duration: 1000
+          //   })
+          // } else if(weswiper.activeIndex === 0) {
+          //   wx.showToast({
+          //     title: '已经到头啦～',
+          //     icon: 'none',
+          //     duration: 1000
+          //   })
+          // }
         },
         /**
          *  slide达到过渡条件时执行
@@ -174,13 +187,26 @@
          *  过渡结束时执行
          */
         onTransitionEnd (weswiper) {
-
+          // console.log(weswiper.activeIndex,'weswiper.activeIndex');
+          if(weswiper.activeIndex === 5){
+            wx.showToast({
+              title: '已经到尾啦～',
+              icon: 'none',
+              duration: 1000
+            })
+          } else if(weswiper.activeIndex === 0) {
+            wx.showToast({
+              title: '已经到头啦～',
+              icon: 'none',
+              duration: 1000
+            })
+          }
         },
         /**
          *  手指触碰swiper并且拖动slide时执行
          */
         onSlideMove (weswiper) {
-
+          // console.log(weswiper.activeIndex,'weswiper.activeIndex');
         },
         /**
          * slide达到过渡条件 且规定了方向 向前（右、下）切换时执行
@@ -247,7 +273,7 @@
             console.log(tempFilePaths,'tempFilePaths');
             wx.setStorageSync('imageurl',tempFilePaths[0]);
 
-            if(e === 'ticket') {
+            if(e === 'ticket' || e === 'wyw') {
               wx.navigateTo({
                 url: `crop1`
               });

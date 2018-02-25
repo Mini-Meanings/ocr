@@ -3,7 +3,7 @@
     <view class="rmedge">
       <view class="temp"/>
     </view>
-    <view class="mycontainer">
+    <scroll-view scroll-x class="mycontainer">
       <view class="content">
         
   <view class="tags">
@@ -20,6 +20,13 @@
   <view class="we-container {{$myswiper$weSwiper$directionClass}}">
     <view class="we-wrapper" bindtouchstart="$myswiper$weSwiper$touchstart" bindtouchmove="$myswiper$weSwiper$touchmove" bindtouchend="$myswiper$weSwiper$touchend" animation="{{$myswiper$weSwiper$animationData}}">
       
+      <view class="we-slide">
+        <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="ticket">
+          <image lazy-load="true" src="../image/temp5.png"/>
+          <text class="title">票据识别</text>
+          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
+        </view>
+      </view>
       <view class="we-slide">
         <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="generate">
           <image lazy-load="true" src="../image/temp1.png"/>
@@ -49,13 +56,6 @@
         </view>
       </view>
       <view class="we-slide">
-        <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="ticket">
-          <image lazy-load="true" src="../image/temp5.png"/>
-          <text class="title">票据识别</text>
-          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
-        </view>
-      </view>
-      <view class="we-slide">
         <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="wyw">
           <image lazy-load="true" src="../image/temp6.png"/>
           <text class="title">生僻字识别</text>
@@ -77,5 +77,5 @@
   </view>
 
       </view>
-    </view>
+    </scroll-view>
   </view>
