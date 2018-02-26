@@ -44,22 +44,6 @@
     width: 695rpx;
     text-align: justify;
   }
-  .help .qusetion {
-    width: 130rpx;
-    height: 130rpx;
-    line-height: 130rpx;
-    display:inline-block;
-    border-radius: 50%;
-    text-align: center;
-    /* box-shadow: rgba(47, 84, 235, 0.12) 0px 6px 12px inset; */
-    box-shadow: rgba(255,255,255,0.52) 0 0rpx 58rpx inset;
-    font-size: 32rpx;
-    color: rgb(228, 226, 226);
-    position:fixed;
-    bottom:30rpx;
-    right:30rpx;
-    background-color: transparent;
-  }
 </style>
 <template>
   <view class="help">
@@ -76,8 +60,8 @@
         <text class="desc">如果发现图片识别异常，请尝试更换其他图片，或者减小图片尺寸，尽可能使其精确识别。</text>
       </block>
       <block class="block">
-        <text class="tit">3.上传图片识别异常？</text>
-        <text class="desc">如果发现图片识别异常，请尝试更换其他图片，或者减小图片尺寸，尽可能使其精确识别。如果发现图片识别异常，请尝试更换其他图片，或者减小图片尺寸，尽可能使其精确识别。如果发现图片识别异常，请尝试更换其他图片，或者减小图片尺寸，尽可能使其精确识别。</text>
+        <text class="tit">3.首页顶部页签顺序为什么不固定？</text>
+        <text class="desc">目前页签根据用户使用次数动态统计，使用次数最多的将排在最前面。</text>
       </block>
       <block class="block">
         <text class="tit">4.上传图片识别异常？</text>
@@ -92,7 +76,6 @@
         <text class="desc">如果发现图片识别异常，请尝试更换其他图片，或者减小图片尺寸，尽可能使其精确识别。</text>
       </block>
     </scroll-view>
-    <button class="qusetion" open-type="contact">客服</button>
   </view>
 </template>
 

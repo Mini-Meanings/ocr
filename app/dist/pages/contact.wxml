@@ -1,5 +1,5 @@
 
-  <view class="contact">
+  <scroll-view class="contact">
     <view class="rmedge">
       <view class="temp"/>
     </view>
@@ -12,11 +12,11 @@
         </picker>
       </view> -->
       <view class="section">
-        <view>请描述您的问题</view>
+        <view>问题描述</view>
         <textarea bindblur="bindTextAreaBlur" placeholder-style="color:#fff;font-size:30rpx;" placeholder=""/>
       </view>
       <view class="section">
-        <view class="section__title">告诉我们怎样联系您</view>
+        <view class="section__title">联系方式</view>
         <input name="input"/>
       </view>
       <view class="btns">
@@ -24,4 +24,5 @@
         <span bindtap="goback">返回</span>
       </view>
     </form>
-  </view>
+    <!-- <button class="qusetion" open-type="contact">客服</button> -->
+  </scroll-view>
