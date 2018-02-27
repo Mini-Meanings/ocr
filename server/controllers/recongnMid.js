@@ -73,6 +73,7 @@ exports.picCrop = function (req, res, next) {
  */
 exports.timesCount = function (type) {
 	return function (user, req, res, next) {
+		logger.debug("timesCount user: %j", user);
 		if (!user) {
 			return res.lockSend(100006, `获取用户身份信息失败.`);
 		}
