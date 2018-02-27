@@ -8,9 +8,14 @@
     </view>
     <!-- <view wx:if="{{result.status}}" class="result">{{result.desc}}</view> -->
     <view  wx:if="{{$preview$result.status}}" class="result">
-      <view class="line" wx:for-items="{{$preview$result.list}}" wx:for-index="index" wx:for-item="item" wx:key="index">
-        <text>{{item}}</text>
-      </view>
+      <text class="notice">注意：勾选文字可通过「复制文字」进行拷贝！</text>
+      <checkbox-group bindchange="$preview$checkboxChange">
+        <view class="line" wx:for-items="{{$preview$result.list}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+          <label class="checkbox">
+            <checkbox value="{{item.id}}" checked="true"/>{{item.val}}
+          </label>
+        </view>
+      </checkbox-group>
     </view>
     <view class="btns {{!$preview$result.status?'hide':''}}">
       <view>
