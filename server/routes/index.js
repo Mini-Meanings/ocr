@@ -5,7 +5,6 @@ var routers = require("require-directory")(module);
 
 module.exports = function (app) {
 	Object.keys(routers).forEach(item => {    //批量处理route文件夹中的路由文件
-		console.log("======= item : %j", item);
 		if (item !== "index") {
 			app.use("/" + item, routers[item]);
 		}
