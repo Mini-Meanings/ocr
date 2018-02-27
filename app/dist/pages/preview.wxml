@@ -6,12 +6,12 @@
     <view class="imgbox">
       <image mode="widthFix" src="{{$preview$result.imgurl}}"/>
     </view>
-    <view  wx:if="{{$preview$result.status}}" class="result">{{$preview$result.desc}}</view>
-    <!-- <block class="result" wx:if="{{result.status}}" wx:for-items="{{result.list}}" wx:for-index="index" wx:for-item="item" wx:key="index">
-      <view>
+    <!-- <view wx:if="{{result.status}}" class="result">{{result.desc}}</view> -->
+    <view  wx:if="{{$preview$result.status}}" class="result">
+      <view class="line" wx:for-items="{{$preview$result.list}}" wx:for-index="index" wx:for-item="item" wx:key="index">
         <text>{{item}}</text>
       </view>
-    </block> -->
+    </view>
     <view class="btns {{!$preview$result.status?'hide':''}}">
       <view>
         <span class="second" bindtap="$preview$transfer">

@@ -246,12 +246,12 @@
             var tempFilePaths = res.tempFilePaths;
             console.log(tempFilePaths,'tempFilePaths');
             wx.setStorageSync('imageurl',tempFilePaths[0]);
-            // wx.navigateTo({
-            //   url: `preview?type=${e}`
-            // })
             wx.navigateTo({
-              url: `crop`
+              url: `preview?type=${e}`
             })
+            // wx.navigateTo({
+            //   url: `crop`
+            // })
           }
         })
       },
