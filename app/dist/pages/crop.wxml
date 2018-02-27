@@ -1,0 +1,9 @@
+
+<view>
+  <view>{{desc}}</view>
+  
+  <canvas class="cropper" disable-scroll="{{$cropper$disable}}" bindtouchstart="$cropper$ts" bindtouchmove="$cropper$tm" bindtouchend="$cropper$te" style="width:{{$cropper$width}}px;height:{{$cropper$height}}px;background-color: rgba(0, 0, 0, 0.8)" binderror="$cropper$canvasError" canvas-id="cropper">
+  </canvas>
+
+  <button bindtap="getCropperImage">识别图片</button>
+</view>

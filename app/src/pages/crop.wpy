@@ -1,0 +1,95 @@
+<style lang="less">
+
+</style>
+<template>
+<view>
+  <view>{{desc}}</view>
+  <cropper :options="cropperOpt"
+    @beforeImageLoad="bl"></cropper>
+  <button @tap="getCropperImage">识别图片</button>
+</view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import Cropper from '../components/cropper';
+const device = wx.getSystemInfoSync();
+const width = device.windowWidth;
+const height = device.windowHeight - 50;
+
+export default class Index extends wepy.page {
+  data = {
+    cropperOpt: {
+      width,
+      height,
+      scale: 2.5,
+      zoom: 8,
+      cut: {
+        x: (width - 300) / 2,
+        y: (height - 300) / 2,
+        width: 300,
+        height: 300
+      }
+    },
+    imgurl: '',
+    desc: ''
+  }
+
+  components = {
+    cropper: Cropper
+  }
+
+  events = {
+    ready () {
+      console.log('we-cropper ready');
+    },
+    beforeImageLoad () {
+      console.log('we-cropper beforeImageLoad');
+    },
+    imageLoad () {
+      console.log('we-cropper imageLoad');
+    },
+    beforeDraw () {
+      console.log('we-cropper beforeDraw');
+    }
+  }
+
+  methods = {
+    getCropperImage () {
+      let self = this;
+      wx.showLoading({
+        title: '加载中',
+      })
+      this.$invoke('cropper', 'getCropperImage', (src) => {
+        console.log(src,'src');
+        wx.uploadFile({
+          url:'https://www.iocr.vip/ai/recogn/general',
+          filePath: src,
+          name: 'file',
+          success: function(res){
+            let data = JSON.parse(res.data);
+            console.log(data.data.words_result,'success');
+
+            let results = data.data.words_result.map((item) => { return item.words; });
+            console.log(results,'results');
+            self.desc = results.join('');
+            // self.result.status = true;
+
+            self.$apply();
+            wx.hideLoading();
+          }
+        })
+      })
+    }
+  }
+
+  cropWindow () {
+    this.imgurl = wx.getStorageSync('imageurl');
+    this.$invoke('cropper', 'pushOrigin', this.imgurl);
+  }
+
+  onLoad () {
+    this.cropWindow();
+  }
+}
+</script>

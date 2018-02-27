@@ -13,6 +13,7 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index',
+      'pages/crop',
       'pages/preview',
       'pages/help',
       'pages/contact'
