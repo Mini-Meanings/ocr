@@ -21,11 +21,12 @@
   .preview .result {
     position: absolute;
     top: 0;
-    width: 100%;
+    // width: 100%;
     height: ~"calc(100vh)";
     background: rgba(0,0,0,0.3);
-    text-align:center;
     font-size: 32rpx;
+    padding: 30rpx;
+    text-align: justify;
   }
   .preview .btns {
     position:absolute;
@@ -34,7 +35,7 @@
     box-sizing:border-box;
     text-align:center;
     display:flex;
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(249, 249, 250,0.05)), to(rgb(253, 253, 253)));
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(249, 249, 250,0)), to(rgb(253, 253, 253)));
   }
   .preview .btns span {
     width:120rpx;
@@ -80,7 +81,12 @@
     <view class="imgbox">
       <image mode="widthFix" src="{{result.imgurl}}" />
     </view>
-    <view wx:if="{{result.status}}" class="result">{{result.one}}</view>
+    <view wx:if="{{result.status}}" class="result">{{result.desc}}</view>
+    <!-- <block class="result" wx:if="{{result.status}}" wx:for-items="{{result.list}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+      <view>
+        <text>{{item}}</text>
+      </view>
+    </block> -->
     <view class="btns {{!result.status?'hide':''}}">
       <view>
         <span class="second" @tap="transfer">
@@ -117,8 +123,9 @@
       result: {
         imgurl: '',
         desc: '',
-        one: '这里是测试文字～这里是测试文字',
-        status: true
+        one: '解析图片中～',
+        status: false,
+        // list: []
       }
     }
 
@@ -154,7 +161,7 @@
       },
       copy() {
         wx.setClipboardData({
-          data: 'hello jartto!',
+          data: this.result.desc,
           success: function(res) {
             wx.getClipboardData({
               success: function(res) {
@@ -172,7 +179,6 @@
 
     upload() {
       let self = this;
-      const ctx = wx.createCanvasContext('myCanvas');
       wx.showLoading({
         title: '加载中',
       })
@@ -181,28 +187,15 @@
         filePath: this.result.imgurl,
         name: 'file',
         success: function(res){
-          // wx.showToast({
-          //   title: '成功',
-          //   icon: 'success',
-          //   duration: 2000
-          // })
-          var data = JSON.parse(res.data);
-          console.log(data.data.words_result[0],'success');
-          //do something
-          self.result.desc = data.data.words_result[0].words;
+          let data = JSON.parse(res.data);
+          console.log(data.data.words_result,'success');
+
+          let results = data.data.words_result.map((item) => { return item.words; });
+          console.log(results,'results');
+          self.result.desc = results.join('');
+          self.result.status = true;
+
           self.$apply();
-
-          // ctx.rect(10, 10, 100, 50);
-          ctx.rect(
-            data.data.words_result[0].location.left-80, 
-            data.data.words_result[0].location.top, 
-            data.data.words_result[0].location.width-350, 
-            26
-          );
-          ctx.setStrokeStyle('red');
-          ctx.stroke();
-          ctx.draw();
-
           wx.hideLoading();
         }
       })
@@ -210,7 +203,7 @@
 
     onLoad () {
       this.result.imgurl = wx.getStorageSync('imageurl');
-      // this.upload();
+      this.upload();
       wx.showShareMenu({
         withShareTicket: true
       })

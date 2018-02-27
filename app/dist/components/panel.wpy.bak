@@ -50,7 +50,7 @@
   </view>
 </template>
 <script>
-  import wepy from 'wepy'
+  import wepy from 'wepy';
 
   export default class Panel extends wepy.component {
     methods = {
@@ -68,8 +68,11 @@
             //   urls: tempFilePaths // 需要预览的图片http链接列表
             // })
             wx.setStorageSync('imageurl',tempFilePaths[0]);
+            // wx.navigateTo({
+            //   url: 'preview?id=1'
+            // })
             wx.navigateTo({
-              url: 'preview?id=1'
+              url: 'crop'
             })
           }
         })

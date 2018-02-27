@@ -1,4 +1,3 @@
-@import "./../components/panel.wxss";
 @import "./../components/swiper.wxss";
 @import "./../components/navs.wxss";
 @import "./../components/tags.wxss";
