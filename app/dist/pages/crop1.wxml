@@ -1,0 +1,45 @@
+
+    
+  <scroll-view class="cropper_main_container {{$wepyCropper$cropperData.hidden?'hidden':''}}">
+    <view class="cropper_container">
+      <canvas class="original_canvas" canvas-id="originalCanvas" style="width:{{$wepyCropper$cropperChangableData.originalSize.width}}px;height:{{$wepyCropper$cropperChangableData.originalSize.height}}px;"/>
+
+      <view class="cropper_canvas_container">
+        <canvas class="canvas" canvas-id="canvas" style="left:{{$wepyCropper$cropperData.left}}px;top:{{$wepyCropper$cropperData.top}}px;width:{{$wepyCropper$cropperChangableData.scaleSize.width}}px;height:{{$wepyCropper$cropperChangableData.scaleSize.height}}px;"/>
+        <canvas class="move_canvas" canvas-id="moveCanvas" style="left:{{$wepyCropper$cropperData.left}}px;top:{{$wepyCropper$cropperData.top}}px;width:{{$wepyCropper$cropperChangableData.scaleSize.width}}px;height:{{$wepyCropper$cropperChangableData.scaleSize.height}}px;"/>
+
+        <movable-area class="cropper_movable_area_container" style="left:{{$wepyCropper$cropperData.left}}px;top:{{$wepyCropper$cropperData.top}}px;width:{{$wepyCropper$cropperChangableData.scaleSize.width}}px;height:{{$wepyCropper$cropperChangableData.scaleSize.height}}px;">
+          <block  wx:if="{{$wepyCropper$cropperMovableItems}}">
+            <block wx:for="{{$wepyCropper$cropperMovableItems}}" wx:key="moveItem">
+              <movable-view class="move_item" style="width:{{$wepyCropper$cropperData.itemLength}}px; height:{{$wepyCropper$cropperData.itemLength}}px;" direction="all" x="{{item.x-$wepyCropper$cropperData.itemLength/2}}" y="{{item.y-$wepyCropper$cropperData.itemLength/2}}" bindtouchmove="$wepyCropper$moveEvent" bindtouchend="$wepyCropper$endEvent" data-wpymoveevent-a="{{index}}" data-wpyendevent-a="{{index}}"/>
+            </block>
+          </block>
+        </movable-area>
+      </view>
+    </view>
+
+    <view class="cropper_toolbar">
+      <view class="button_item cancel_button" bindtap="$wepyCropper$hideCropper">
+        取消
+      </view>
+      <view class="button_item rotate_button" bindtap="$wepyCropper$rotateImage">
+        旋转
+      </view>
+
+      <block  wx:if="{{$wepyCropper$cropperData.sizeType.length==2}}">
+        <view class="original_button button_item {{$wepyCropper$cropperData.original?'checked':''}}" bindtap="$wepyCropper$originalChange">
+          <!-- <view class='check_container'>
+              <view class='check_border'></view>
+              <view class='check_center'></view>
+          </view> -->
+          <view>原图</view>
+        </view>
+      </block>
+      <view class="crop_image_button button_item {{$wepyCropper$cropperChangableData.canCrop?'':'disable'}}" bindtap="$wepyCropper${{$wepyCropper$cropperChangableData.canCrop?'cropImage':''}}">
+        完成
+      </view>
+      <!-- <view class="crop_image_button button_item" bindtap="cropImage">
+          完成
+      </view> -->
+    </view>
+  </scroll-view>

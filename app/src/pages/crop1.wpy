@@ -1,0 +1,39 @@
+<template>
+    <wepyCropper :params.sync="clipParams"></wepyCropper>
+</template>
+<script>
+import wepy from 'wepy';
+import wepyCropper from 'wepy-cropper';
+
+export default class Crop1 extends wepy.page {
+  data = {
+    clipParams: {
+      src: "", //字符串, 图片path 必填
+      mode: "rectangle", //选填,默认rectangle
+      /* 两种模式
+      通过的mode设定
+      mode:'rectangle' 返回图片
+      mode:'quadrangle' 并不返回图片，只返回在图片中的四个点，用于perspective correction（可以查找OpenCV相关资料）
+      */
+      sizeType: ["original"] //数组,选填 ['original', 'compressed'], 默认original
+    }
+  };
+  components = {
+    wepyCropper
+  };
+
+  onLoad() {
+    this.clipParams.src = wx.getStorageSync('imageurl');
+  }
+
+  events = {
+    //裁剪完的图片
+    wepyCropperFinsh(path) {
+      wx.setStorageSync('imageurl',path);
+      wx.redirectTo({
+        url: 'preview'
+      });
+    }
+  };
+}
+</script>

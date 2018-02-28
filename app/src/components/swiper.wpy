@@ -240,21 +240,29 @@
       upload(e) {
         wx.chooseImage({
           count: 1, // 默认9
-          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+          sizeType: ['original'], // 可以指定是原图还是压缩图，默认二者都有
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: function (res) {
             var tempFilePaths = res.tempFilePaths;
             console.log(tempFilePaths,'tempFilePaths');
             wx.setStorageSync('imageurl',tempFilePaths[0]);
-            wx.navigateTo({
-              url: `preview?type=${e}`
-            })
-            // wx.navigateTo({
-            //   url: `crop`
-            // })
+
+            if(e === 'ticket') {
+              wx.navigateTo({
+                url: `crop1`
+              });
+            } else {
+              wx.navigateTo({
+                url: `preview?type=${e}`
+              });
+            }
+
           }
         })
       },
+      ticket() {
+        
+      }
     }
     
     onLoad() {
