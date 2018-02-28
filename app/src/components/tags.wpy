@@ -64,6 +64,7 @@
               wx.navigateTo({
                 url: `preview?type=${e}`
               });
+              wx.setStorageSync('type', e);
             }
           }
         })
