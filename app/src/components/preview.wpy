@@ -22,7 +22,7 @@
     position: absolute;
     top: 0;
     // width: 100%;
-    height: ~"calc(100vh - 258rpx)";
+    height: ~"calc(100vh - 205rpx)";
     background: rgba(0,0,0,0.75);
     font-size: 30rpx;
     padding: 30rpx;
@@ -47,46 +47,44 @@
     text-align:center;
     display:flex;
     z-index:999;
-    padding-top: 30rpx;
+    padding-top: 10rpx;
     background: #fff;
     // border-top: 1px solid rgb(226, 226, 226);
     box-shadow: 0rpx -2rpx 5rpx #ccc;
     // background: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(249, 249, 250,0)), to(rgb(253, 253, 253)));
   }
   .preview .btns span {
-    width:120rpx;
-    height:120rpx;
+    width: 100rpx;
+    height: 100rpx;
     display: inline-block;
     // border:1px solid;
-    border-radius:50%;
-    line-height:120rpx;
-    text-align:center;
-    margin:0 30rpx;
-    font-size: 30rpx;
-    color: rgb(228, 226, 226);
+    border-radius: 50%;
+    line-height: 100rpx;
+    margin-bottom: -5px;
   }
   .preview .first{
-    box-shadow: rgba(134, 204, 4, 0.52) 0 0rpx 58rpx inset;
+    box-shadow: rgba(134, 204, 4, 0.52) 0 0rpx 48rpx inset;
   }
   .preview .second{
-    box-shadow: rgba(9, 224, 224, 0.52) 0 0rpx 58rpx inset;
+    box-shadow: rgba(9, 224, 224, 0.52) 0 0rpx 48rpx inset;
   }
   .preview .third{
-    box-shadow: rgba(204, 78, 5, 0.52) 0 0rpx 58rpx inset;
+    box-shadow: rgba(204, 78, 5, 0.52) 0 0rpx 48rpx inset;
   }
   .preview .fourth{
-    box-shadow: rgba(179, 5, 202, 0.52) 0 0rpx 58rpx inset;
+    box-shadow: rgba(179, 5, 202, 0.52) 0 0rpx 48rpx inset;
   }
   .hide span{
     color: rgb(43, 43, 43)!important;
   }
   .btns image{
-    width:50rpx;
-    height:50rpx;
+    width:40rpx;
+    height:40rpx;
     vertical-align:middle;
   }
   .btns .one{
-    font-size:30rpx;
+    font-size:25rpx;
+    display:inline-block;
     color:#333;
     opacity:0.8;
   }
@@ -184,16 +182,16 @@
         wx.showActionSheet({
           itemList: ['中英文', '日语', '法语'],
           success: function(res) {
-            console.log(res.tapIndex)
+            console.log(res.tapIndex);
           },
           fail: function(res) {
-            console.log(res.errMsg)
+            console.log(res.errMsg);
           }
         })
       },
       copy() {
         wx.setClipboardData({
-          data: this.copy.join(''),
+          data: this.copy.join('\n'),
           success: function(res) {
             wx.getClipboardData({
               success: function(res) {
