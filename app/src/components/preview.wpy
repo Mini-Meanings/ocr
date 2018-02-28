@@ -22,11 +22,22 @@
     position: absolute;
     top: 0;
     // width: 100%;
-    height: ~"calc(100vh)";
-    background: rgba(0,0,0,0.3);
-    font-size: 32rpx;
+    height: ~"calc(100vh - 205rpx)";
+    background: rgba(0,0,0,0.75);
+    font-size: 30rpx;
     padding: 30rpx;
     text-align: justify;
+    color: #ccc;
+    width: ~"calc(100vw - 55rpx)";
+    overflow-y:scroll;
+  }
+  .preview .notice {
+    color: rgb(255, 153, 0);
+  }
+  .preview .line {
+    // width: 100%;
+    margin:20rpx 0;
+    border-bottom:1px dashed rgb(99, 98, 98);
   }
   .preview .btns {
     position:absolute;
@@ -35,42 +46,45 @@
     box-sizing:border-box;
     text-align:center;
     display:flex;
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(249, 249, 250,0)), to(rgb(253, 253, 253)));
+    z-index:999;
+    padding-top: 10rpx;
+    background: #fff;
+    // border-top: 1px solid rgb(226, 226, 226);
+    box-shadow: 0rpx -2rpx 5rpx #ccc;
+    // background: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(249, 249, 250,0)), to(rgb(253, 253, 253)));
   }
   .preview .btns span {
-    width:120rpx;
-    height:120rpx;
+    width: 100rpx;
+    height: 100rpx;
     display: inline-block;
     // border:1px solid;
-    border-radius:50%;
-    line-height:120rpx;
-    text-align:center;
-    margin:0 30rpx;
-    font-size: 32rpx;
-    color: rgb(228, 226, 226);
+    border-radius: 50%;
+    line-height: 100rpx;
+    margin-bottom: -5px;
   }
   .preview .first{
-    box-shadow: rgba(134, 204, 4, 0.52) 0 0rpx 58rpx inset;
+    box-shadow: rgba(134, 204, 4, 0.52) 0 0rpx 48rpx inset;
   }
   .preview .second{
-    box-shadow: rgba(9, 224, 224, 0.52) 0 0rpx 58rpx inset;
+    box-shadow: rgba(9, 224, 224, 0.52) 0 0rpx 48rpx inset;
   }
   .preview .third{
-    box-shadow: rgba(204, 78, 5, 0.52) 0 0rpx 58rpx inset;
+    box-shadow: rgba(204, 78, 5, 0.52) 0 0rpx 48rpx inset;
   }
   .preview .fourth{
-    box-shadow: rgba(179, 5, 202, 0.52) 0 0rpx 58rpx inset;
+    box-shadow: rgba(179, 5, 202, 0.52) 0 0rpx 48rpx inset;
   }
   .hide span{
     color: rgb(43, 43, 43)!important;
   }
   .btns image{
-    width:60rpx;
-    height:60rpx;
+    width:40rpx;
+    height:40rpx;
     vertical-align:middle;
   }
   .btns .one{
-    font-size:30rpx;
+    font-size:25rpx;
+    display:inline-block;
     color:#333;
     opacity:0.8;
   }
@@ -81,12 +95,17 @@
     <view class="imgbox">
       <image mode="widthFix" src="{{result.imgurl}}" />
     </view>
-    <view wx:if="{{result.status}}" class="result">{{result.desc}}</view>
-    <!-- <block class="result" wx:if="{{result.status}}" wx:for-items="{{result.list}}" wx:for-index="index" wx:for-item="item" wx:key="index">
-      <view>
-        <text>{{item}}</text>
-      </view>
-    </block> -->
+    <!-- <view wx:if="{{result.status}}" class="result">{{result.desc}}</view> -->
+    <view wx:if="{{result.status}}" class="result">
+      <text class="notice">注意：勾选文字可通过「复制文字」进行拷贝！</text>
+      <checkbox-group @change="checkboxChange">
+        <view class="line" wx:for-items="{{result.list}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+          <label class="checkbox">
+            <checkbox value="{{item.id}}" checked="true"/>{{item.val}}
+          </label>
+        </view>
+      </checkbox-group>
+    </view>
     <view class="btns {{!result.status?'hide':''}}">
       <view>
         <span class="second" @tap="transfer">
@@ -125,13 +144,24 @@
         desc: '',
         one: '解析图片中～',
         status: false,
-        // list: []
-      }
+        list: []
+      },
+      copy: []
     }
 
     methods = {
       which() {
         this.result.one = this.result.desc;
+      },
+      checkboxChange(e) {
+        let keys = e.detail.value.sort((a,b)=>{
+          return a-b;
+        });
+        this.copy = [];
+        for(let i = 0; i < keys.length; i++) {
+          this.copy.push(this.result.list[keys[i]].val);
+        }
+        console.log(this.copy);
       },
       share() {
         wx.showShareMenu({
@@ -152,16 +182,16 @@
         wx.showActionSheet({
           itemList: ['中英文', '日语', '法语'],
           success: function(res) {
-            console.log(res.tapIndex)
+            console.log(res.tapIndex);
           },
           fail: function(res) {
-            console.log(res.errMsg)
+            console.log(res.errMsg);
           }
         })
       },
       copy() {
         wx.setClipboardData({
-          data: this.result.desc,
+          data: this.copy.join('\n'),
           success: function(res) {
             wx.getClipboardData({
               success: function(res) {
@@ -180,7 +210,7 @@
     upload() {
       let self = this;
       wx.showLoading({
-        title: '加载中',
+        title: '识别中',
       })
       wx.uploadFile({
         url:'https://www.iocr.vip/ai/recogn/general',
@@ -190,9 +220,9 @@
           let data = JSON.parse(res.data);
           console.log(data.data.words_result,'success');
 
-          let results = data.data.words_result.map((item) => { return item.words; });
-          console.log(results,'results');
-          self.result.desc = results.join('');
+          let results = data.data.words_result.map((item,index) => { return {id:index,val:item.words}; });
+          console.log(results,'sss');
+          self.result.list = results;
           self.result.status = true;
 
           self.$apply();
