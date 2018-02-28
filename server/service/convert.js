@@ -2,10 +2,44 @@
  * Created by wyq on 18/1/27.
  * 将图片转换为文字
  */
-const AipOcrClient = require("baidu-aip-sdk").ocr;
+const AipOcrClient = require("baidu-aip-sdk").ocr;          //图像相关
+const AipSpeechClient = require("baidu-aip-sdk").speech;    //语音相关
 const fs = require("fs");
 const config = require("config");
 const Bluebird = require("bluebird");
+const path = require("path");
+const logger = require("../utils/log")(__filename);
+
+/**
+ * 语音合成
+ * @param txt 文本
+ * @param opt 选项
+ */
+exports.voiceCompose = function (txt, opt) {
+	if (!txt || txt.length) {
+		return Bluebird.reject("text length must <= 1024 and > 0");
+	}
+	opt = opt || {};
+	if (!opt.hasOwnProperty("per")) {
+		opt.per = 1;
+	}
+	let speechKey = config.speechKey;
+	let selKey = speechKey[+new Date() % speechKey.length];
+	const client = new AipSpeechClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
+	client.text2audio(txt, opt).then(res => {
+		if (!res || !res.data) {
+			logger.warn("voice compose fiald res: %s", res);
+			return Bluebird.reject("voice compose fiald");
+		}
+		let fileName = `v-${+new Date()}.mp3`;
+		let pathName = path.join(__dirname, `../public/voice/${fileName}`);
+		fs.writeFileSync(pathName, res.data);
+		return Bluebird.resolve(fileName);
+	}).catch(err => {
+		logger.error("voiceCompose err: %s, opt: %s, txt: %s", err.stack || err.message || err, opt, txt);
+		return Bluebird.reject(err);
+	});
+};
 
 // 通用文字识别 500次
 exports.generalOcr = function (imgBuff) {
@@ -173,7 +207,7 @@ exports.generalEnhance = function (imgBuff) {
 	let selKey = ocrKey[1]; //付费接口，key只有一个
 	const client = new AipOcrClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
 	const options = {
-		language_type:"CHN_ENG",
+		language_type: "CHN_ENG",
 		detect_direction: "true",
 		detect_language: "true"
 	};
