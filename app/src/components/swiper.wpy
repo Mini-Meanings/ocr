@@ -292,6 +292,7 @@
               wx.navigateTo({
                 url: `crop1`
               });
+              wx.setStorageSync('type', e);
             } else {
               wx.navigateTo({
                 url: `preview?type=${e}`

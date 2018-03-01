@@ -147,7 +147,8 @@
         list: [],
         type: ''
       },
-      copy: []
+      copy: [],
+      authid: 'temp002'
     }
 
     methods = {
@@ -155,6 +156,7 @@
         this.result.one = this.result.desc;
       },
       checkboxChange(e) {
+        // console.log('checkboxChange');
         let keys = e.detail.value.sort((a,b)=>{
           return a-b;
         });
@@ -208,6 +210,18 @@
       }
     }
 
+    initCopy() {
+      // console.log('initCopy');
+      let keys = this.result.list.sort((a,b)=>{
+        return a-b;
+      });
+      this.copy = [];
+      for(let i = 0; i < keys.length; i++) {
+        this.copy.push(this.result.list[i].val);
+      }
+      // console.log(this.copy,'init copy');
+    }
+
     upload(type) {
       console.log(type,'upload');
       let self = this;
@@ -216,9 +230,10 @@
       })
       if (type === 'card') {
         wx.uploadFile({
-          url:'https://www.iocr.vip/ai/recogn/bankcard',
+          url:'https://www.iocr.vip/ai/recogns/bankcard',
           filePath: this.result.imgurl,
           name: 'file',
+          header: {authid:this.authid},
           success: function(res) {
             let data = JSON.parse(res.data);
             console.log(data,'backcard');
@@ -256,7 +271,7 @@
           url:'https://www.iocr.vip/ai/recogns/idcard',
           filePath: this.result.imgurl,
           name: 'file',
-          header: {authid:'test001'},
+          header: {authid:this.authid},
           formData: {
             side: 'front',
           },
@@ -293,6 +308,7 @@
               ];
 
               self.result.status = true;
+              self.initCopy();
               self.$apply();
             }
             wx.hideLoading();
@@ -307,7 +323,7 @@
           url:'https://www.iocr.vip/ai/recogns/drivecard',
           filePath: this.result.imgurl,
           name: 'file',
-          header: {authid:'test001'},
+          header: {authid:this.authid},
           success: function(res) {
             let data = JSON.parse(res.data);
             console.log(data,'drive success');
@@ -355,9 +371,10 @@
         })
       } else if(type === 'enhance') {
          wx.uploadFile({
-          url:'https://www.iocr.vip/ai/recogn/enhance',
+          url:'https://www.iocr.vip/ai/recogns/enhance',
           filePath: this.result.imgurl,
           name: 'file',
+          header: {authid:this.authid},
           success: function(res) {
             let data = JSON.parse(res.data);
             console.log(data,'success');
@@ -391,9 +408,10 @@
         })
       } else {
         wx.uploadFile({
-          url:'https://www.iocr.vip/ai/recogn/general',
+          url:'https://www.iocr.vip/ai/recogns/general',
           filePath: this.result.imgurl,
           name: 'file',
+          header: {authid:this.authid},
           success: function(res) {
             let data = JSON.parse(res.data);
             console.log(data,'success');
