@@ -23,15 +23,15 @@
       <view class="we-slide">
         <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="generate">
           <image lazy-load="true" src="../image/temp1.png"/>
-          <text class="title">文字识别</text>
-          <text class="desc">提供通用图片文字识别，快速高效。对文字图片进行识别，返回信息。</text>
+          <text class="title">通用文字识别</text>
+          <text class="desc">提供快速的图片识别方式，识别类型多，但同时存在较多冗余数据。</text>
         </view>
       </view>
       <view class="we-slide">
         <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="ticket">
           <image lazy-load="true" src="../image/temp5.png"/>
           <text class="title">票据识别</text>
-          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
+          <text class="desc">针对票据类型图片进行识别，必要时需要裁切图片，确定识别范围。</text>
         </view>
       </view>
       <view class="we-slide">
@@ -45,21 +45,21 @@
         <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="drive">
           <image lazy-load="true" src="../image/temp3.png"/>
           <text class="title">驾驶证识别</text>
-          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
+          <text class="desc">针对驾驶证信息进行识别，格式化显示姓名，证号，车型，有效期等数据。</text>
         </view>
       </view>
       <view class="we-slide">
         <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="card">
           <image lazy-load="true" src="../image/temp4.png"/>
           <text class="title">银行卡识别</text>
-          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
+          <text class="desc">识别银行卡号，类型，名称等信息，并格式化显示。</text>
         </view>
       </view>
       <view class="we-slide">
         <view class="item" bindtap="$myswiper$upload" data-wpyupload-a="wyw">
           <image lazy-load="true" src="../image/temp6.png"/>
           <text class="title">生僻字识别</text>
-          <text class="desc">提供通用图片文字识别，快速高效。同时返回位置信息。</text>
+          <text class="desc">适用于打印体的繁体字文件识别，识别率较高，但有次数限制。</text>
         </view>
       </view>
     

@@ -287,9 +287,60 @@
                 {id: 0, val: `姓名：${temp['姓名'].words}`},
                 {id: 1, val: `性别：${temp['性别'].words}`},
                 {id: 2, val: `民族：${temp['民族'].words}`},
-                // {id: 3, val: `出生日期：${temp['出生日期'].words}`},
+                {id: 3, val: `出生：${temp['出生'].words}`},
                 {id: 4, val: `住址：${temp['住址'].words}`},
                 {id: 5, val: `公民身份号码：${temp['公民身份号码'].words}`},
+              ];
+
+              self.result.status = true;
+              self.$apply();
+            }
+            wx.hideLoading();
+          },
+          fail: function(err) {
+            // console.log(err,'err');
+            wx.hideLoading();
+          }
+        })
+      } else if (type === 'drive') {
+         wx.uploadFile({
+          url:'https://www.iocr.vip/ai/recogns/drivecard',
+          filePath: this.result.imgurl,
+          name: 'file',
+          header: {authid:'test001'},
+          success: function(res) {
+            let data = JSON.parse(res.data);
+            console.log(data,'drive success');
+
+            if (data.status === 'error') {
+              wx.showModal({
+                title: '异常提示',
+                content: data.data,
+                success: function(res) {
+                  if (res.confirm) {
+                    console.log('用户点击确定');
+                  } else if (res.cancel) {
+                    console.log('用户点击取消');
+                  }
+                }
+              })
+            } else if(data.status === 'ok') {
+              // let results = data.data.words_result.map((item,index) => { return {id:index,val:item.words,key:item[item[index]]}; });
+              // console.log(results,'sss');
+              // self.result.list = results;
+              // self.result.status = true;
+
+              let temp = data.data.words_result;
+              self.result.list = [
+                {id: 0, val: `证号：${temp['证号'].words}`},
+                {id: 1, val: `有效期限：${temp['有效期限'].words}`},
+                {id: 2, val: `准驾车型：${temp['准驾车型'].words}`},
+                {id: 3, val: `初次领证日期：${temp['初次领证日期'].words}`},
+                {id: 4, val: `姓名：${temp['姓名'].words}`},
+                {id: 5, val: `性别：${temp['性别'].words}`},
+                {id: 6, val: `国籍：${temp['国籍'].words}`},
+                {id: 7, val: `出生日期：${temp['出生日期'].words}`},
+                {id: 8, val: `住址：${temp['住址'].words}`}
               ];
 
               self.result.status = true;

@@ -51,29 +51,33 @@
       <view class="temp"></view>
     </view>
     <scroll-view class="scroll-view_H" scroll-y>
+       <block class="block">
+        <text class="tit">1.如果不按照类型上传图片，可以识别吗？</text>
+        <text class="desc">如果图片类型未按照类型上传，将会有冗余数据，可以通过勾选决定需要复制的文本信息。</text>
+      </block>
       <block class="block">
-        <text class="tit">1.为什么繁体字识别不可用？</text>
+        <text class="tit">2.为什么繁体字识别不可用？</text>
         <text class="desc">繁体字识别需要调用付费接口，目前只对注册用户开发，注册后可免费使用。</text>
       </block>
       <block class="block">
-        <text class="tit">2.上传图片识别异常？</text>
+        <text class="tit">3.上传图片识别异常？</text>
         <text class="desc">如果发现图片识别异常，请尝试更换其他图片，或者减小图片尺寸，尽可能使其精确识别。</text>
       </block>
       <block class="block">
-        <text class="tit">3.首页顶部页签顺序为什么不固定？</text>
+        <text class="tit">4.首页顶部页签顺序为什么不固定？</text>
         <text class="desc">目前页签根据用户使用次数动态统计，使用次数最多的将排在最前面。</text>
       </block>
       <block class="block">
-        <text class="tit">4.为什么要进行分类？</text>
+        <text class="tit">5.为什么要进行分类？</text>
         <text class="desc">为了更准确的识别图片，请确保图片类型，如身份证，银行卡等，否则可能出现异常。</text>
       </block>
       <block class="block">
-        <text class="tit">5.上传图片识别异常？</text>
-        <text class="desc">如果发现图片识别异常，请尝试更换其他图片，或者减小图片尺寸，尽可能使其精确识别。如果发现图片识别异常，请尝试更换其他图片，或者减小图片尺寸，尽可能使其精确识别。</text>
+        <text class="tit">6.图片识别后没有任何反应</text>
+        <text class="desc">可能是网络异常或未知问题，请尝试重新上传图片，进行识别。</text>
       </block>
       <block class="block">
-        <text class="tit">6.上传图片识别异常？</text>
-        <text class="desc">如果发现图片识别异常，请尝试更换其他图片，或者减小图片尺寸，尽可能使其精确识别。</text>
+        <text class="tit">7.身份证识别问题</text>
+        <text class="desc">目前只支持身份证正面识别，反面信息较少，可以使用「通用文字识别」。</text>
       </block>
     </scroll-view>
   </view>
