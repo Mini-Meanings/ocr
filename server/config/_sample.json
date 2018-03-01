@@ -57,5 +57,13 @@
       "APIKey": "abcdef123456"
     }
   ],
-  "isCacheFile": true
+  "isCacheFile": true,
+  "mailConf": {
+    "user": "a@b.c",
+    "pass": "123456",
+    "customerServiceMail": [
+      "a@b.c",
+      "a@b.c"
+    ]
+  }
 }
