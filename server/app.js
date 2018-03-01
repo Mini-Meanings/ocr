@@ -60,7 +60,7 @@ app.use(function (req, res, next) {
 	next(err);
 });
 
-// error handler
+// error handler 1111
 app.use(function (err, req, res, next) {
 	console.log('[Inside \'uncaughtException\' event]' + err.stack || err.message || err);
 	mLockSend.delLock(req.lockId);
