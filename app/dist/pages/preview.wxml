@@ -38,7 +38,7 @@
       </view>
       <view>
         <span class="first" bindtap="$preview$toggle">
-          <image src="../image/{{$preview$result.status? 'show':'hide'}}.png"/>
+          <image src="../image/{{!$preview$result.status? 'show':'hide'}}.png"/>
         </span>
         <text class="one">{{!$preview$result.status?'显示图层':'隐藏图层'}}</text>
       </view>

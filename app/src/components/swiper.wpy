@@ -60,43 +60,43 @@
       <view class="we-slide">
         <view class="item" @tap="upload(generate)">
           <image lazy-load="true" src="../image/temp1.png" />
-          <text class="title">通用文字识别</text>
+          <text class="title">通用文字识别（5 次）</text>
           <text class="desc">提供快速的图片识别方式，识别类型多，但同时存在较多冗余数据。</text>
         </view>
       </view>
       <view class="we-slide">
         <view class="item" @tap="upload(ticket)">
           <image lazy-load="true" src="../image/temp5.png" />
-          <text class="title">票据识别</text>
+          <text class="title">票据识别（5 次）</text>
           <text class="desc">针对票据类型图片进行识别，必要时需要裁切图片，确定识别范围。</text>
         </view>
       </view>
       <view class="we-slide">
         <view class="item" @tap="upload(id)">
           <image lazy-load="true" src="../image/temp2.png" />
-          <text class="title">身份证识别「正面」</text>
-          <text class="desc">可识别身份证「正面」，包含姓名、性别、出生日期、住址、证件号等信息。</text>
+          <text class="title">身份证识别（5 次）</text>
+          <text class="desc">可识别身份证「正面」，包含姓名、性别、出生日期、住址、证件号等。</text>
         </view>
       </view>
       <view class="we-slide">
         <view class="item" @tap="upload(drive)">
           <image lazy-load="true" src="../image/temp3.png" />
-          <text class="title">驾驶证识别</text>
+          <text class="title">驾驶证识别（5 次）</text>
           <text class="desc">针对驾驶证信息进行识别，格式化显示姓名，证号，车型，有效期等。</text>
         </view>
       </view>
       <view class="we-slide">
         <view class="item" @tap="upload(card)">
           <image lazy-load="true" src="../image/temp4.png" />
-          <text class="title">银行卡识别</text>
+          <text class="title">银行卡识别（5 次）</text>
           <text class="desc">识别银行卡号，类型，名称等信息，并格式化显示。</text>
         </view>
       </view>
       <view class="we-slide">
         <view class="item" @tap="upload(enhance)">
           <image lazy-load="true" src="../image/temp6.png" />
-          <text class="title">生僻字识别</text>
-          <text class="desc">适用于打印体的繁体字文件识别，识别率较高，但有次数限制。</text>
+          <text class="title">生僻字识别（5 次）</text>
+          <text class="desc">适用于繁体字图片文件识别，准确率高，但耗时较长。</text>
         </view>
       </view>
     </weSwiper>

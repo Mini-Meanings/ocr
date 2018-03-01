@@ -127,7 +127,7 @@
       </view>
       <view>
         <span class="first" @tap="toggle">
-          <image src="../image/{{result.status? 'show':'hide'}}.png" />
+          <image src="../image/{{!result.status? 'show':'hide'}}.png" />
         </span>
         <text class="one">{{!result.status?'显示图层':'隐藏图层'}}</text>
       </view>
@@ -182,19 +182,35 @@
         this.result.status = !this.result.status;
       },
       transfer() {
+        let self = this;
         wx.showActionSheet({
-          itemList: ['中英文', '日语', '法语'],
+          itemList: ['英文', '日语', '法语', '中文'],
           success: function(res) {
-            console.log(res.tapIndex);
+            // console.log(res.tapIndex,self.copy);
+            let type = '';
+            if(res.tapIndex === 0) {
+              type = 'en';
+            } else if(res.tapIndex === 1) {
+              type = 'jp';
+            } else if(res.tapIndex === 2) {
+              type = 'fra';
+            } else if(res.tapIndex === 3) {
+              type = 'zh';
+            }
             wx.request({
               url: 'https://www.iocr.vip/ai/switchs/translate', 
-              formData: { 
-                destLan: 'en',
-                q: '王'
+              method: 'POST',
+              header: {authid:self.authid},
+              data: { 
+                destLan: type,
+                q: self.copy.join('')
               },
-              header: {authid:this.authid},
               success: function(res) {
                 console.log('translate',res.data);
+                self.result.list = [
+                  {id: 0, val: res.data.data},
+                ];
+                self.$apply();
               }
             })
           },
@@ -270,6 +286,7 @@
               ];
 
               self.result.status = true;
+              self.initCopy();
               self.$apply();
             }
             wx.hideLoading();
@@ -376,6 +393,7 @@
               ];
 
               self.result.status = true;
+              self.initCopy();
               self.$apply();
             }
             wx.hideLoading();
@@ -414,7 +432,7 @@
               // console.log(results,'sss');
               self.result.list = results;
               self.result.status = true;
-
+              self.initCopy();
               self.$apply();
             }
             wx.hideLoading();
@@ -453,7 +471,7 @@
               // console.log(results,'sss');
               self.result.list = results;
               self.result.status = true;
-
+              self.initCopy();
               self.$apply();
             }
             wx.hideLoading();

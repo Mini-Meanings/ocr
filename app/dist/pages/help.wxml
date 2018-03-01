@@ -32,5 +32,9 @@
         <text class="tit">7.身份证识别问题</text>
         <text class="desc">目前只支持身份证正面识别，反面信息较少，可以使用「通用文字识别」。</text>
       </block>
+      <block class="block">
+        <text class="tit">8.识别次数限制</text>
+        <text class="desc">每种类型每天有免费的使用次数限制，用完之后需要次日才能恢复使用。</text>
+      </block>
     </scroll-view>
   </view>
