@@ -14,8 +14,8 @@
 
         
   <view class="swip">
-    <image bindtap="$myswiper$goNext" class="next" src="../image/next.png"/>
-    <image bindtap="$myswiper$goPrev" class="prev" src="../image/prev.png"/>
+    <image  wx:if="{{$myswiper$rflag}}" bindtap="$myswiper$goNext" class="next" src="../image/next.png"/>
+    <image  wx:if="{{$myswiper$lflag}}" bindtap="$myswiper$goPrev" class="prev" src="../image/prev.png"/>
     
   <view class="we-container {{$myswiper$weSwiper$directionClass}}">
     <view class="we-wrapper" bindtouchstart="$myswiper$weSwiper$touchstart" bindtouchmove="$myswiper$weSwiper$touchmove" bindtouchend="$myswiper$weSwiper$touchend" animation="{{$myswiper$weSwiper$animationData}}">

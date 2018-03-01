@@ -54,8 +54,8 @@
 </style>
 <template>
   <view  class="swip">
-    <image ng-if="lflag" @tap="goNext" class="next" src="../image/next.png" />
-    <image ng-if="rflag" @tap="goPrev" class="prev" src="../image/prev.png" />
+    <image wx:if="{{rflag}}" @tap="goNext" class="next" src="../image/next.png" />
+    <image wx:if="{{lflag}}" @tap="goPrev" class="prev" src="../image/prev.png" />
     <weSwiper :option="swiper">
       <view class="we-slide">
         <view class="item" @tap="upload(generate)">
@@ -203,6 +203,18 @@
           //     duration: 1000
           //   })
           // }
+
+          // wx.setStorageSync('index', weswiper.activeIndex);
+          
+          // console.log(arguments,'arguments');
+          // console.log(weswiper.isBeginning,'isBeginning');
+          // if (weswiper.isBeginning){
+          //   console.log('tail');
+          //   this.lflag = false;
+          // } else if (weswiper.isEnd) {
+          //   console.log('head');
+          //   this.rflag = false;
+          // }
         },
         /**
          *  手指触碰swiper并且拖动slide时执行
@@ -293,6 +305,7 @@
     }
     
     onLoad() {
+      this.index = 0;
     }
   }
 </script>
