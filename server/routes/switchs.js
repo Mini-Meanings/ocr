@@ -9,7 +9,7 @@ const mDefaultValue = require("../utils/defaultValue.js");
 
 /**
  * @api {post} /switchs/translate v1-02.01 翻译转换
- * @apiGroup v1-01.switchs
+ * @apiGroup v1-02.switchs
  * @apiName  lanTranslate
  *
  * @apiDescription 文本翻译
