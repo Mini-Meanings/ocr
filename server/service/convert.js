@@ -34,7 +34,7 @@ exports.voiceCompose = function (txt, opt) {
 		let fileName = `v-${+new Date()}.mp3`;
 		let pathName = path.join(__dirname, `../public/voice/${fileName}`);
 		fs.writeFileSync(pathName, res.data);
-		return Bluebird.resolve(fileName);
+		return Bluebird.resolve("/voice/" + fileName);
 	}).catch(err => {
 		logger.error("voiceCompose err: %s, opt: %s, txt: %s", err.stack || err.message || err, opt, txt);
 		return Bluebird.reject(err);
