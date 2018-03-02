@@ -39,7 +39,7 @@ exports.doGeneral = function (req, res) {
 		return res.lockSend(200, result);
 	}).catch(err => {
 		logger.warn("doGeneral generalWithLocation err: %s", err.stack || err.message || err);
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
 	});
 };
 
@@ -57,7 +57,7 @@ exports.doAccurate = function (req, res) {
 		return res.lockSend(200, result);
 	}).catch(err => {
 		logger.warn("doAccurate accurate err: %s", err.stack || err.message || err);
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
 	});
 };
 
@@ -81,7 +81,7 @@ exports.doIdcard = function (req, res) {
 		return res.lockSend(200, result);
 	}).catch(err => {
 		logger.warn("doIdcard idcard err: %s", err.stack || err.message || err);
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
 	});
 };
 
@@ -100,7 +100,7 @@ exports.doBankcard = function (req, res) {
 		return res.lockSend(200, result);
 	}).catch(err => {
 		logger.warn("doBankcard bankcard err: %s", err.stack || err.message || err);
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
 	});
 };
 
@@ -119,7 +119,7 @@ exports.doDrivecard = function (req, res) {
 		return res.lockSend(200, result);
 	}).catch(err => {
 		logger.warn("doDrivecard drivingLicense err: %s", err.stack || err.message || err);
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
 	});
 };
 
@@ -138,7 +138,7 @@ exports.doVehiclecard = function (req, res) {
 		return res.lockSend(200, result);
 	}).catch(err => {
 		logger.warn("doVehiclecard vehicleLicense err: %s", err.stack || err.message || err);
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
 	});
 };
 
@@ -156,7 +156,7 @@ exports.doLicense = function (req, res) {
 		return res.lockSend(200, result);
 	}).catch(err => {
 		logger.warn("doLicense licensePlate err: %s", err.stack || err.message || err);
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
 	});
 };
 
@@ -175,7 +175,7 @@ exports.doBusiness = function (req, res) {
 		return res.lockSend(200, result);
 	}).catch(err => {
 		logger.warn("doBusiness businessLicense err: %s", err.stack || err.message || err);
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
 	});
 };
 
@@ -193,7 +193,7 @@ exports.doReceipt = function (req, res) {
 		return res.lockSend(200, result);
 	}).catch(err => {
 		logger.warn("doReceipt receipt err: %s", err.stack || err.message || err);
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
 	});
 };
 
@@ -211,6 +211,6 @@ exports.doEnhance = function (req, res) {
 		return res.lockSend(200, result);
 	}).catch(err => {
 		logger.warn("doEnhance generalEnhance err: %s", err.stack || err.message || err);
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
 	});
 };
