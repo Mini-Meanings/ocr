@@ -30,7 +30,8 @@ function totalTimesCount(type) {
  * @param res
  */
 exports.doGeneral = function (req, res) {
-	mConvert.generalWithLocation(req.fileBuf.toString("base64")).then(result => {
+	// mConvert.generalWithLocation(req.fileBuf.toString("base64")).then(result => {
+	mConvert.generalWithLocation(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("general");
 		if (result.error_code) {
 			return BlueBird.reject(mTransErrCode.goSwitchErr(result));

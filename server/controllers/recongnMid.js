@@ -38,7 +38,7 @@ exports.agrsCheck = function (req, res, next) {
  */
 exports.picCrop = function (req, res, next) {
 	// req.fileBuf = req.files[0].buffer;
-	// return next();
+	return next();
 	//todo 由于multer解析body时没有集成object的原型函数，所以req.body.hasOwnProperty函数是不存在的，下边代码重新继承
 	req.body = Object.assign({}, req.body);
 	if (req.body.hasOwnProperty("x") && req.body.hasOwnProperty("y") && req.body.hasOwnProperty("w") && req.body.hasOwnProperty("h")) {
