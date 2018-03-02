@@ -9,6 +9,7 @@ const mCacheFile = require("../service/cacheFile.js");
 const mDefauleValue = require("../utils/defaultValue.js");
 const rc = require("../utils/createRedisClient")();
 const logger = require("../utils/log")(__filename);
+const mTransErrCode = require("../utils/transErrCode.js");
 
 function totalTimesCount(type) {
 	if (!type) {
@@ -32,7 +33,7 @@ exports.doGeneral = function (req, res) {
 	mConvert.generalWithLocation(req.fileBuf.toString("base64")).then(result => {
 		totalTimesCount("general");
 		if (result.error_code) {
-			return BlueBird.reject(result);
+			return BlueBird.reject(mTransErrCode.goSwitchErr(result));
 		}
 		return res.lockSend(200, result);
 	}).catch(err => {
@@ -49,7 +50,7 @@ exports.doAccurate = function (req, res) {
 	mConvert.accurate(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("accurate");
 		if (result.error_code) {
-			return BlueBird.reject(result);
+			return BlueBird.reject(mTransErrCode.goSwitchErr(result));
 		}
 		return res.lockSend(200, result);
 	}).catch(err => {
@@ -71,7 +72,7 @@ exports.doIdcard = function (req, res) {
 	mConvert.idcard(req.files[0].buffer.toString("base64"), idCardSide).then(result => {
 		totalTimesCount("idcard");
 		if (result.error_code) {
-			return BlueBird.reject(result);
+			return BlueBird.reject(mTransErrCode.goSwitchErr(result));
 		}
 		mCacheFile.saveBuf(req.files[0].buffer, "shenfenzheng");
 		return res.lockSend(200, result);
@@ -89,7 +90,7 @@ exports.doBankcard = function (req, res) {
 	mConvert.bankcard(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("bankcard");
 		if (result.error_code) {
-			return BlueBird.reject(result);
+			return BlueBird.reject(mTransErrCode.goSwitchErr(result));
 		}
 		mCacheFile.saveBuf(req.files[0].buffer, "shenfenzheng");
 		return res.lockSend(200, result);
@@ -107,7 +108,7 @@ exports.doDrivecard = function (req, res) {
 	mConvert.drivingLicense(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("drivecard");
 		if (result.error_code) {
-			return BlueBird.reject(result);
+			return BlueBird.reject(mTransErrCode.goSwitchErr(result));
 		}
 		mCacheFile.saveBuf(req.files[0].buffer, "jiashizheng");
 		return res.lockSend(200, result);
@@ -125,7 +126,7 @@ exports.doVehiclecard = function (req, res) {
 	mConvert.vehicleLicense(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("vehiclecard");
 		if (result.error_code) {
-			return BlueBird.reject(result);
+			return BlueBird.reject(mTransErrCode.goSwitchErr(result));
 		}
 		mCacheFile.saveBuf(req.files[0].buffer, "xingshizheng");
 		return res.lockSend(200, result);
@@ -143,7 +144,7 @@ exports.doLicense = function (req, res) {
 	mConvert.licensePlate(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("license");
 		if (result.error_code) {
-			return BlueBird.reject(result);
+			return BlueBird.reject(mTransErrCode.goSwitchErr(result));
 		}
 		return res.lockSend(200, result);
 	}).catch(err => {
@@ -160,7 +161,7 @@ exports.doBusiness = function (req, res) {
 	mConvert.businessLicense(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("business");
 		if (result.error_code) {
-			return BlueBird.reject(result);
+			return BlueBird.reject(mTransErrCode.goSwitchErr(result));
 		}
 		mCacheFile.saveBuf(req.files[0].buffer, "yingyezhizhao");
 		return res.lockSend(200, result);
@@ -178,7 +179,7 @@ exports.doReceipt = function (req, res) {
 	mConvert.receipt(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("receipt");
 		if (result.error_code) {
-			return BlueBird.reject(result);
+			return BlueBird.reject(mTransErrCode.goSwitchErr(result));
 		}
 		return res.lockSend(200, result);
 	}).catch(err => {
@@ -195,7 +196,7 @@ exports.doEnhance = function (req, res) {
 	mConvert.generalEnhance(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("enhance");
 		if (result.error_code) {
-			return BlueBird.reject(result);
+			return BlueBird.reject(mTransErrCode.goSwitchErr(result));
 		}
 		return res.lockSend(200, result);
 	}).catch(err => {

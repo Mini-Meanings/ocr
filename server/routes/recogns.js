@@ -53,7 +53,8 @@ const mRecongnCont = require("../controllers/recongnController.js");
  *      "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *   }
  */
-app.post("/general", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnMid.timesCount("general"), mRecongnCont.doGeneral);
+app.post("/general", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop,
+	mRecongnMid.timesCount("general"), mRecongnCont.doGeneral);
 
 /**
  * @api {post} /recogns/accurate v1-01.02 高精度文字识别(含位置信息)
@@ -99,7 +100,8 @@ app.post("/general", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, m
  *      "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *   }
  */
-app.post("/accurate", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnMid.timesCount("accurate"), mRecongnCont.doAccurate);
+app.post("/accurate", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop,
+	mRecongnMid.timesCount("accurate"), mRecongnCont.doAccurate);
 
 /**
  * @api {post} /recogns/idcard v1-01.03 识别身份证(正反面)
@@ -185,7 +187,8 @@ app.post("/accurate", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, 
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/idcard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnMid.timesCount("idcard"), mRecongnCont.doIdcard);
+app.post("/idcard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop,
+	mRecongnMid.timesCount("idcard"), mRecongnCont.doIdcard);
 
 /**
  * @api {post} /recogns/bankcard v1-01.04 银行卡识别
@@ -225,7 +228,8 @@ app.post("/idcard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mR
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/bankcard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnMid.timesCount("bankcard"), mRecongnCont.doBankcard);
+app.post("/bankcard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop,
+	mRecongnMid.timesCount("bankcard"), mRecongnCont.doBankcard);
 
 /**
  * @api {post} /recogns/drivecard v1-01.05 驾驶证识别
@@ -275,7 +279,8 @@ app.post("/bankcard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, 
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/drivecard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnMid.timesCount("drivecard"), mRecongnCont.doDrivecard);
+app.post("/drivecard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop,
+	mRecongnMid.timesCount("drivecard"), mRecongnCont.doDrivecard);
 
 /**
  * @api {post} /recogns/vehiclecard v1-01.06 行驶证识别
@@ -325,7 +330,8 @@ app.post("/drivecard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop,
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/vehiclecard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnMid.timesCount("vehiclecard"), mRecongnCont.doVehiclecard);
+app.post("/vehiclecard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop,
+	mRecongnMid.timesCount("vehiclecard"), mRecongnCont.doVehiclecard);
 
 /**
  * @api {post} /recogns/license v1-01.07 车牌识别
@@ -362,7 +368,8 @@ app.post("/vehiclecard", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCro
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/license", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnMid.timesCount("license"), mRecongnCont.doLicense);
+app.post("/license", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop,
+	mRecongnMid.timesCount("license"), mRecongnCont.doLicense);
 
 /**
  * @api {post} /recogns/business v1-01.08 营业执照识别
@@ -426,7 +433,8 @@ app.post("/license", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, m
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/business", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnMid.timesCount("business"), mRecongnCont.doBusiness);
+app.post("/business", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop,
+	mRecongnMid.timesCount("business"), mRecongnCont.doBusiness);
 
 /**
  * @api {post} /recogns/receipt v1-01.09 通用票据识别
@@ -477,7 +485,8 @@ app.post("/business", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, 
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/receipt", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnMid.timesCount("receipt"), mRecongnCont.doReceipt);
+app.post("/receipt", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop,
+	mRecongnMid.timesCount("receipt"), mRecongnCont.doReceipt);
 
 /**
  * @api {post} /recogns/enhance v1-01.10 通用文字识别（含生僻字版）- 无位置信息
@@ -522,4 +531,5 @@ app.post("/receipt", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, m
  *        "data":"文件类型错误，目前只支持不超过4M的 *.png、*.jpg、*.jpeg、*.bmp 类型图片"
  *     }
  */
-app.post("/enhance", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop, mRecongnMid.timesCount("enhance"), mRecongnCont.doEnhance);
+app.post("/enhance", upload.any(), mRecongnMid.agrsCheck, mRecongnMid.picCrop,
+	mRecongnMid.timesCount("enhance"), mRecongnCont.doEnhance);

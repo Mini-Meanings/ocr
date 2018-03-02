@@ -39,7 +39,7 @@ exports.goTrans = function (q, destLan = "zh") {
 				return reject(err);
 			}
 			if (!response || !response.trans_result || !response.trans_result.length || !response.trans_result[0].dst) {
-				logger.error("goTrans response err: %s, param: %s", response, param);
+				logger.warn("goTrans response err: %s, param: %s", response, param);
 				return reject("response field error");
 			}
 			return resolve(response.trans_result[0].dst);
