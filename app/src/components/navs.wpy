@@ -16,13 +16,41 @@
     box-shadow: rgba(38, 218, 231, 0.52) 0 0rpx 58rpx inset;
     font-size: 32rpx;
     color: rgb(87, 86, 86);
+    overflow: hidden;
+  }
+  .mynavs .ripple {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mynavs .ripple:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #666 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(8, 8);
+    opacity: 0;
+    transition: transform .4s, opacity .5s;
+  }
+  .mynavs .ripple:active:after {
+    transform: scale(0, 0);
+    opacity: .3;
+    transition: 0s;
   }
 </style>
 <template>
   <view class="mynavs">
-    <span @tap="toGeizan" type="default" > 赞赏 </span>
-    <span @tap="gotoPage(help)" type="default" > 帮助 </span>
-    <span @tap="gotoPage(contact)" type="default" > 反馈 </span>
+    <span class="ripple" @tap="toGeizan" type="default" > 赞赏 </span>
+    <span class="ripple" @tap="gotoPage(help)" type="default" > 帮助 </span>
+    <span class="ripple" @tap="gotoPage(contact)" type="default" > 反馈 </span>
   </view>
 </template>
 <script>
