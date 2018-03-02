@@ -31,7 +31,7 @@
     <view class="rmedge">
       <view class="temp"></view>
     </view>
-    <scroll-view scroll-x class="mycontainer">
+    <scroll-view class="mycontainer">
       <view  class="content">
         <tags />
         <myswiper />

@@ -320,19 +320,7 @@
       innerAudioContext.autoplay = true;
       innerAudioContext.src = url;
       innerAudioContext.play();
-      // if(!url) {
-        
-      //   innerAudioContext.autoplay = true;
-      //   innerAudioContext.src = url;
-      //   innerAudioContext.play();
-      // } else {
-      //   innerAudioContext.src = url;
-      // }
-      // const innerAudioContext = wx.createInnerAudioContext();
-      // innerAudioContext.autoplay = true;
-      // innerAudioContext.src = url;
-      // innerAudioContext.paused && innerAudioContext.play();
-
+      
       innerAudioContext.onEnded(() => {
         console.log('结束播放');
         // this.isPlay = false;

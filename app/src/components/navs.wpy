@@ -1,7 +1,7 @@
 <style type="less">
   .mynavs {
     position: absolute;
-    bottom: 80rpx;
+    bottom: 50rpx;
     width: 100%;
     display: flex;
     justify-content: space-around;
