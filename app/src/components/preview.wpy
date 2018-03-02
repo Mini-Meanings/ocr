@@ -88,6 +88,36 @@
     color:#333;
     opacity:0.8;
   }
+  .preview .ripple {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .preview .ripple:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    // border-radius: 50%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #666 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(7, 7);
+    opacity: 0;
+    transition: transform .4s, opacity .5s;
+  }
+  .preview .ripple:active:after {
+    transform: scale(0, 0);
+    opacity: .3;
+    transition: 0s;
+  }
+  #myAudio {
+    position: absolute;
+  }
 </style>
 <template>
   <view class="preview">
@@ -108,30 +138,32 @@
     </view>
     <view class="btns {{!result.status?'hide':''}}">
       <view>
-        <span class="second" @tap="transfer">
+        <span class="second ripple" @tap="transfer">
           <image src="../image/transfer.png" />
         </span>
         <text class="one">翻译文本</text>
       </view>
       <view>
-        <span class="third" @tap="voice">
+        <span class="third ripple" @tap="voice">
           <image src="../image/voice.png" />
         </span>
         <text class="one">语音播报</text>
       </view>
       <view>
-        <span class="fourth" @tap="copy">
+        <span class="fourth ripple" @tap="copy">
           <image src="../image/copy.png" />
         </span>
         <text class="one">复制文字</text>
       </view>
       <view>
-        <span class="first" @tap="toggle">
+        <span class="first ripple" @tap="toggle">
           <image src="../image/{{!result.status? 'show':'hide'}}.png" />
         </span>
         <text class="one">{{!result.status?'显示图层':'隐藏图层'}}</text>
       </view>
     </view>
+    <!-- <audio wx:if="{{jarttoTest}}" src="{{voiceUrl}}" autoplay></audio> -->
+    <audio src="{{voiceUrl}}" id="myAudio"></audio>
   </view>
 </template>
 <script>
@@ -149,7 +181,8 @@
       },
       copy: [],
       authid: Math.random().toString(16).substring(2),
-      voiceUrl: ''
+      voiceUrl: '',
+      isPlay: true
     }
 
     methods = {
@@ -173,11 +206,11 @@
         })
       },
       voice() {
-        // wx.showToast({
-        //   title: '语音合成中...',
-        //   icon: 'loading',
-        //   duration: 2000
-        // })
+        wx.showToast({
+          title: '语音合成中...',
+          icon: 'loading',
+          duration: 10000
+        })
         let self = this;
         wx.request({
           url: 'https://www.iocr.vip/ai/switchs/voice/compose', 
@@ -188,15 +221,22 @@
             spd: 5, // 语速
             pit: 4, // 音调
             vol: 3, // 音量
-            per: 4, // 0为女声，1为男声，3为情感合成-度逍遥，4为情感合成-度丫丫
+            per: 3, // 0为女声，1为男声，3为情感合成-度逍遥，4为情感合成-度丫丫
           },
           success: function(res) {
             console.log('compose',res.data);
 
             if(res.data.code === 200){
               let url = res.data.data.url;
-              self.voiceUrl = `https://www.iocr.vip${url}`;
+              self.voiceUrl = `https://www.iocr.vip/ai${url}`;
               self.$apply();
+              // wx.showToast({
+              //   title: '音频合成完毕',
+              //   icon: 'success',
+              //   duration: 2000
+              // })
+              wx.hideToast();
+              self.openPlayer();
             } else {
               wx.showModal({
                 title: '提示',
@@ -272,6 +312,34 @@
           }
         })
       }
+    }
+
+    openPlayer(){
+      let url = this.voiceUrl;
+      const innerAudioContext = wx.createInnerAudioContext();
+      innerAudioContext.autoplay = true;
+      innerAudioContext.src = url;
+      innerAudioContext.play();
+      // if(!url) {
+        
+      //   innerAudioContext.autoplay = true;
+      //   innerAudioContext.src = url;
+      //   innerAudioContext.play();
+      // } else {
+      //   innerAudioContext.src = url;
+      // }
+      // const innerAudioContext = wx.createInnerAudioContext();
+      // innerAudioContext.autoplay = true;
+      // innerAudioContext.src = url;
+      // innerAudioContext.paused && innerAudioContext.play();
+
+      innerAudioContext.onEnded(() => {
+        console.log('结束播放');
+        // this.isPlay = false;
+      })
+      innerAudioContext.onError((res) => {
+        console.log(res);
+      })
     }
 
     initCopy() {
