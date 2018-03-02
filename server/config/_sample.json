@@ -57,6 +57,18 @@
       "APIKey": "abcdef123456"
     }
   ],
+  "speechKey": [
+    {
+      "AppID": "aaa1",
+      "APIKey": "bbb2",
+      "SecretKey": "ccc3"
+    },
+    {
+      "AppID": "aaa1",
+      "APIKey": "bbb2",
+      "SecretKey": "ccc3"
+    }
+  ],
   "isCacheFile": true,
   "mailConf": {
     "user": "a@b.c",
