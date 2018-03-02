@@ -54,7 +54,7 @@ app.post("/translate", function (req, res) {
 	mTranlate.goTrans(q, destLan).then(response => {
 		return res.lockSend(200, response);
 	}).catch(err => {
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
 	});
 });
 
@@ -120,7 +120,7 @@ app.post("/voice/compose", function (req, res) {
 	mConvertService.voiceCompose(req.body.txt, opt).then(url => {
 		return res.lockSend(200, {url: url});
 	}).catch(err => {
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
 	});
 });
 

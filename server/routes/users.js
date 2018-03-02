@@ -90,7 +90,7 @@ app.get("/times/me", function (user, req, res) {
 		return res.lockSend(200, result);
 	}).catch(err => {
 		logger.warn("times me redis err: %s, key: %s, filedList: %s", err.message || err, key, filedList);
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
 	});
 });
 
@@ -146,7 +146,7 @@ app.post("/feedback", function (req, res) {
 		return res.lockSend(200, "您反馈的问题已知悉，请等待回复...");
 	}).catch(err => {
 		logger.warn("feedback save db err: %s, doc: %s", err.stack || err.message || err, doc);
-		return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
+		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
 	});
 });
 
