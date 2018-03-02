@@ -25,6 +25,7 @@ exports.agrsCheck = function (req, res, next) {
 	let size = file.size;
 	let ext = path.extname(file.originalname);
 	if (size > maxFileSize || !allowFile.includes(ext)) {
+		logger.warn("agrsCheck err ext: %s, size: %s", ext, size);
 		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片`);
 	}
 	return next();
