@@ -92,7 +92,7 @@
         <textarea @input="getQuestion" value="{{question}}" placeholder-style="color:#fff;font-size:30rpx;" placeholder="" />
       </view>
       <view class="section">
-        <view class="section__title">联系方式</view>
+        <view class="section__title">邮箱地址</view>
         <input @input="getContact" name="input" value="{{contact}}"/>
       </view>
       <view class="btns">
@@ -131,10 +131,17 @@ export default class Contact extends wepy.page {
       },
       submitInfo: function() {
         let self = this;
+        let pat = /^([a-zA-Z0-9.-])+@([a-zA-Z0-9-])+(.[a-zA-Z0-9_-])+/;
         console.log(this.question,this.contact);
         if(!this.question || !this.contact) {
           wx.showToast({
             title: '请完善信息后提交',
+            icon: 'none',
+            duration: 1000
+          })
+        } else if(!pat.test(this.contact)) {
+          wx.showToast({
+            title: '邮箱格式不正确',
             icon: 'none',
             duration: 1000
           })

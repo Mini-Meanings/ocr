@@ -16,7 +16,7 @@
         <textarea bindinput="getQuestion" value="{{question}}" placeholder-style="color:#fff;font-size:30rpx;" placeholder=""/>
       </view>
       <view class="section">
-        <view class="section__title">联系方式</view>
+        <view class="section__title">邮箱地址</view>
         <input bindinput="getContact" name="input" value="{{contact}}"/>
       </view>
       <view class="btns">
