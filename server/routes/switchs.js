@@ -59,19 +59,19 @@ app.post("/translate", function (req, res) {
 });
 
 /**
- * @api {post} /switchs/voice/compose v1-02.02 翻译转换
+ * @api {post} /switchs/voice/compose v1-02.02 语音合成
  * @apiGroup v1-02.switchs
  * @apiName  voiceCompose
  *
- * @apiDescription 翻译转换
+ * @apiDescription 语音合成
  *
  * @apiVersion 1.0.0
  *
  * @apiParam (switchs) {String} txt 文本，不超过1024字节
- * @apiParam (switchs) {Number=0,1,2,3,4,5,6,7,8,9} spd 语速
- * @apiParam (switchs) {Number=0,1,2,3,4,5,6,7,8,9} pit 音调
- * @apiParam (switchs) {Number=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15} vol 音量
- * @apiParam (switchs) {Number=0,1,3,4} per 发音人选择, 0为女声，1为男声，3为情感合成-度逍遥，4为情感合成-度丫丫，默认为普通女
+ * @apiParam (switchs) {Number=0,1,2,3,4,5,6,7,8,9} [spd 语速
+ * @apiParam (switchs) {Number=0,1,2,3,4,5,6,7,8,9} [pit 音调
+ * @apiParam (switchs) {Number=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15} [vol 音量
+ * @apiParam (switchs) {Number=0,1,3,4} [per 发音人选择, 0为女声，1为男声，3为情感合成-度逍遥，4为情感合成-度丫丫，默认为普通女
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK

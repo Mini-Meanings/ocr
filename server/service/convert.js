@@ -16,7 +16,7 @@ const logger = require("../utils/log")(__filename);
  * @param opt 选项
  */
 exports.voiceCompose = function (txt, opt) {
-	if (!txt || txt.length) {
+	if (!txt || !txt.length) {
 		return Bluebird.reject("text length must <= 1024 and > 0");
 	}
 	opt = opt || {};
