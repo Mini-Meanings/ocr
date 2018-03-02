@@ -148,7 +148,8 @@
         type: ''
       },
       copy: [],
-      authid: Math.random().toString(16).substring(2)
+      authid: Math.random().toString(16).substring(2),
+      voiceUrl: ''
     }
 
     methods = {
@@ -172,10 +173,46 @@
         })
       },
       voice() {
-        wx.showToast({
-          title: '语音合成中...',
-          icon: 'loading',
-          duration: 2000
+        // wx.showToast({
+        //   title: '语音合成中...',
+        //   icon: 'loading',
+        //   duration: 2000
+        // })
+        let self = this;
+        wx.request({
+          url: 'https://www.iocr.vip/ai/switchs/voice/compose', 
+          method: 'POST',
+          // header: {authid:self.authid},
+          data: { 
+            txt: self.copy.join(''),
+            spd: 5, // 语速
+            pit: 4, // 音调
+            vol: 3, // 音量
+            per: 4, // 0为女声，1为男声，3为情感合成-度逍遥，4为情感合成-度丫丫
+          },
+          success: function(res) {
+            console.log('compose',res.data);
+
+            if(res.data.code === 200){
+              let url = res.data.data.url;
+              self.voiceUrl = `https://www.iocr.vip${url}`;
+              self.$apply();
+            } else {
+              wx.showModal({
+                title: '提示',
+                content: res.data.data,
+                success: function(res) {
+                  if (res.confirm) {
+                    wx.navigateBack({
+                      delta: 2
+                    })
+                  } else if (res.cancel) {
+                    console.log('用户点击取消');
+                  }
+                }
+              })
+            }
+          }
         })
       },
       toggle() {
@@ -265,7 +302,7 @@
             console.log(data,'backcard');
             if (data.status === 'error') {
               wx.showModal({
-                title: '异常提示',
+                title: '提示',
                 content: data.data,
                 success: function(res) {
                   if (res.confirm) {
@@ -310,7 +347,7 @@
 
             if (data.status === 'error') {
               wx.showModal({
-                title: '异常提示',
+                title: '提示',
                 content: data.data,
                 success: function(res) {
                   if (res.confirm) {
@@ -361,7 +398,7 @@
 
             if (data.status === 'error') {
               wx.showModal({
-                title: '异常提示',
+                title: '提示',
                 content: data.data,
                 success: function(res) {
                   if (res.confirm) {
@@ -415,7 +452,7 @@
 
             if (data.status === 'error') {
               wx.showModal({
-                title: '异常提示',
+                title: '提示',
                 content: data.data,
                 success: function(res) {
                   if (res.confirm) {
@@ -454,7 +491,7 @@
 
             if (data.status === 'error') {
               wx.showModal({
-                title: '异常提示',
+                title: '提示',
                 content: data.data,
                 success: function(res) {
                   if (res.confirm) {

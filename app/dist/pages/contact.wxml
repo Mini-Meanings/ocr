@@ -13,11 +13,11 @@
       </view> -->
       <view class="section">
         <view>问题描述</view>
-        <textarea bindinput="getQuestion" placeholder-style="color:#fff;font-size:30rpx;" placeholder=""/>
+        <textarea bindinput="getQuestion" value="{{question}}" placeholder-style="color:#fff;font-size:30rpx;" placeholder=""/>
       </view>
       <view class="section">
         <view class="section__title">联系方式</view>
-        <input bindinput="getContact" name="input"/>
+        <input bindinput="getContact" name="input" value="{{contact}}"/>
       </view>
       <view class="btns">
         <span bindtap="submitInfo">提交</span>

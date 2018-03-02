@@ -89,11 +89,11 @@
       </view> -->
       <view class="section">
         <view>问题描述</view>
-        <textarea @input="getQuestion" placeholder-style="color:#fff;font-size:30rpx;" placeholder="" />
+        <textarea @input="getQuestion" value="{{question}}" placeholder-style="color:#fff;font-size:30rpx;" placeholder="" />
       </view>
       <view class="section">
         <view class="section__title">联系方式</view>
-        <input @input="getContact" name="input" />
+        <input @input="getContact" name="input" value="{{contact}}"/>
       </view>
       <view class="btns">
         <span @tap="submitInfo">提交</span>
@@ -115,7 +115,7 @@ export default class Contact extends wepy.page {
     data = {
       index: 0,
       array: ['问题', '建议', '优化', '异常'],
-      qusetion: '',
+      question: '',
       contact: ''
     };
     methods = {
@@ -124,32 +124,58 @@ export default class Contact extends wepy.page {
       //   this.index = e.detail.value;
       // },
       getQuestion: function(e) {
-        this.qusetion = e.detail.value;
+        this.question = e.detail.value;
       },
       getContact: function (e) { 
         this.contact = e.detail.value;
       },
       submitInfo: function() {
-        console.log(this.qusetion,this.contact);
-        if(!this.qusetion || !this.contact) {
+        let self = this;
+        console.log(this.question,this.contact);
+        if(!this.question || !this.contact) {
           wx.showToast({
             title: '请完善信息后提交',
             icon: 'none',
             duration: 1000
           })
         } else {
-          wx.showModal({
-            title: '操作成功',
-            content: '谢谢反馈，我们会尽快处理！',
-            // showCancel: false,
+          wx.request({
+            url: 'https://www.iocr.vip/ai/users/feedback',
+            method: 'POST',
+            data: {
+              content: this.question ,
+              email: this.contact
+            },
             success: function(res) {
-              if (res.confirm) {
-                wx.navigateBack({
-                  delta: 1
+              console.log(res.data,'feedback');
+              if(res.data.code === 200) {
+                wx.showToast({
+                  title: res.data.data,
+                  icon: 'none',
+                  duration: 2000
                 })
-              } else if (res.cancel) {
-                console.log('用户点击取消')
+                // 重置表单域
+                self.question = '';
+                self.contact = '';
+                self.$apply();
+              } else {
+                wx.showModal({
+                  title: '提示',
+                  content: res.data.data,
+                  success: function(res) {
+                    if (res.confirm) {
+                      wx.navigateBack({
+                        delta: 2
+                      })
+                    } else if (res.cancel) {
+                      console.log('用户点击取消');
+                    }
+                  }
+                })
               }
+            },
+            fail: function (e) { 
+              console.log(e,'feedback api error');
             }
           })
         }
