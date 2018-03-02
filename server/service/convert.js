@@ -16,28 +16,30 @@ const logger = require("../utils/log")(__filename);
  * @param opt 选项
  */
 exports.voiceCompose = function (txt, opt) {
-	if (!txt || !txt.length) {
-		return Bluebird.reject("text length must <= 1024 and > 0");
-	}
-	opt = opt || {};
-	if (!opt.hasOwnProperty("per")) {
-		opt.per = 1;
-	}
-	let speechKey = config.speechKey;
-	let selKey = speechKey[+new Date() % speechKey.length];
-	const client = new AipSpeechClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
-	client.text2audio(txt, opt).then(res => {
-		if (!res || !res.data) {
-			logger.warn("voice compose fiald res: %s", res);
-			return Bluebird.reject("voice compose fiald");
+	return new Bluebird((resolve, reject) => {
+		if (!txt || !txt.length) {
+			return reject("text length must <= 1024 and > 0");
 		}
-		let fileName = `v-${+new Date()}.mp3`;
-		let pathName = path.join(__dirname, `../public/voice/${fileName}`);
-		fs.writeFileSync(pathName, res.data);
-		return Bluebird.resolve("/voice/" + fileName);
-	}).catch(err => {
-		logger.error("voiceCompose err: %s, opt: %s, txt: %s", err.stack || err.message || err, opt, txt);
-		return Bluebird.reject(err);
+		opt = opt || {};
+		if (!opt.hasOwnProperty("per")) {
+			opt.per = 1;
+		}
+		let speechKey = config.speechKey;
+		let selKey = speechKey[+new Date() % speechKey.length];
+		const client = new AipSpeechClient(selKey.AppID, selKey.APIKey, selKey.SecretKey);
+		client.text2audio(txt, opt).then(res => {
+			if (!res || !res.data) {
+				logger.warn("voice compose fiald res: %s", res);
+				return reject("voice compose fiald");
+			}
+			let fileName = `v-${+new Date()}.mp3`;
+			let pathName = path.join(__dirname, `../public/voice/${fileName}`);
+			fs.writeFileSync(pathName, res.data);
+			return resolve("/voice/" + fileName);
+		}).catch(err => {
+			logger.error("voiceCompose err: %s, opt: %s, txt: %s", err.stack || err.message || err, opt, txt);
+			return reject(err);
+		});
 	});
 };
 
