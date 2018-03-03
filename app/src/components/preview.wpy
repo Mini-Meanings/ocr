@@ -195,6 +195,7 @@
         let keys = e.detail.value.sort((a,b)=>{
           return a-b;
         });
+        // let keys = e.detail.value;
         this.copy = [];
         for(let i = 0; i < keys.length; i++) {
           this.copy.push(this.result.list[keys[i]].val);
@@ -344,6 +345,7 @@
       let keys = this.result.list.sort((a,b)=>{
         return a-b;
       });
+      // let keys = this.result.list;
       this.copy = [];
       for(let i = 0; i < keys.length; i++) {
         this.copy.push(this.result.list[i].val);

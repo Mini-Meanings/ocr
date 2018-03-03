@@ -358,6 +358,7 @@
     }
 
     getUserInfo() {
+      let self = this;
       wx.getUserInfo({
         success: function(res) {
           let userInfo = res.userInfo;
@@ -368,6 +369,40 @@
           let province = userInfo.province
           let city = userInfo.city
           let country = userInfo.country
+        },
+        fail: function(error) {
+          // console.log(error);
+          wx.showModal({
+            title: '警告',
+            confirmText: '授权',
+            cancelText: '不授权',
+            content: `若不授权微信登陆，则无法使用「AI识图」功能；点击重新获取授权，则可重新使用；若点击不授权，后期还使用小程序，需在微信「发现小程序」，删掉「AI识图」，重新搜索授权登陆，方可使用。`,
+            success: function(res) {
+              if (res.confirm) {
+                wx.openSetting({
+                  success:function(res){
+                    // console.log(res,'res');
+                    wx.showToast({
+                      title: '授权成功',
+                      icon: 'none',
+                      duration: 2000
+                    })
+                  }
+                })
+              } else if (res.cancel) {
+                console.log('用户点击取消');
+                self.count = {
+                  general: 0,
+                  receipt: 0,
+                  idcard: 0,
+                  drivecard: 0,
+                  bankcard: 0,
+                  enhance: 0
+                }
+                self.$apply();
+              }
+            }
+          })
         }
       })
     }
