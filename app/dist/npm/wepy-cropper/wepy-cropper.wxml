@@ -18,7 +18,10 @@
     </view>
 
     <view class="cropper_toolbar">
-      <view class="button_item cancel_button" bindtap="hideCropper">
+      <!-- <view class="button_item cancel_button" bindtap="hideCropper">
+        取消
+      </view> -->
+      <view class="button_item cancel_button" bindtap="goback">
         取消
       </view>
       <view class="button_item rotate_button" bindtap="rotateImage">

@@ -283,7 +283,7 @@
               header: {authid:self.authid},
               data: { 
                 destLan: type,
-                q: self.copy.join('')
+                q: self.copy.join(' ')
               },
               success: function(res) {
                 console.log('translate',res.data);
@@ -483,16 +483,18 @@
               // self.result.status = true;
 
               let temp = data.data.words_result;
+              console.log(temp,'temp');
               self.result.list = [
                 {id: 0, val: `证号：${temp['证号'].words}`},
                 {id: 1, val: `有效期限：${temp['有效期限'].words}`},
-                {id: 2, val: `准驾车型：${temp['准驾车型'].words}`},
-                {id: 3, val: `初次领证日期：${temp['初次领证日期'].words}`},
-                {id: 4, val: `姓名：${temp['姓名'].words}`},
-                {id: 5, val: `性别：${temp['性别'].words}`},
-                {id: 6, val: `国籍：${temp['国籍'].words}`},
-                {id: 7, val: `出生日期：${temp['出生日期'].words}`},
-                {id: 8, val: `住址：${temp['住址'].words}`}
+                {id: 2, val: `至：${temp['至'].words}`},
+                {id: 3, val: `准驾车型：${temp['准驾车型'].words}`},
+                {id: 4, val: `初次领证日期：${temp['初次领证日期'].words}`},
+                {id: 5, val: `姓名：${temp['姓名'].words}`},
+                {id: 6, val: `性别：${temp['性别'].words}`},
+                {id: 7, val: `国籍：${temp['国籍'].words}`},
+                {id: 8, val: `出生日期：${temp['出生日期'].words}`},
+                {id: 9, val: `住址：${temp['住址'].words}`}
               ];
 
               self.result.status = true;

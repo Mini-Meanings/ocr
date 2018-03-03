@@ -35,13 +35,14 @@
     width:100%;
     padding:20rpx;
     // color: rgba(0,0,0,0.6);
-    color: red;
+    color: rgb(88, 88, 88);
   }
   .contact input {
     height:60rpx;
     border:1px solid rgba(0,0,0,0.6);
     border-radius:15rpx;
     padding:15rpx;
+    color: rgb(88, 88, 88);
   }
   .contact .btns {
     display: flex;
