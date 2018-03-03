@@ -5,6 +5,7 @@
 const logger = require("./log")(__filename);
 
 const errCodeMap = {
+	//图像识别相关错误码
 	4: "集群超限额",
 	14: "IAM鉴权失败，建议用户参照文档自查生成sign的方式是否正确，或换用控制台中ak sk的方式调用",
 	17: "每天流量超限额",
@@ -36,9 +37,17 @@ const errCodeMap = {
 	282114: "URL长度超过1024字节或为0",
 	282808: "request id xxxxx 不存在",
 	282809: "返回结果请求错误（不属于excel或json）",
-	282810: "图像识别错误"
+	282810: "图像识别错误",
+
+	//其它错误转义
+	"ESOCKETTIMEDOUT": "图片识别超时，缩小图片大小可提高成功率(注: 如果为手机照片，建议对照片进行手机截屏，将截屏的图片进行识别，实验证明对照片进行截屏后生成的图片可以明显减少图片大小，而且不会影响识别效果);"
 };
 
+/**
+ * 转义百度api接口错误
+ * @param errInfo
+ * @returns {*}
+ */
 exports.goSwitchErr = function (errInfo) {
 	if (!errInfo || !errInfo.error_code) {
 		return "错误信息不存在";
@@ -52,5 +61,17 @@ exports.goSwitchErr = function (errInfo) {
 	return errMsg;
 };
 
+
+/**
+ * 转义系统错误
+ * @param errKey
+ * @returns {*}
+ */
+exports.getErrInfo = function (errKey) {
+	if (!errKey) {
+		return null;
+	}
+	return errCodeMap[errKey];
+};
 
 
