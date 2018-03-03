@@ -290,6 +290,7 @@
                 self.result.list = [
                   {id: 0, val: res.data.data},
                 ];
+                self.copy = [res.data.data];
                 self.$apply();
               }
             })
@@ -598,7 +599,7 @@
 
     destroyAudio() {
       console.log('destroy audio');
-      this.innerAudioContext.destroy();
+      this.innerAudioContext && this.innerAudioContext.destroy();
     }
 
   }
