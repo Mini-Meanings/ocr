@@ -26,7 +26,7 @@ exports.agrsCheck = function (req, res, next) {
 	let ext = path.extname(file.originalname);
 	if (size > maxFileSize || !allowFile.includes(ext)) {
 		logger.warn("agrsCheck err ext: %s, size: %s", ext, size);
-		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片(注: 如果为手机照片，建议对照片进行手机截屏，将截屏的图片进行识别，实验证明对照片进行截屏后生成的图片可以明显减少图片大小，而且不会影响识别效果)`);
+		return res.lockSend(100002, `文件类型错误，目前只支持不超过4M的 ${allowFile.map(e => "*" + e).join("、")} 类型图片(注: 建议对照片进行手机截屏，重新识别截屏图片)`);
 	}
 	return next();
 };

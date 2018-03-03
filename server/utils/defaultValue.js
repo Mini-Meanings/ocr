@@ -9,7 +9,7 @@ module.exports = {
 	recongnAllowFile: [".png", ".jpg", ".bmp", ".jpeg"],   //图片识别文件类型
 	recongnMaxFileSize: 4 * 1024 * 1024,              //图片识别文件大小上限
 	times: {
-		general: 10,      //文字识别(含位置信息)
+		general: 15,      //文字识别(含位置信息)
 		accurate: 10,      //高精度文字识别(含位置信息)
 		idcard: 10,       //识别身份证(正反面)
 		bankcard: 10,     //银行卡识别
@@ -18,7 +18,7 @@ module.exports = {
 		license: 10,      //车牌识别
 		business: 10,     //营业执照识别
 		receipt: 10,      //通用票据识别
-		enhance: 3,       //通用文字识别（含生僻字版）- 无位置信息
+		enhance: 5,       //通用文字识别（含生僻字版）- 无位置信息
 	},
 	timesKeyPrefix: "timesKeyPrefix-",
 	totalTimesKeyPrefix: "totalTimesKeyPrefix-",
