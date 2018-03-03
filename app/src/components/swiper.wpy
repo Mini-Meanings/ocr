@@ -125,6 +125,7 @@
         bankcard: 0,
         enhance: 0,
       },
+      userInfo: null,
       swiper: {
         // direction: 'vertical',
         // width: 180,
@@ -336,39 +337,43 @@
     }
 
     getOneLimitTimes() {
-      let self = this;
-      wx.request({
-        url: 'https://www.iocr.vip/ai/users/times/me',
-        success: function(res) {
-          console.log(res.data);
-          if(res.data.code === 200) {
-            let temp = res.data.data;
-            self.count = {
-              general: temp.general,
-              receipt: temp.receipt,
-              idcard: temp.idcard,
-              drivecard: temp.drivecard,
-              bankcard: temp.bankcard,
-              enhance: temp.enhance
-            }
-            self.$apply();
-          }
-        }
-      })
+      console.log(this.userInfo,'this.userInfo');
+      // let self = this;
+      // wx.request({
+      //   url: 'https://www.iocr.vip/ai/users/times/me',
+      //   success: function(res) {
+      //     console.log(res.data);
+      //     if(res.data.code === 200) {
+      //       let temp = res.data.data;
+      //       self.count = {
+      //         general: temp.general,
+      //         receipt: temp.receipt,
+      //         idcard: temp.idcard,
+      //         drivecard: temp.drivecard,
+      //         bankcard: temp.bankcard,
+      //         enhance: temp.enhance
+      //       }
+      //       self.$apply();
+      //     }
+      //   }
+      // })
     }
 
     getUserInfo() {
       let self = this;
       wx.getUserInfo({
         success: function(res) {
-          let userInfo = res.userInfo;
-          console.log(userInfo);
-          let nickName = userInfo.nickName
-          let avatarUrl = userInfo.avatarUrl
-          let gender = userInfo.gender //性别 0：未知、1：男、2：女
-          let province = userInfo.province
-          let city = userInfo.city
-          let country = userInfo.country
+          // console.log(res.userInfo);
+          self.userInfo = res.userInfo;
+          // let userInfo = res.userInfo;
+          // let nickName = userInfo.nickName
+          // let avatarUrl = userInfo.avatarUrl
+          // let gender = userInfo.gender //性别 0：未知、1：男、2：女
+          // let province = userInfo.province
+          // let city = userInfo.city
+          // let country = userInfo.country
+          self.getOneLimitTimes();
+          wx.setStorageSync('userinfo', self.userInfo.avatarUrl);
         },
         fail: function(error) {
           // console.log(error);
