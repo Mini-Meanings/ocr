@@ -35,6 +35,7 @@
     width:100%;
     padding:20rpx;
     // color: rgba(0,0,0,0.6);
+    color: red;
   }
   .contact input {
     height:60rpx;
