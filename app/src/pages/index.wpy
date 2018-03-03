@@ -35,7 +35,6 @@
       <view  class="content">
         <tags />
         <myswiper />
-        <!-- <panel /> -->
         <navs />
       </view>
     </scroll-view>
@@ -48,7 +47,6 @@
   import Tags from '../components/tags';
   import Navs from '../components/navs';
   import MySwiper from '../components/swiper';
-  import Panel from '../components/panel';
 
   export default class Index extends wepy.page {
     config = {
@@ -58,7 +56,6 @@
       tags: Tags,
       navs: Navs,
       myswiper: MySwiper,
-      panel: Panel
     }
 
     mixins = [testMixin]

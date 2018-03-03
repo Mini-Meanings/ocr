@@ -22,5 +22,9 @@ export default class Show extends wepy.page {
 
     events = {};
     onLoad() {};
+    onUnload() {
+      // console.log('preview---------onUnload');
+      this.$invoke('preview', 'destroyAudio');
+    }  
 }
 </script>

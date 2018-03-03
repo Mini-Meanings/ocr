@@ -68,7 +68,6 @@
 
   </view>
 
-        <!-- <panel /> -->
         
   <view class="mynavs">
     <span class="ripple" bindtap="$navs$toGeizan" type="default"> 赞赏 </span>

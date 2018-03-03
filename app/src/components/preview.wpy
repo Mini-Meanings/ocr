@@ -163,7 +163,7 @@
       </view>
     </view>
     <!-- <audio wx:if="{{jarttoTest}}" src="{{voiceUrl}}" autoplay></audio> -->
-    <audio src="{{voiceUrl}}" id="myAudio"></audio>
+    <!-- <audio src="{{voiceUrl}}" id="myAudio"></audio> -->
   </view>
 </template>
 <script>
@@ -182,7 +182,8 @@
       copy: [],
       authid: Math.random().toString(16).substring(2),
       voiceUrl: '',
-      isPlay: true
+      isPlay: false,
+      innerAudioContext: null
     }
 
     methods = {
@@ -206,6 +207,8 @@
         })
       },
       voice() {
+        console.log(this.isPlay,'this.isPlay');
+        if(this.isPlay) return;
         wx.showToast({
           title: '语音合成中...',
           icon: 'loading',
@@ -314,16 +317,22 @@
       }
     }
 
-    openPlayer(){
+    openPlayer(flag){
       let url = this.voiceUrl;
       const innerAudioContext = wx.createInnerAudioContext();
-      innerAudioContext.autoplay = true;
-      innerAudioContext.src = url;
-      innerAudioContext.play();
+      this.innerAudioContext = innerAudioContext;
+      this.innerAudioContext.autoplay = true;
+      this.innerAudioContext.src = url;
+      this.innerAudioContext.play();
+
+      innerAudioContext.onPlay(() => {
+        console.log('正在播放');
+        this.isPlay = true;
+      });
       
       innerAudioContext.onEnded(() => {
         console.log('结束播放');
-        // this.isPlay = false;
+        this.isPlay = false;
       })
       innerAudioContext.onError((res) => {
         console.log(res);
@@ -586,5 +595,11 @@
         withShareTicket: true
       })
     }
+
+    destroyAudio() {
+      console.log('destroy audio');
+      this.innerAudioContext.destroy();
+    }
+
   }
 </script>

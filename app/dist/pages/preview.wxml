@@ -44,7 +44,7 @@
       </view>
     </view>
     <!-- <audio wx:if="{{jarttoTest}}" src="{{voiceUrl}}" autoplay></audio> -->
-    <audio src="{{$preview$voiceUrl}}" id="myAudio"/>
+    <!-- <audio src="{{voiceUrl}}" id="myAudio"></audio> -->
   </view>
 
   </view>

@@ -76,7 +76,7 @@
         // })
       },
       gotoPage(e) {
-        console.log(e,'e');
+        // console.log(e,'e');
         wx.navigateTo({
           url: e
         })
