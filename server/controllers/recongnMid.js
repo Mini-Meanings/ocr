@@ -87,6 +87,8 @@ exports.timesCount = function (type) {
 			rc.expire(key, 24 * 60 * 60);   //24小时后删除key
 			const defaultTimes = mDefauleValue.times[type];
 			if (+response > defaultTimes) {
+				logger.warn("timesCount limit response: %s, defaultTimes: %s, key: %s, field: %s",
+					response, defaultTimes, key, field);
 				return res.lockSend(100007, "免费次数已用尽");
 			}
 			next();
