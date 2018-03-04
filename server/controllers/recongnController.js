@@ -10,6 +10,7 @@ const mDefauleValue = require("../utils/defaultValue.js");
 const rc = require("../utils/createRedisClient")();
 const logger = require("../utils/log")(__filename);
 const mTransErrCode = require("../utils/transErrCode.js");
+const mRecongnMid = require("./recongnMid.js");
 
 function totalTimesCount(type) {
 	if (!type) {
@@ -29,7 +30,7 @@ function totalTimesCount(type) {
  * @param req
  * @param res
  */
-exports.doGeneral = function (req, res) {
+exports.doGeneral = function (user, req, res) {
 	// mConvert.generalWithLocation(req.fileBuf.toString("base64")).then(result => {
 	mConvert.generalWithLocation(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("general");
@@ -41,6 +42,9 @@ exports.doGeneral = function (req, res) {
 		logger.warn("doGeneral generalWithLocation err: %s", err.stack || err.message || err);
 		let errmsg = err.message || err.stack || (typeof err === "string" ? err : JSON.stringify(err));
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
+		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
+		let field = type + "_" + user;
+		mRecongnMid.modifyUserTimes(key, field, -1);
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -50,7 +54,7 @@ exports.doGeneral = function (req, res) {
  * @param req
  * @param res
  */
-exports.doAccurate = function (req, res) {
+exports.doAccurate = function (user, req, res) {
 	mConvert.accurate(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("accurate");
 		if (result.error_code) {
@@ -61,6 +65,9 @@ exports.doAccurate = function (req, res) {
 		logger.warn("doAccurate accurate err: %s", err.stack || err.message || err);
 		let errmsg = err.message || err.stack || (typeof err === "string" ? err : JSON.stringify(err));
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
+		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
+		let field = type + "_" + user;
+		mRecongnMid.modifyUserTimes(key, field, -1);
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -71,7 +78,7 @@ exports.doAccurate = function (req, res) {
  * @param res
  * @returns {Function|*}
  */
-exports.doIdcard = function (req, res) {
+exports.doIdcard = function (user, req, res) {
 	const idCardSide = req.body.side || req.query.side;
 	if (!idCardSide || (idCardSide !== "front" && idCardSide !== "back")) {
 		return res.lockSend(100003, `需要指出证件朝向(front: 正面,back: 背面)`);
@@ -87,6 +94,9 @@ exports.doIdcard = function (req, res) {
 		logger.warn("doIdcard idcard err: %s", err.stack || err.message || err);
 		let errmsg = err.message || err.stack || (typeof err === "string" ? err : JSON.stringify(err));
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
+		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
+		let field = type + "_" + user;
+		mRecongnMid.modifyUserTimes(key, field, -1);
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -96,7 +106,7 @@ exports.doIdcard = function (req, res) {
  * @param req
  * @param res
  */
-exports.doBankcard = function (req, res) {
+exports.doBankcard = function (user, req, res) {
 	mConvert.bankcard(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("bankcard");
 		if (result.error_code) {
@@ -108,6 +118,9 @@ exports.doBankcard = function (req, res) {
 		logger.warn("doBankcard bankcard err: %s", err.stack || err.message || err);
 		let errmsg = err.message || err.stack || (typeof err === "string" ? err : JSON.stringify(err));
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
+		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
+		let field = type + "_" + user;
+		mRecongnMid.modifyUserTimes(key, field, -1);
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -117,7 +130,7 @@ exports.doBankcard = function (req, res) {
  * @param req
  * @param res
  */
-exports.doDrivecard = function (req, res) {
+exports.doDrivecard = function (user, req, res) {
 	mConvert.drivingLicense(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("drivecard");
 		if (result.error_code) {
@@ -129,6 +142,9 @@ exports.doDrivecard = function (req, res) {
 		logger.warn("doDrivecard drivingLicense err: %s", err.stack || err.message || err);
 		let errmsg = err.message || err.stack || (typeof err === "string" ? err : JSON.stringify(err));
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
+		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
+		let field = type + "_" + user;
+		mRecongnMid.modifyUserTimes(key, field, -1);
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -138,7 +154,7 @@ exports.doDrivecard = function (req, res) {
  * @param req
  * @param res
  */
-exports.doVehiclecard = function (req, res) {
+exports.doVehiclecard = function (user, req, res) {
 	mConvert.vehicleLicense(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("vehiclecard");
 		if (result.error_code) {
@@ -150,6 +166,9 @@ exports.doVehiclecard = function (req, res) {
 		logger.warn("doVehiclecard vehicleLicense err: %s", err.stack || err.message || err);
 		let errmsg = err.message || err.stack || (typeof err === "string" ? err : JSON.stringify(err));
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
+		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
+		let field = type + "_" + user;
+		mRecongnMid.modifyUserTimes(key, field, -1);
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -159,7 +178,7 @@ exports.doVehiclecard = function (req, res) {
  * @param req
  * @param res
  */
-exports.doLicense = function (req, res) {
+exports.doLicense = function (user, req, res) {
 	mConvert.licensePlate(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("license");
 		if (result.error_code) {
@@ -170,6 +189,9 @@ exports.doLicense = function (req, res) {
 		logger.warn("doLicense licensePlate err: %s", err.stack || err.message || err);
 		let errmsg = err.message || err.stack || (typeof err === "string" ? err : JSON.stringify(err));
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
+		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
+		let field = type + "_" + user;
+		mRecongnMid.modifyUserTimes(key, field, -1);
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -179,7 +201,7 @@ exports.doLicense = function (req, res) {
  * @param req
  * @param res
  */
-exports.doBusiness = function (req, res) {
+exports.doBusiness = function (user, req, res) {
 	mConvert.businessLicense(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("business");
 		if (result.error_code) {
@@ -191,6 +213,9 @@ exports.doBusiness = function (req, res) {
 		logger.warn("doBusiness businessLicense err: %s", err.stack || err.message || err);
 		let errmsg = err.message || err.stack || (typeof err === "string" ? err : JSON.stringify(err));
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
+		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
+		let field = type + "_" + user;
+		mRecongnMid.modifyUserTimes(key, field, -1);
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -200,7 +225,7 @@ exports.doBusiness = function (req, res) {
  * @param req
  * @param res
  */
-exports.doReceipt = function (req, res) {
+exports.doReceipt = function (user, req, res) {
 	mConvert.receipt(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("receipt");
 		if (result.error_code) {
@@ -211,6 +236,9 @@ exports.doReceipt = function (req, res) {
 		logger.warn("doReceipt receipt err: %s", err.stack || err.message || err);
 		let errmsg = err.message || err.stack || (typeof err === "string" ? err : JSON.stringify(err));
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
+		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
+		let field = type + "_" + user;
+		mRecongnMid.modifyUserTimes(key, field, -1);
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -220,7 +248,7 @@ exports.doReceipt = function (req, res) {
  * @param req
  * @param res
  */
-exports.doEnhance = function (req, res) {
+exports.doEnhance = function (user, req, res) {
 	mConvert.generalEnhance(req.files[0].buffer.toString("base64")).then(result => {
 		totalTimesCount("enhance");
 		if (result.error_code) {
@@ -231,6 +259,9 @@ exports.doEnhance = function (req, res) {
 		logger.warn("doEnhance generalEnhance err: %s", err.stack || err.message || err);
 		let errmsg = err.message || err.stack || (typeof err === "string" ? err : JSON.stringify(err));
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
+		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
+		let field = type + "_" + user;
+		mRecongnMid.modifyUserTimes(key, field, -1);
 		return res.lockSend(100000, errmsg);
 	});
 };
