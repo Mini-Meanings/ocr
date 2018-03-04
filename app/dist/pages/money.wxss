@@ -1,1 +1,1 @@
-.money{height:calc(100vh);background:#fafaf0;display:flex;align-items:center;justify-content:center}.money image{width:calc(100vw);height:calc(100vw)}
+.money{height:calc(100vh);background:#fafaf0;display:flex;align-items:center;justify-content:center}.money image{width:calc(100vw);height:calc(100vw)}.money .fix{background:#efeed4;width:100%;height:calc(100vh)/2;position:absolute;top:0}
