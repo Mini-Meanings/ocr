@@ -99,8 +99,8 @@ exports.timesCount = function (type) {
 };
 
 let modifyUserTimes = exports.modifyUserTimes = function (key, field, count = 1) {
-	if (!uid) {
-		return BlueBird.reject("用户ID为空");
+	if (!key || !field) {
+		return BlueBird.reject("param incomplete");
 	}
 	return rc.hincrby(key, field, count)
 };
