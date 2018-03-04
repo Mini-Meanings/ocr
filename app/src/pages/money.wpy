@@ -1,0 +1,44 @@
+<style lang="less">
+  .money {
+    height: ~"calc(100vh)";
+    background: #fafaf0;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+  }
+  .money image {
+    width: ~"calc(100vw)";
+    height: ~"calc(100vw)";
+  }
+  
+</style>
+<template>
+  <view class="money" @tap="previewImg">
+    <image src="https://www.iocr.vip/ai/money.jpeg" width="100%"/>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class Contact extends wepy.page {
+    config = {
+      navigationBarTitleText: '赞赏'
+    }
+
+    data = {
+    };
+    methods = {
+      previewImg() {
+        wx.previewImage({
+          current: 'https://www.iocr.vip/ai/money.jpeg', // 当前显示图片的http链接
+          urls: ['https://www.iocr.vip/ai/money.jpeg'] // 需要预览的图片http链接列表
+        })
+      }
+    };
+
+    events = {};
+    onLoad() {
+    };
+}
+</script>

@@ -310,7 +310,7 @@
         let self = this;
         wx.chooseImage({
           count: 1, // 默认9
-          sizeType: ['original'], // 可以指定是原图还是压缩图，默认二者都有
+          sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: function (res) {
             let tempFilePaths = res.tempFilePaths;
@@ -372,8 +372,8 @@
           // let province = userInfo.province
           // let city = userInfo.city
           // let country = userInfo.country
-          self.getOneLimitTimes();
           wx.setStorageSync('userinfo', self.userInfo.avatarUrl);
+          self.getOneLimitTimes();
         },
         fail: function(error) {
           // console.log(error);

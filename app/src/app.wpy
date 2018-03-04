@@ -17,7 +17,8 @@ export default class extends wepy.app {
       'pages/crop1',
       'pages/preview',
       'pages/help',
-      'pages/contact'
+      'pages/contact',
+      'pages/money'
     ],
     window: {
       backgroundTextStyle: 'light',

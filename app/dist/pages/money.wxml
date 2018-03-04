@@ -1,0 +1,4 @@
+
+  <view class="money" bindtap="previewImg">
+    <image src="https://www.iocr.vip/ai/money.jpeg" width="100%"/>
+  </view>

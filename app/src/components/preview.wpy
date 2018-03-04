@@ -181,7 +181,7 @@
       },
       copy: [],
       // authid: Math.random().toString(16).substring(2),
-      authid: wx.getStorageSync('userinfo'),
+      authid: '',
       voiceUrl: '',
       isPlay: false,
       innerAudioContext: null
@@ -595,7 +595,12 @@
     onLoad () {
       this.result.imgurl = wx.getStorageSync('imageurl');
       this.result.type = wx.getStorageSync('type');
-      console.log(wx.getStorageSync('userinfo'),'userinfo');
+      this.authid = wx.getStorageSync('userinfo');
+      wx.showToast({
+        title: this.authid,
+        icon: 'success',
+        duration: 2000
+      })
       this.upload(this.result.type);
       wx.showShareMenu({
         withShareTicket: true

@@ -86,6 +86,9 @@
         // wx.navigateToMiniProgram({
         //   appId: 
         // })
+        wx.navigateTo({
+          url: 'money'
+        })
       },
       gotoPage(e) {
         // console.log(e,'e');
