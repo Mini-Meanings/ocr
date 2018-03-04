@@ -58,42 +58,42 @@
     <image wx:if="{{lflag}}" @tap="goPrev" class="prev" src="../image/prev.png" />
     <weSwiper :option="swiper">
       <view class="we-slide">
-        <view class="item" @tap="upload(generate)">
+        <view class="item" @tap="upload(generate,{{count.general}})">
           <image lazy-load="true" src="../image/temp1.png" />
           <text class="title">通用文字识别（{{count.general}} 次）</text>
           <text class="desc">提供快速的图片识别方式，识别类型多，但同时存在较多冗余数据。</text>
         </view>
       </view>
       <view class="we-slide">
-        <view class="item" @tap="upload(ticket)">
+        <view class="item" @tap="upload(ticket,{{count.receipt}})">
           <image lazy-load="true" src="../image/temp5.png" />
           <text class="title">票据识别（{{count.receipt}} 次）</text>
           <text class="desc">针对票据类型图片进行识别，必要时需要裁切图片，确定识别范围。</text>
         </view>
       </view>
       <view class="we-slide">
-        <view class="item" @tap="upload(id)">
+        <view class="item" @tap="upload(id,{{count.idcard}})">
           <image lazy-load="true" src="../image/temp2.png" />
           <text class="title">身份证识别（{{count.idcard}} 次）</text>
           <text class="desc">可识别身份证「正面」，包含姓名、性别、出生日期、住址、证件号等。</text>
         </view>
       </view>
       <view class="we-slide">
-        <view class="item" @tap="upload(drive)">
+        <view class="item" @tap="upload(drive,{{count.drivecard}})">
           <image lazy-load="true" src="../image/temp3.png" />
           <text class="title">驾驶证识别（{{count.drivecard}} 次）</text>
           <text class="desc">针对驾驶证信息进行识别，格式化显示姓名，证号，车型，有效期等。</text>
         </view>
       </view>
       <view class="we-slide">
-        <view class="item" @tap="upload(card)">
+        <view class="item" @tap="upload(card,{{count.bankcard}})">
           <image lazy-load="true" src="../image/temp4.png" />
           <text class="title">银行卡识别（{{count.bankcard}} 次）</text>
           <text class="desc">识别银行卡号，类型，名称等信息，并格式化显示。</text>
         </view>
       </view>
       <view class="we-slide">
-        <view class="item" @tap="upload(enhance)">
+        <view class="item" @tap="upload(enhance,{{count.enhance}})">
           <image lazy-load="true" src="../image/temp6.png" />
           <text class="title">生僻字识别（{{count.enhance}} 次）</text>
           <text class="desc">适用于繁体字图片文件识别，准确率高，但耗时较长。</text>
@@ -286,7 +286,27 @@
           })
         }
       },
-      upload(e) {
+      upload(e,times) {
+        // console.log(times,'times');
+        if(times === 0) {
+          wx.showModal({
+            title: '提示',
+            confirmText: '帮助',
+            // cancelText: '',
+            content: '今日该类型「免费」次数已经用完，请使用其他类型。或等待次日恢复使用次数!',
+            success: function(res) {
+              if (res.confirm) {
+                // console.log('用户点击确定');
+                wx.navigateTo({
+                  url: 'help'
+                })
+              } else if (res.cancel) {
+                console.log('用户点击取消');
+              }
+            }
+          })
+          return;
+        }
         let self = this;
         wx.chooseImage({
           count: 1, // 默认9
@@ -337,26 +357,28 @@
     }
 
     getOneLimitTimes() {
-      console.log(this.userInfo,'this.userInfo');
-      // let self = this;
-      // wx.request({
-      //   url: 'https://www.iocr.vip/ai/users/times/me',
-      //   success: function(res) {
-      //     console.log(res.data);
-      //     if(res.data.code === 200) {
-      //       let temp = res.data.data;
-      //       self.count = {
-      //         general: temp.general,
-      //         receipt: temp.receipt,
-      //         idcard: temp.idcard,
-      //         drivecard: temp.drivecard,
-      //         bankcard: temp.bankcard,
-      //         enhance: temp.enhance
-      //       }
-      //       self.$apply();
-      //     }
-      //   }
-      // })
+      console.log(wx.getStorageSync('userinfo'),'this.userInfo');
+      if(!wx.getStorageSync('userinfo')) return;
+      let self = this;
+      wx.request({
+        url: 'https://www.iocr.vip/ai/users/times/me',
+        header: {authid:wx.getStorageSync('userinfo')},
+        success: function(res) {
+          console.log(res.data,'me');
+          if(res.data.code === 200) {
+            let temp = res.data.data;
+            self.count = {
+              general: (15 - temp.general || 0) >= 0 ? (15 - temp.general || 0) : 0,
+              receipt: (10 - temp.receipt || 0) >= 0 ? (10 - temp.receipt || 0) : 0,
+              idcard: (10 - temp.idcard || 0) >= 0 ? (10 - temp.idcard || 0) : 0,
+              drivecard: (10 - temp.drivecard || 0) >= 0 ? (10 - temp.drivecard || 0) : 0,
+              bankcard: (10 - temp.bankcard || 0) >= 0 ? (10 - temp.bankcard || 0) : 0,
+              enhance: (5 - temp.enhance || 0) >= 0 ? (5 - temp.enhance || 0) : 0
+            }
+            self.$apply();
+          }
+        }
+      })
     }
 
     getUserInfo() {
@@ -392,6 +414,7 @@
                       icon: 'none',
                       duration: 2000
                     })
+                    self.getOneLimitTimes();
                   }
                 })
               } else if (res.cancel) {
@@ -415,7 +438,7 @@
     onLoad() {
       this.index = 0;
       this.getEachLimitTimes();
-      this.getUserInfo();
+      // this.getUserInfo();
     }
   }
 </script>

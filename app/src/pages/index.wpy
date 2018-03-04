@@ -103,5 +103,10 @@
         withShareTicket: true
       })
     };
+    onShow() {
+      console.log('on show');
+      this.$invoke('myswiper', 'getUserInfo');
+      // this.getUserInfo();
+    }
   }
 </script>
