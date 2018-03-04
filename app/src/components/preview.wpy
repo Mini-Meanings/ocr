@@ -550,7 +550,46 @@
             wx.hideLoading();
           }
         })
-      } else {
+      } else if(type === 'ticket') {
+        wx.uploadFile({
+          url:'https://www.iocr.vip/ai/recogns/receipt',
+          filePath: this.result.imgurl,
+          name: 'file',
+          header: {authid:this.authid},
+          success: function(res) {
+            let data = JSON.parse(res.data);
+            console.log(data,'success');
+
+            if (data.status === 'error') {
+              wx.showModal({
+                title: '提示',
+                content: data.data,
+                success: function(res) {
+                  if (res.confirm) {
+                    wx.navigateBack({
+                      delta: 2
+                    })
+                  } else if (res.cancel) {
+                    console.log('用户点击取消');
+                  }
+                }
+              })
+            } else if(data.status === 'ok') {
+              let results = data.data.words_result.map((item,index) => { return {id:index,val:item.words}; });
+              // console.log(results,'sss');
+              self.result.list = results;
+              self.result.status = true;
+              self.initCopy();
+              self.$apply();
+            }
+            wx.hideLoading();
+          },
+          fail: function(err) {
+            // console.log(err,'err');
+            wx.hideLoading();
+          }
+        })
+      }else {
         wx.uploadFile({
           url:'https://www.iocr.vip/ai/recogns/general',
           filePath: this.result.imgurl,
