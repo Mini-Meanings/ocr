@@ -42,11 +42,11 @@ app.get("/times/default", function (req, res) {
 });
 
 /**
- * @api {get} /users/times/me v1-03.02 获取某个人的当天识图已用次数
+ * @api {get} /users/times/me v1-03.02 获取某个人的当天识图剩余次数
  * @apiGroup v1-03.user
  * @apiName  getUserUseTimes
  *
- * @apiDescription 获取某个人的当天识图已用次数(根据authid进行识别用户)
+ * @apiDescription 获取某个人的当天识图剩余次数(根据authid进行识别用户)
  *
  * @apiVersion 1.0.0
  *
@@ -87,7 +87,12 @@ app.get("/times/me", function (user, req, res) {
 	let filedList = Object.keys(mDefauleValue.times).map(item => item + "_" + uid);
 	rc.hmget(key, filedList).then(response => {
 		let result = _.object(Object.keys(mDefauleValue.times), response);
-		return res.lockSend(200, result);
+		let leftTimes = {};
+		for (let index in mDefauleValue.times) {
+			let t = mDefauleValue.times[index] - (result[index] || 0);
+			leftTimes[index] = t < 0 ? 0 : t;
+		}
+		return res.lockSend(200, leftTimes);
 	}).catch(err => {
 		logger.warn("times me redis err: %s, key: %s, filedList: %s", err.message || err, key, filedList);
 		return res.lockSend(100000, err.message || err.stack || JSON.stringify(err));
