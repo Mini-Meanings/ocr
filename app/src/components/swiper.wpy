@@ -334,28 +334,6 @@
       },
     }
 
-    getEachLimitTimes() {
-      let self = this;
-      wx.request({
-        url: 'https://www.iocr.vip/ai/users/times/default',
-        success: function(res) {
-          console.log(res.data);
-          if(res.data.code === 200) {
-            let temp = res.data.data;
-            self.count = {
-              general: temp.general,
-              receipt: temp.receipt,
-              idcard: temp.idcard,
-              drivecard: temp.drivecard,
-              bankcard: temp.bankcard,
-              enhance: temp.enhance
-            }
-            self.$apply();
-          }
-        }
-      })
-    }
-
     getOneLimitTimes() {
       console.log(wx.getStorageSync('userinfo'),'this.userInfo');
       if(!wx.getStorageSync('userinfo')) return;
@@ -368,12 +346,12 @@
           if(res.data.code === 200) {
             let temp = res.data.data;
             self.count = {
-              general: (15 - temp.general || 0) >= 0 ? (15 - temp.general || 0) : 0,
-              receipt: (10 - temp.receipt || 0) >= 0 ? (10 - temp.receipt || 0) : 0,
-              idcard: (10 - temp.idcard || 0) >= 0 ? (10 - temp.idcard || 0) : 0,
-              drivecard: (10 - temp.drivecard || 0) >= 0 ? (10 - temp.drivecard || 0) : 0,
-              bankcard: (10 - temp.bankcard || 0) >= 0 ? (10 - temp.bankcard || 0) : 0,
-              enhance: (5 - temp.enhance || 0) >= 0 ? (5 - temp.enhance || 0) : 0
+              general: temp.general,
+              receipt: temp.receipt,
+              idcard: temp.idcard,
+              drivecard: temp.drivecard,
+              bankcard: temp.bankcard,
+              enhance: temp.enhance
             }
             self.$apply();
           }
@@ -437,8 +415,6 @@
     
     onLoad() {
       this.index = 0;
-      this.getEachLimitTimes();
-      // this.getUserInfo();
     }
   }
 </script>
