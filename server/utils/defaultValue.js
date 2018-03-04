@@ -7,7 +7,7 @@ module.exports = {
 		"it", "el", "nl", "pl", "bul", "est", "dan", "fin", "cs", "rom", "slo", "swe", "hu", "cht", "vie"],
 	baiduTransApi: "https://fanyi-api.baidu.com/api/trans/vip/translate",                                 //百度翻译api
 	recongnAllowFile: [".png", ".jpg", ".bmp", ".jpeg"],   //图片识别文件类型
-	recongnMaxFileSize: 4 * 1024 * 1024,              //图片识别文件大小上限
+	recongnMaxFileSize: 2.5 * 1024 * 1024,              //图片识别文件大小上限
 	times: {
 		general: 15,      //文字识别(含位置信息)
 		accurate: 10,      //高精度文字识别(含位置信息)

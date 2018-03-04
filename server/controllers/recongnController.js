@@ -44,7 +44,9 @@ exports.doGeneral = function (user, req, res) {
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
 		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
 		let field = "general" + "_" + user;
-		mRecongnMid.modifyUserTimes(key, field, -1).catch();
+		mRecongnMid.modifyUserTimes(key, field, -1).catch(err=> {
+			logger.warn("recover use time fiald key: %s, field: %s", key, field);
+		});
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -67,7 +69,9 @@ exports.doAccurate = function (user, req, res) {
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
 		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
 		let field = "accurate" + "_" + user;
-		mRecongnMid.modifyUserTimes(key, field, -1).catch();
+		mRecongnMid.modifyUserTimes(key, field, -1).catch(err=> {
+			logger.warn("recover use time fiald key: %s, field: %s", key, field);
+		});
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -96,7 +100,9 @@ exports.doIdcard = function (user, req, res) {
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
 		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
 		let field = "idcard" + "_" + user;
-		mRecongnMid.modifyUserTimes(key, field, -1).catch();
+		mRecongnMid.modifyUserTimes(key, field, -1).catch(err=> {
+			logger.warn("recover use time fiald key: %s, field: %s", key, field);
+		});
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -120,7 +126,9 @@ exports.doBankcard = function (user, req, res) {
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
 		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
 		let field = "bankcard" + "_" + user;
-		mRecongnMid.modifyUserTimes(key, field, -1).catch();
+		mRecongnMid.modifyUserTimes(key, field, -1).catch(err=> {
+			logger.warn("recover use time fiald key: %s, field: %s", key, field);
+		});
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -144,7 +152,9 @@ exports.doDrivecard = function (user, req, res) {
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
 		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
 		let field = "drivecard" + "_" + user;
-		mRecongnMid.modifyUserTimes(key, field, -1).catch();
+		mRecongnMid.modifyUserTimes(key, field, -1).catch(err=> {
+			logger.warn("recover use time fiald key: %s, field: %s", key, field);
+		});
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -168,7 +178,9 @@ exports.doVehiclecard = function (user, req, res) {
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
 		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
 		let field = "vehiclecard" + "_" + user;
-		mRecongnMid.modifyUserTimes(key, field, -1).catch();
+		mRecongnMid.modifyUserTimes(key, field, -1).catch(err=> {
+			logger.warn("recover use time fiald key: %s, field: %s", key, field);
+		});
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -191,7 +203,9 @@ exports.doLicense = function (user, req, res) {
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
 		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
 		let field = "license" + "_" + user;
-		mRecongnMid.modifyUserTimes(key, field, -1).catch();
+		mRecongnMid.modifyUserTimes(key, field, -1).catch(err=> {
+			logger.warn("recover use time fiald key: %s, field: %s", key, field);
+		});
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -215,7 +229,9 @@ exports.doBusiness = function (user, req, res) {
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
 		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
 		let field = "business" + "_" + user;
-		mRecongnMid.modifyUserTimes(key, field, -1).catch();
+		mRecongnMid.modifyUserTimes(key, field, -1).catch(err=> {
+			logger.warn("recover use time fiald key: %s, field: %s", key, field);
+		});
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -238,7 +254,9 @@ exports.doReceipt = function (user, req, res) {
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
 		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
 		let field = "receipt" + "_" + user;
-		mRecongnMid.modifyUserTimes(key, field, -1).catch();
+		mRecongnMid.modifyUserTimes(key, field, -1).catch(err=> {
+			logger.warn("recover use time fiald key: %s, field: %s", key, field);
+		});
 		return res.lockSend(100000, errmsg);
 	});
 };
@@ -261,7 +279,9 @@ exports.doEnhance = function (user, req, res) {
 		errmsg = mTransErrCode.getErrInfo(errmsg) || errmsg;
 		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
 		let field = "enhance" + "_" + user;
-		mRecongnMid.modifyUserTimes(key, field, -1).catch();
+		mRecongnMid.modifyUserTimes(key, field, -1).catch(err=> {
+			logger.warn("recover use time fiald key: %s, field: %s", key, field);
+		});
 		return res.lockSend(100000, errmsg);
 	});
 };
