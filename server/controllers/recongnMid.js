@@ -10,6 +10,7 @@ const allowFile = mDefauleValue.recongnAllowFile;  //支持文件类型
 const maxFileSize = mDefauleValue.recongnMaxFileSize;              //文件大小
 const logger = require("../utils/log")(__filename);
 const rc = require("../utils/createRedisClient")();
+const BlueBird = require("bluebird");
 
 /**
  * 参数验证
@@ -82,7 +83,7 @@ exports.timesCount = function (type) {
 		let uid = user;
 		let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
 		let field = type + "_" + uid;
-		rc.hincrby(key, field, 1).then(response => {
+		modifyUserTimes(key, field).then(response => {
 			rc.expire(key, 24 * 60 * 60);   //24小时后删除key
 			const defaultTimes = mDefauleValue.times[type];
 			if (+response > defaultTimes) {
@@ -95,6 +96,13 @@ exports.timesCount = function (type) {
 			return res.lockSend(100000, err.stack || err.message || JSON.stringify(err));
 		});
 	}
+};
+
+let modifyUserTimes = exports.modifyUserTimes = function (key, field, count = 1) {
+	if (!uid) {
+		return BlueBird.reject("用户ID为空");
+	}
+	return rc.hincrby(key, field, count)
 };
 
 
