@@ -50,3 +50,13 @@ app.get("/del/cache/mp3", function (req, res) {
 	}
 });
 
+app.get("/flush/cache", function (req, res) {   //清楚当天缓存
+	let key = mDefauleValue.timesKeyPrefix + moment().format('YYYY-MM-DD');
+	rc.hgetall(key).then(response => {
+		rc.del(key);
+		return res.lockSend(200, response);
+	}).catch(err => {
+		return res.lockSend(100000, err.stack || err.message || err);
+	});
+});
+
