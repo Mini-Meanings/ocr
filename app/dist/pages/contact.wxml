@@ -13,7 +13,7 @@
       </view> -->
       <view class="section">
         <view>问题描述</view>
-        <textarea bindinput="getQuestion" value="{{question}}" placeholder=""/>
+        <textarea maxlength="-1" bindinput="getQuestion" value="{{question}}" placeholder=""/>
       </view>
       <view class="section">
         <view class="section__title">邮箱地址</view>

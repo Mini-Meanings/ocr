@@ -199,7 +199,7 @@
     <view wx:if="{{transfer.flag}}" class="transformBox">
       <i class="close ripple" @tap="closeTransformBox"> X </i>
       <text class="title">翻译结果</text>
-      <textarea maxlength="-1" focus="true" @input="updateTextarea" value="{{transfer.val}}" />
+      <textarea maxlength="-1" focus selection-start="{{ cursorIndex }}" selection-end="{{ cursorIndex }}" @input="updateTextarea" value="{{transfer.val}}" />
       <text class="notice2">注意：点击结果编辑修改，「重置」将返回初始状态。</text>
       <view class="btnGroup">
         <button @tap="resetTransfer" disabled="{{transfer.reset}}">重置</button>
@@ -270,7 +270,8 @@
         copyPaste: '',
         reset: true,
         arrow: false
-      }
+      },
+      cursorIndex: 0
     }
 
     methods = {
@@ -278,9 +279,11 @@
         this.transfer.flag = !this.transfer.flag;
       },
       updateTextarea(e) {
-        // console.log(e.detail.value,'updateTextarea');
-        this.transfer.val =  e.detail.value;
+        const { value, cursor } = e.detail;
+        // console.log(value,cursor,'updateTextarea');
+        this.transfer.val =  value;
         this.transfer.reset = false;
+        this.cursorIndex = cursor;
       },
       resetTransfer() {
         this.transfer.val = this.transfer.copyPaste;
