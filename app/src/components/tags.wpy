@@ -51,6 +51,7 @@
 </template>
 <script>
   import wepy from 'wepy';
+  import 'wepy-async-function'; 
 
   export default class Tags extends wepy.component {
     data = {
@@ -71,10 +72,32 @@
           id: 'enhance',
           title: '生僻字'
         },
-      ]
+      ],
+      count: {
+        general: 0,
+        receipt: 0, // 票据
+        idcard: 0,
+        drivecard: 0,
+        bankcard: 0,
+        enhance: 0,
+      },
     }
     methods = {
-      tap (e) {
+      async tap (e) {
+        await this.getOneLimitTimes();
+        if(e === 'id' && this.count.idcard === 0) {
+          this.showWarn('身份证');
+          return;
+        } else if(e === 'card' && this.count.bankcard === 0) {
+          this.showWarn('银行卡');
+          return;
+        } else if(e === 'drive' && this.count.drivecard === 0) {
+          this.showWarn('驾驶证');
+          return;
+        } else if(e === 'enhance' && this.count.enhance === 0) {
+          this.showWarn('生僻字');
+          return;
+        }
         wx.chooseImage({
           count: 1,
           sizeType: ['original', 'compressed'],
@@ -96,11 +119,55 @@
             }
           }
         })
-      },
+      }
+    }
+
+    showWarn (txt) {
+      wx.showModal({
+        title: '提示',
+        confirmText: '帮助',
+        // cancelText: '',
+        content: `今日${txt}「免费」次数已经用完，请使用其他类型。或等待次日恢复使用次数!`,
+        success: function(res) {
+          if (res.confirm) {
+            // console.log('用户点击确定');
+            wx.navigateTo({
+              url: 'help'
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消');
+          }
+        }
+      })
+    }
+
+    getOneLimitTimes() {
+      // console.log(wx.getStorageSync('userinfo'),'tags');
+      if(!wx.getStorageSync('userinfo')) return;
+      let self = this;
+      wx.request({
+        url: 'https://www.iocr.vip/ai/users/times/me',
+        header: {authid:wx.getStorageSync('userinfo')},
+        success: function(res) {
+          console.log(res.data,'tags');
+          if(res.data.code === 200) {
+            let temp = res.data.data;
+            self.count = {
+              general: temp.general,
+              receipt: temp.receipt,
+              idcard: temp.idcard,
+              drivecard: temp.drivecard,
+              bankcard: temp.bankcard,
+              enhance: temp.enhance
+            }
+            self.$apply();
+          }
+        }
+      })
     }
 
     onLoad () {
-      console.log('tags');
+      this.getOneLimitTimes();
     }
   }
 </script>
