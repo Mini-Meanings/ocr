@@ -2,15 +2,28 @@
   <view>
     
   <view class="preview">
-    <canvas bindtap="$preview$which" class="canvas" canvas-id="myCanvas"/>
+    <!-- <canvas bindtap="which" class="canvas" canvas-id="myCanvas"/> -->
     <view class="imgbox">
       <image mode="widthFix" src="{{$preview$result.imgurl}}"/>
+    </view>
+    <view  wx:if="{{$preview$transfer.arrow}}" class="transferArrow" bindtap="$preview$toggleTransferBox">
+      <image src="../image/up.png"/>
+    </view>
+    <view  wx:if="{{$preview$transfer.flag}}" class="transformBox">
+      <i class="close ripple" bindtap="$preview$closeTransformBox"> X </i>
+      <text class="title">翻译结果</text>
+      <textarea maxlength="-1" focus="true" bindinput="$preview$updateTextarea" value="{{$preview$transfer.val}}"/>
+      <text class="notice2">注意：点击结果编辑修改，重置按钮将返回初始状态。</text>
+      <view class="btnGroup">
+        <button bindtap="$preview$resetTransfer" disabled="{{$preview$transfer.reset}}">重置</button>
+        <button bindtap="$preview$copyTransfer">复制</button>
+      </view>
     </view>
     <!-- <view wx:if="{{result.status}}" class="result">{{result.desc}}</view> -->
     <view hidden="{{!$preview$result.status}}" class="result">
       <text class="notice">注意：勾选文字可通过「复制文字」进行拷贝！</text>
       <checkbox-group bindchange="$preview$checkboxChange">
-        <view class="line"  wx:for-items="{{$preview$result.list}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+        <view class="line" wx:for-items="{{$preview$result.list}}" wx:for-index="index" wx:for-item="item" wx:key="index">
           <label class="checkbox">
             <checkbox value="{{item.id}}" checked="true"/>{{item.val}}
           </label>
@@ -43,8 +56,6 @@
         <text class="one">{{!$preview$result.status?'显示图层':'隐藏图层'}}</text>
       </view>
     </view>
-    <!-- <audio wx:if="{{jarttoTest}}" src="{{voiceUrl}}" autoplay></audio> -->
-    <!-- <audio src="{{voiceUrl}}" id="myAudio"></audio> -->
   </view>
 
   </view>
