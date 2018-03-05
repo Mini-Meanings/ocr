@@ -200,7 +200,7 @@
       <i class="close ripple" @tap="closeTransformBox"> X </i>
       <text class="title">翻译结果</text>
       <textarea maxlength="-1" focus="true" @input="updateTextarea" value="{{transfer.val}}" />
-      <text class="notice2">注意：点击结果编辑修改，重置按钮将返回初始状态。</text>
+      <text class="notice2">注意：点击结果编辑修改，「重置」将返回初始状态。</text>
       <view class="btnGroup">
         <button @tap="resetTransfer" disabled="{{transfer.reset}}">重置</button>
         <button @tap="copyTransfer">复制</button>

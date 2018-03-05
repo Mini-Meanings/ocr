@@ -13,7 +13,7 @@
       <i class="close ripple" bindtap="$preview$closeTransformBox"> X </i>
       <text class="title">翻译结果</text>
       <textarea maxlength="-1" focus="true" bindinput="$preview$updateTextarea" value="{{$preview$transfer.val}}"/>
-      <text class="notice2">注意：点击结果编辑修改，重置按钮将返回初始状态。</text>
+      <text class="notice2">注意：点击结果编辑修改，「重置」将返回初始状态。</text>
       <view class="btnGroup">
         <button bindtap="$preview$resetTransfer" disabled="{{$preview$transfer.reset}}">重置</button>
         <button bindtap="$preview$copyTransfer">复制</button>

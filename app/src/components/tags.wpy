@@ -84,6 +84,7 @@
     }
     methods = {
       async tap (e) {
+        console.log(e,'tap');
         await this.getOneLimitTimes();
         if(e === 'id' && this.count.idcard === 0) {
           this.showWarn('身份证');
@@ -100,7 +101,8 @@
         }
         wx.chooseImage({
           count: 1,
-          sizeType: ['original', 'compressed'],
+          // sizeType: ['original', 'compressed'],
+          sizeType: ['compressed'],
           sourceType: ['album', 'camera'],
           success: function (res) {
             let tempFilePaths = res.tempFilePaths;

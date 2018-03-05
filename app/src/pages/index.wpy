@@ -106,6 +106,7 @@
     onShow() {
       console.log('on show');
       this.$invoke('myswiper', 'getUserInfo');
+      this.$invoke('tags', 'getOneLimitTimes');
       // this.getUserInfo();
     }
   }
