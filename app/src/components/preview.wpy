@@ -520,10 +520,6 @@
     upload(type) {
       console.log(type,'upload');
       let self = this;
-      wx.showLoading({
-        title: '识别中',
-        mask: true,
-      })
       if (type === 'card') {
         wx.uploadFile({
           url:'https://www.iocr.vip/ai/recogns/bankcard',
@@ -805,14 +801,18 @@
     }
 
     onLoad () {
+      wx.showLoading({
+        title: '识别中',
+        mask: true,
+      })
       this.result.imgurl = wx.getStorageSync('imageurl');
       this.result.type = wx.getStorageSync('type');
       this.authid = wx.getStorageSync('userinfo');
-      wx.showToast({
-        title: this.authid,
-        icon: 'success',
-        duration: 2000
-      })
+      // wx.showToast({
+      //   title: this.authid,
+      //   icon: 'success',
+      //   duration: 2000
+      // })
       this.upload(this.result.type);
       wx.showShareMenu({
         withShareTicket: true

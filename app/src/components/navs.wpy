@@ -61,7 +61,7 @@
 <template>
   <view class="mynavs">
     <span class="ripple" @tap="gotoPage(help)" type="default" > 帮助 </span>
-    <span class="ripple shake" @tap="toGeizan" type="default" > 赞赏 </span>
+    <span class="ripple shake" @tap="toGeizan" type="default" > 支持 </span>
     <span class="ripple" @tap="gotoPage(contact)" type="default" > 反馈 </span>
   </view>
 </template>
