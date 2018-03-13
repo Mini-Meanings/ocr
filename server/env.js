@@ -15,3 +15,4 @@ var mergeObject = function (obj1, obj2) {
 };
 
 mergeObject(global, require("./models"));
+
