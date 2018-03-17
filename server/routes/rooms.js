@@ -7,7 +7,7 @@ const mConvert = require("../service/convert");
 const mTools = require("../tools");
 const fs = require("fs");
 const path = require("path");
-const gm = require('gm').subClass({imageMagick: true});
+// const gm = require('gm').subClass({imageMagick: true});
 
 router.get("/", function (req, res) {
 	return res.send("rooms router");
