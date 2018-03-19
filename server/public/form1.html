@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>单图上传</title>
+</head>
+<body>
+<form action="/recogns/general?u=t" method="post" enctype="multipart/form-data">
+  <h4>通用文字识别（含位置信息版）</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogns/accurate?u=t" method="post" enctype="multipart/form-data">
+  <h4>高精度文字识别（含位置信息版）</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogns/idcard?side=front&u=t" method="post" enctype="multipart/form-data">
+  <h4>身份证正面识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogns/idcard?side=back&u=t" method="post" enctype="multipart/form-data">
+  <h4>身份证背面识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogns/bankcard?u=t" method="post" enctype="multipart/form-data">
+  <h4>银行卡识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogns/drivecard?u=t" method="post" enctype="multipart/form-data">
+  <h4>驾驶证识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogns/vehiclecard?u=t" method="post" enctype="multipart/form-data">
+  <h4>行驶证识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogns/license?u=t" method="post" enctype="multipart/form-data">
+  <h4>车牌识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogns/business?u=t" method="post" enctype="multipart/form-data">
+  <h4>营业执照识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogns/receipt?u=t" method="post" enctype="multipart/form-data">
+  <h4>通用票据识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+<hr/>
+<form action="/recogns/enhance?u=t" method="post" enctype="multipart/form-data">
+  <h4>生僻字识别</h4>
+  <input type="file" name="logo">
+  <input type="submit" value="提交">
+</form>
+</body>
+</html>
