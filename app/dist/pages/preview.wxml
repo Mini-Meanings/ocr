@@ -1,7 +1,7 @@
 
   <view>
     
-  <view class="preview">
+  <scroll-view class="preview">
     <!-- <canvas bindtap="which" class="canvas" canvas-id="myCanvas"/> -->
     <view class="imgbox">
       <image mode="widthFix" src="{{$preview$result.imgurl}}"/>
@@ -56,6 +56,6 @@
         <text class="one">{{!$preview$result.status?'显示图层':'隐藏图层'}}</text>
       </view>
     </view>
-  </view>
+  </scroll-view>
 
   </view>

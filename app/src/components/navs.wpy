@@ -83,11 +83,16 @@
       },
       toGeizan() {
         console.log(1111);
-        // wx.navigateToMiniProgram({
-        //   appId: 
+        // wx.navigateTo({
+        //   url: 'money'
         // })
-        wx.navigateTo({
-          url: 'money'
+        wx.navigateToMiniProgram({
+          appId: 'wx18a2ac992306a5a4',
+          path: 'pages/apps/largess/detail?accountId=1393991',
+          success(res) {
+            // 打开成功
+            console.log('to gei zan：',res);
+          }
         })
       },
       gotoPage(e) {

@@ -6,6 +6,10 @@
   // }
   .preview {
     background: url(https://www.iocr.vip/ai/dot1.png) repeat 0 0 transparent;
+    height: ~"calc(100vh)";
+    // height: 30px;
+    box-sizing:border-box;
+    // border:1px solid red;
   }
   .preview .imgbox {
     // border: 1px solid red;
@@ -188,7 +192,7 @@
   
 </style>
 <template>
-  <view class="preview">
+  <scroll-view class="preview">
     <!-- <canvas @tap="which" class="canvas" canvas-id="myCanvas"/> -->
     <view class="imgbox">
       <image mode="widthFix" src="{{result.imgurl}}" />
@@ -243,7 +247,7 @@
         <text class="one">{{!result.status?'显示图层':'隐藏图层'}}</text>
       </view>
     </view>
-  </view>
+  </scroll-view>
 </template>
 <script>
   import wepy from 'wepy';
