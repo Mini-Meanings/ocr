@@ -8,7 +8,32 @@ app.post("/baseinfo", function (req, res) {
 	console.log("===== body: %j", req.body);
 	return res.send({
 		code: 0,
-		userIcon: "http://www.baidu.com",
-		userNickName: "北艳难菲"
+		picture: "http://www.baidu.com",
+		nickName: "北艳难菲"
+	});
+});
+
+app.post("/flist", function (req, res) {
+	console.log("=========body: %j", res.body);
+	return res.send({
+		code: 0,
+		friends: [
+			{
+				globalId: 1,
+				nickName: "nickName1",
+				picture: "picture1"
+			},
+			{
+				globalId: 2,
+				nickName: "nickName2",
+				picture: "picture2"
+			},
+			{
+				globalId: 3,
+				nickName: "nickName3",
+				picture: "picture13"
+			}
+		],
+		message: "response message"
 	});
 });
