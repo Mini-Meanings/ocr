@@ -37,3 +37,15 @@ app.post("/flist", function (req, res) {
 		message: "response message"
 	});
 });
+
+app.post("/timeout", function (req, res) {
+	console.log("=========body: %j", res.body);
+	setTimeout(() => {
+		return res.send("success");
+	}, 20000);
+});
+
+app.get("/badworld", function (req, res) {
+	console.log('==================== params: %j', req.query);
+	return res.send({"ret": 0, "data": {"text_check_ret": 1, "dirty_cnt": 1, "dirty_words": "test"}});
+});
